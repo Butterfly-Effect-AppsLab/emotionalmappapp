@@ -1,5 +1,6 @@
 import falcon
 import requests
+from random import randint
 from falcon.http_status import HTTPStatus
 
 class HandleCORS(object):
@@ -17,7 +18,7 @@ class NewsCollection:
         """Handles GET requests"""
         import requests
         url = ('http://newsapi.org/v2/top-headlines?'
-       'country=us&'
+       'country=sk&'
        'apiKey=937002ae68b342789cf3d3515c33a483')
         response = requests.get(url)
         newsJson = response.json()
@@ -25,9 +26,10 @@ class NewsCollection:
         result_news = []
         for news in newsJson['articles']:
                 temp = {}
-                temp['author'] = news.author
-                temp['title'] = news.title
-                temp['description'] = news.description
+                temp['author'] = news['author']
+                temp['title'] = news['title']
+                temp['description'] = news['description']
+                temp['feedback'] = randint(0,1)
                 result_news.append(temp)
 
         resp.media = result_news
