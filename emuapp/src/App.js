@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import News from './Components/news.js';
-import Navigation from './Components/navbar.js';
+import News from './Components/News.js';
+import Navigation from './Components/Navbar.js';
 
 class App extends Component {
 
