@@ -1,5 +1,9 @@
 import falcon
+import requests
+import models as m
+from random import randint
 from falcon.http_status import HTTPStatus
+
 
 class HandleCORS(object):
     def process_request(self, req, resp):
@@ -14,32 +18,36 @@ class NewsCollection:
 
     def on_get(self, req, resp):
         """Handles GET requests"""
-        news = [{
-                'subject':"Corona je vsade",
-                'Description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec elit elementum, cursus mauris sit amet, tempor sapien. Pellentesque lacinia a elit eu efficitur. Quisque at posuere ex. Praesent posuere enim id est venenatis cursus. Morbi scelerisque lacinia enim et blandit. Donec sed orci pharetra, posuere elit et, finibus dui. Pellentesque malesuada libero ac lectus sodales ullamcorper. Nullam tempus felis non ligula sodales, quis ornare justo luctus. Sed lorem ipsum, faucibus eget nunc non, tempor pretium purus. Donec in nulla est.",
-                'Author': "Sebi"
-        },
-        {
-                'subject':"V Bratislave sa stavia metro",
-                'Description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec elit elementum, cursus mauris sit amet, tempor sapien. Pellentesque lacinia a elit eu efficitur. Quisque at posuere ex. Praesent posuere enim id est venenatis cursus. Morbi scelerisque lacinia enim et blandit. Donec sed orci pharetra, posuere elit et, finibus dui. Pellentesque malesuada libero ac lectus sodales ullamcorper. Nullam tempus felis non ligula sodales, quis ornare justo luctus. Sed lorem ipsum, faucibus eget nunc non, tempor pretium purus. Donec in nulla est.",
-                'Author': "Martin"
-        },
-        {
-                'subject':"10 novych nakazenych ochorenim COVID-19",
-                'Description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec elit elementum, cursus mauris sit amet, tempor sapien. Pellentesque lacinia a elit eu efficitur. Quisque at posuere ex. Praesent posuere enim id est venenatis cursus. Morbi scelerisque lacinia enim et blandit. Donec sed orci pharetra, posuere elit et, finibus dui. Pellentesque malesuada libero ac lectus sodales ullamcorper. Nullam tempus felis non ligula sodales, quis ornare justo luctus. Sed lorem ipsum, faucibus eget nunc non, tempor pretium purus. Donec in nulla est."
-        },
-        {
-                'subject':"Corona!!!",
-                'Description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec elit elementum, cursus mauris sit amet, tempor sapien. Pellentesque lacinia a elit eu efficitur. Quisque at posuere ex. Praesent posuere enim id est venenatis cursus. Morbi scelerisque lacinia enim et blandit. Donec sed orci pharetra, posuere elit et, finibus dui. Pellentesque malesuada libero ac lectus sodales ullamcorper. Nullam tempus felis non ligula sodales, quis ornare justo luctus. Sed lorem ipsum, faucibus eget nunc non, tempor pretium purus. Donec in nulla est."
-        },
-        {
-                'subject':"Snad to bude dobre",
-                'Description': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec elit elementum, cursus mauris sit amet, tempor sapien. Pellentesque lacinia a elit eu efficitur. Quisque at posuere ex. Praesent posuere enim id est venenatis cursus. Morbi scelerisque lacinia enim et blandit. Donec sed orci pharetra, posuere elit et, finibus dui. Pellentesque malesuada libero ac lectus sodales ullamcorper. Nullam tempus felis non ligula sodales, quis ornare justo luctus. Sed lorem ipsum, faucibus eget nunc non, tempor pretium purus. Donec in nulla est.",
-                'Author': "Premier"
-        }]
+        url = ('http://newsapi.org/v2/top-headlines?'
+       'country=sk&'
+       'apiKey=937002ae68b342789cf3d3515c33a483')
+        response = requests.get(url)
+        news_json = response.json()
 
-        resp.media = news
+        result_news = []
+        for news in news_json['articles']:
+                temp = {}
+                temp['author'] = news['author']
+                temp['title'] = news['title']
+                temp['description'] = news['description']
+                temp['feedback'] = randint(0,1)
+                result_news.append(temp)
 
+        resp.media = result_news
+
+class UserCollection:
+
+    def on_get(self, req, resp):
+        """Handles GET requests"""
+        ses = m.Session()
+        users = ses.query(m.User)
+
+        result = []
+        for u in users:
+            r = {'name': u.name}
+            result.append(r)
+        resp.media = result
 
 api = falcon.API(middleware=[HandleCORS() ])
 api.add_route('/news', NewsCollection())
+api.add_route('/users', UserCollection())
