@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:5000/news')
+    fetch('/news')
         .then(res => res.json())
         .then(data => {
           this.setState({ news: data.data });
