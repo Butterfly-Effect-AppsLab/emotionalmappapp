@@ -41,3 +41,6 @@ def get_users():
             'name': u.name}
         result.append(r)
     return {'data': result}
+
+if __name__ == "__main__":
+    api.run()
