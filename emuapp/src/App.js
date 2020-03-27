@@ -10,10 +10,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://192.168.0.113:8000/news')
+    fetch('http://localhost:5000/news')
         .then(res => res.json())
         .then(data => {
-          this.setState({ news: data });
+          this.setState({ news: data.data });
         }).catch(resp => {
           console.error(resp);
       });
