@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-engine = create_engine('sqlite:///emu.db')
+engine = create_engine('sqlite:///database/emu.db')
 Session = sessionmaker(bind=engine)
 
 class User(Base):
