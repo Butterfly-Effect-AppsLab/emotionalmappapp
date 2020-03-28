@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import News from './Components/News.js';
-import Navigation from './Components/Navbar.js';
+import Navbar from './Components/Navbar.js';
 
 class App extends Component {
 
@@ -23,7 +23,7 @@ class App extends Component {
     console.log(this.state.news)
     return (
       <div>
-        <Navigation/>
+        <Navbar/>
         <News news = {this.state.news} />
       </div>
       )
