@@ -17,4 +17,6 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    uuid = Column(String, nullable=False)
+    sex = Column(String, nullable=False)
+    age_group_id = Column(Integer, nullable=False)
