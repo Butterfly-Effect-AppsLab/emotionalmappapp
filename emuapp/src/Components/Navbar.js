@@ -7,10 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Link from '@material-ui/core/Link';
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({
   root: {
     flexGrow: 1,
   },
@@ -59,5 +58,5 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }
