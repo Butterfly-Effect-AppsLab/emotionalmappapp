@@ -48,6 +48,7 @@ export default function Navbar() {
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
+              onBlur={handleClose}
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose} component="a" href="https://google.com">Profile</MenuItem>
