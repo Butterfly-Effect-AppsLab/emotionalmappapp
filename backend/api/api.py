@@ -1,7 +1,7 @@
 from flask import Flask, redirect
 from flask_cors import CORS
 import requests
-import models as m
+from api import models as m
 from random import randint
 
 api = Flask(__name__)
