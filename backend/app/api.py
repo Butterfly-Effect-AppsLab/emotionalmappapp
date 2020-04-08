@@ -12,7 +12,7 @@ CORS(api)
 
 @api.route('/')
 def get_index():
-    return  render_template("index.html", template_folder='../../../../app/templates')
+    return  render_template("index.html")
 
 @api.route('/news')
 def get_news():
