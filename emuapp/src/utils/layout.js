@@ -5,8 +5,8 @@ import Footer from '../Components/Footer.js';
 
 const useStyles = makeStyles({
     root: {
-      height: '100vh',
-      // display: 'block',
+      height: '100%',
+      display: 'block',
     }
   });
 
@@ -14,7 +14,7 @@ const Layout = ({children, history}) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div id='layout.js' className={classes.root}>
             <Navbar history={history}/>
             {children}
             <Footer history={history}/>

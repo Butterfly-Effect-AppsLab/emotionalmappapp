@@ -10,7 +10,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id='App.js'>
         <Router history={history}>
           <Layout history={history}>
             <Routes/>
