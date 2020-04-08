@@ -10,8 +10,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 const useStyles = makeStyles(({
-  root: {
+  navBar: {
     flexGrow: 1,
+    // minHeight: '10%',
   },
   menuButton: {
     marginLeft: 'auto',
@@ -19,6 +20,9 @@ const useStyles = makeStyles(({
   title: {
     flexGrow: 1,
   },
+  root : {
+    // height: '10%',
+  }
 }));
 
 export default function Navbar() {
@@ -36,7 +40,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed" className={classes.navBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             News
