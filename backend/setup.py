@@ -2,7 +2,7 @@ import setuptools
 
 
 setuptools.setup(
-    name="api-backend", # Replace with your own username
+    name="app-backend", # Replace with your own username
     version="0.0.1",
     author="Sebastian Vanik",
     author_email="sebastian.vanik@gmail.com",

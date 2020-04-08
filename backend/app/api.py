@@ -1,15 +1,18 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, render_template
 from flask_cors import CORS
 import requests
-from api import models as m
+from app import models as m
 from random import randint
+import os
 
-api = Flask(__name__)
+api = Flask("__main__")
+api.debug = True
+api.root_path = os.path.dirname(os.path.abspath(__file__))
 CORS(api)
 
 @api.route('/')
 def get_index():
-    return redirect("/news",code='302')
+    return  render_template("index.html", template_folder='../../../../app/templates')
 
 @api.route('/news')
 def get_news():
