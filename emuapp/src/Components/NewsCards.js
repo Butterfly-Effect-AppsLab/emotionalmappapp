@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 });
 
-export default function NewsCards(props) {
+const NewsCards = (props) => {
     const {news} = props
     const classes = useStyles();
 
@@ -47,8 +47,9 @@ export default function NewsCards(props) {
     return (
         <>
             {news.map((news, i) => renderCard(news, i))}
-            {/* {console.log(news)} */}
         </>
 
     );
 }
+
+export default NewsCards;
