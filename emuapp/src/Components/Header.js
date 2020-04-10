@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,19 +8,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-
-const headerTheme = createMuiTheme({
-  overrides: {
-    MuiToolbar: {
-      regular: {
-        '@media (min-width: 600px)': {
-          minHeight: 56,
-        }}}}
-});
-
 const useStyles = makeStyles(({
   appBar: {
-    flexGrow: 1,
     minHeight: 56,
   },
   menuButton: {
@@ -29,7 +18,6 @@ const useStyles = makeStyles(({
   title: {
     flexGrow: 1,
   },
-
 }));
 
 const Header = () => {
@@ -47,30 +35,30 @@ const Header = () => {
 
   return (
     <div className={classes.appBar}>
-      <ThemeProvider theme={headerTheme}>
-        <AppBar position='fixed' className={classes.appBar}>
-          <Toolbar>
-            <Typography variant='h6' className={classes.title}>
-              News
+      <AppBar position='fixed'>
+        <Toolbar
+          classes={{ regular: classes.appBar }}
+        >
+          <Typography variant='h6' className={classes.title}>
+            News
           </Typography>
-            <IconButton onClick={handleClick} edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
-              <MenuIcon />
-              <Menu
-                id='simple-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onBlur={handleClose}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose} component='a' href='https://google.com'>Profile</MenuItem>
-                <MenuItem onClick={handleClose} component='a' href='https://messenger.com'>My account</MenuItem>
-                <MenuItem onClick={handleClose} component='a' href='https://bing.com'>Logout</MenuItem>
-              </Menu>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+          <IconButton onClick={handleClick} edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
+            <MenuIcon />
+            <Menu
+              id='simple-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onBlur={handleClose}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose} component='a' href='https://google.com'>Profile</MenuItem>
+              <MenuItem onClick={handleClose} component='a' href='https://messenger.com'>My account</MenuItem>
+              <MenuItem onClick={handleClose} component='a' href='https://bing.com'>Logout</MenuItem>
+            </Menu>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
     </div>
   )
 };
