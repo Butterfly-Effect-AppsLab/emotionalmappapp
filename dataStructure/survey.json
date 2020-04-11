@@ -1,0 +1,33 @@
+{
+  "data": {
+    "survey": {
+      "title": "Survey Title",
+      "estimatedTime": 10, //in minutes
+      "responsesCount": 5000,
+      "topics": ["security", "transport"],
+      "targetGroup": {
+        "ageGroup": ["17-20", "21-32"],
+        "interests": ["security", "transport"],
+        "residenceRegion": ["Petrzalka", "Raca"],
+        "workRegion": ["Petrzalka", "Raca"]
+      },
+      "questions": [
+        {
+          "title": "Ako sa mas?",
+          "fieldType": "Checkbox",
+          "required": false,
+          "field": {
+              "options": ["Dobre", "Zle", "Okej"],
+              "otherOption": false,
+              "optionCountMax": 2,
+              "optionCountMin": 2
+         },
+         "subQuestion":{
+            "predicateValue": ["Dobre", "Zle", "Okej"], //vtedy zobraz subquestion
+            "question": {} //rovnaky object ako parent
+        }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<QuestionComponent>
+    Switch(data.type,"Text",<TextQ/>,"Checkbox",<CheckboxQ/>)
+    if(subquestion && subquestion.predicate = ){
+        <QuestionComponent />
+    }
+</QuestionComponent>
