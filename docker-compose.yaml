@@ -1,5 +1,13 @@
 version: '3'
 services:
+    db:
+        image: postgres:alpine
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: emu
+        volumes:
+            - .db-data:/var/lib/postgresql/POSTGRES_DATABASE
     app:
         build: .
         ports:
@@ -8,13 +16,5 @@ services:
             - ./backend:/opt/app/backend
         depends_on:
             - db
-    db:
-        image: postgres:12
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-            POSTGRES_DATABASE: emu
-        volumes:
-            - db-data:/var/lib/postgresql/POSTGRES_DATABASE
 volumes:
     db-data:

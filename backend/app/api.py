@@ -6,7 +6,7 @@ from random import randint
 import os
 
 api = Flask("__main__")
-api.debug = True
+#api.debug = True
 api.root_path = os.path.dirname(os.path.abspath(__file__))
 CORS(api)
 
