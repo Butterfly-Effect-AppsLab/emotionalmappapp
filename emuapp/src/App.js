@@ -8,8 +8,7 @@ import Layout from './utils/layout';
 
 const useStyles = makeStyles({
   baseDiv: {
-    height: '100%',
-    position: 'absolute',
+    height: '100%'
   }
 });
 
