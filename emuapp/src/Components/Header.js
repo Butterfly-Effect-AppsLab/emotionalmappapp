@@ -8,11 +8,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-
 const useStyles = makeStyles(({
-  navBar: {
-    flexGrow: 1,
-    // minHeight: '10%',
+  appBar: {
+    minHeight: 56,
   },
   menuButton: {
     marginLeft: 'auto',
@@ -20,12 +18,9 @@ const useStyles = makeStyles(({
   title: {
     flexGrow: 1,
   },
-  root : {
-    // height: '10%',
-  }
 }));
 
-export default function Navbar() {
+const Header = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -34,34 +29,38 @@ export default function Navbar() {
   };
 
   const handleClose = () => {
-    console.log("som tu");
+    console.log('som tu');
     setAnchorEl(null);
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.navBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+    <div className={classes.appBar}>
+      <AppBar position='fixed'>
+        <Toolbar
+          classes={{ regular: classes.appBar }}
+        >
+          <Typography variant='h6' className={classes.title}>
             News
           </Typography>
-          <IconButton onClick={handleClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton onClick={handleClick} edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
             <MenuIcon />
             <Menu
-              id="simple-menu"
+              id='simple-menu'
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
               onBlur={handleClose}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} component="a" href="https://google.com">Profile</MenuItem>
-              <MenuItem onClick={handleClose} component="a" href="https://messenger.com">My account</MenuItem>
-              <MenuItem onClick={handleClose} component="a" href="https://bing.com">Logout</MenuItem>
+              <MenuItem onClick={handleClose} component='a' href='https://google.com'>Profile</MenuItem>
+              <MenuItem onClick={handleClose} component='a' href='https://messenger.com'>My account</MenuItem>
+              <MenuItem onClick={handleClose} component='a' href='https://bing.com'>Logout</MenuItem>
             </Menu>
           </IconButton>
         </Toolbar>
       </AppBar>
     </div>
   )
-}
+};
+
+export default Header;

@@ -12,19 +12,19 @@ const useStyles = makeStyles({
     bottom: 0,
     width: '100%',
   },
-  root: {
-    height: '10%',
+  footerDiv: {
+    height: 56,
   }
 });
 
-export default function Footer() {
+const Footer = () => {
   const classes = useStyles();
   const [isPressed, setIsPressed] = React.useState(0);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.footerDiv}>
     <BottomNavigation
-      isPressed={isPressed}
+      value={isPressed}
       onChange={(newValue) => {
         setIsPressed(newValue);
       }}
@@ -38,3 +38,5 @@ export default function Footer() {
      </div>
   );
 }
+
+export default Footer;
