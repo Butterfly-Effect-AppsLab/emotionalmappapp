@@ -1,23 +1,12 @@
 # Startup project
 
-## Backend init
-    cd backend
-    python -m venv venv
-    Linux source venv/bin/activate / Windows venv\Scripts\activate
-    pip install -r requirements.txt
-    
 ## Frontend init
     cd emuapp
     npm install
+    npm run watch
 
 ## Start Project
-    venv\Scripts\activate
-    cd emuapp
-    npm start
-
-    Treba otvorit novy terminal
-    backend\venv\Scripts\activate
-    cd emuapp
-    npm run start-api
+    maid docker:up
+    maid docker:migrate
 
 ### Enjoy
