@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
     db:
         image: postgres:alpine
@@ -7,9 +7,9 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_DB: emu
         volumes:
-            - .db-data:/var/lib/postgresql/POSTGRES_DATABASE
+            - .db-data:/var/lib/po%stgresql/POSTGRES_DATABASE
     app:
-        build: .
+        build: ./
         ports:
             - "5000:5000"
         volumes:

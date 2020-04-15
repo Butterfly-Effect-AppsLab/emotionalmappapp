@@ -9,5 +9,5 @@ EXPOSE 5000
 ENV PYTHONPATH=/opt/app/backend
 
 WORKDIR /opt/app/backend
-RUN flask run --host=0.0.0.0
+CMD ["flask","run","--host=0.0.0.0"]
 
