@@ -1,0 +1,19 @@
+{
+    "data": {
+        "news": [
+            {
+                "id": "1",
+                "title": "Bratislava je super",
+                "description": "test",
+                "author": "Jozko",
+                "link": "google.com",
+                "interests": [
+                    {
+                        "name": "security"
+                    }
+                ],
+                "isLiked": true
+            }
+        ]
+    }
+}

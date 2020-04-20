@@ -1,0 +1,14 @@
+{
+    "data": {
+        "uuid": "jdgidhbguodehgebfujsfhnweiofnoufhn",
+        "ageGroup": "18-25",
+        "workLocation":  "Centrum",
+        "residenceLocation": "Raca",
+        "interests": [
+            {
+                "id": "1",
+                "name": "security"
+            }
+        ]
+    }
+}
