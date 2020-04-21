@@ -16,5 +16,12 @@ services:
             - ./backend:/opt/app/backend
         depends_on:
             - db
+    frontend:
+        image: node:13.13.0-stretch
+        volumes:
+            - ./emuapp:/opt/app/emuapp
+            - ./backend:/opt/app/backend
+        working_dir: /opt/app/emuapp
+        command: /bin/sh -c "npm install && npm run watch"
 volumes:
     db-data:
