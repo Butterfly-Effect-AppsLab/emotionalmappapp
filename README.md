@@ -6,6 +6,9 @@
     npm run watch
 
 ## Start Project
-    maid docker:up
-    maid docker:migrate
+    docker-compose build
+    docker-compose up
+
+## Database Migration
+    docker exec -it emotionalmappapp_app_1 alembic upgrade head
 ### Enjoy

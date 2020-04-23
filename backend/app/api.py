@@ -2,6 +2,7 @@ from flask import Flask, redirect, render_template
 from flask_cors import CORS
 import requests
 from app import models as m
+from app import schemas
 from random import randint
 import os
 
@@ -21,16 +22,9 @@ def get_news():
        'apiKey=937002ae68b342789cf3d3515c33a483')
     response = requests.get(url)
     news_json = response.json()
-
-    result_news = []
-    for news in news_json['articles']:
-            temp = {}
-            temp['author'] = news['author']
-            temp['title'] = news['title']
-            temp['description'] = news['description']
-            temp['feedback'] = randint(0,1)
-            result_news.append(temp)
-
+    news_schema = schemas.NewsScheme()
+    result = news_schema.load(news_json['articles'],many=True)
+    result_news = news_schema.dump(result,many=True)
     return {'data': result_news}
 
 @api.route('/users')
@@ -44,6 +38,22 @@ def get_users():
             'name': u.name}
         result.append(r)
     return {'data': result}
+
+@api.route('/agegroups')
+def get_age_groups():
+    groups = { 'ageGroups': ['18-25','26-35','36-45','46-55','55-70','71+'] }
+    return {'data': groups}
+
+@api.route('/interests')
+def get_interests():
+    interests = { 'interests': ['Bezpecnost','Zelen','Zdravie','Cestovanie','Zabava','Oddych'] }
+    return {'data': interests}
+
+@api.route('/cityparts')
+def get_cityparts():
+    parts = { 'cityParts': ['Centrum','Raca','Dubravka','Petrzalka','Karlovka','Nove Mesto'] }
+    return {'data': parts}
+
 
 if __name__ == "__main__":
     api.run(host='0.0.0.0')
