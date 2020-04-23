@@ -5,7 +5,7 @@ const NewsPage = () => {
     const [news, setNews] = React.useState([]);
 
     useEffect(() => {
-        fetch('/news')
+        fetch('/api/news')
             .then(res => res.json())
             .then(data => {
                 setNews(data.data);
