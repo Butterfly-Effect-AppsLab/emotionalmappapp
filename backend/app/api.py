@@ -15,7 +15,7 @@ CORS(api)
 def get_index():
     return  render_template("index.html")
 
-@api.route('/news')
+@api.route('/api/news')
 def get_news():
     url = ('http://newsapi.org/v2/top-headlines?'
        'country=sk&'
@@ -23,11 +23,13 @@ def get_news():
     response = requests.get(url)
     news_json = response.json()
     news_schema = schemas.NewsScheme()
+    
     result = news_schema.load(news_json['articles'],many=True)
     result_news = news_schema.dump(result,many=True)
+    
     return {'data': result_news}
 
-@api.route('/users')
+@api.route('/api/users')
 def get_users():
     ses = m.Session()
     users = ses.query(m.User)
@@ -39,17 +41,17 @@ def get_users():
         result.append(r)
     return {'data': result}
 
-@api.route('/agegroups')
+@api.route('/api/agegroups')
 def get_age_groups():
     groups = { 'ageGroups': ['18-25','26-35','36-45','46-55','55-70','71+'] }
     return {'data': groups}
 
-@api.route('/interests')
+@api.route('/api/interests')
 def get_interests():
     interests = { 'interests': ['Bezpecnost','Zelen','Zdravie','Cestovanie','Zabava','Oddych'] }
     return {'data': interests}
 
-@api.route('/cityparts')
+@api.route('/api/cityparts')
 def get_cityparts():
     parts = { 'cityParts': ['Centrum','Raca','Dubravka','Petrzalka','Karlovka','Nove Mesto'] }
     return {'data': parts}
