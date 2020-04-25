@@ -9,5 +9,6 @@ EXPOSE 5000
 ENV PYTHONPATH=/opt/app/backend
 
 WORKDIR /opt/app/backend
+RUN alembic upgrade head
 CMD ["flask","run","--host=0.0.0.0"]
 

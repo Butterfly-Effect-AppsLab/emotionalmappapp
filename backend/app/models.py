@@ -27,3 +27,9 @@ class Interests(Base):
 
     id = Column(Integer, primary_key=True)
     interest = Column(String, nullable=False)
+    
+class CityParts(Base):
+    __tablename__ = 'city_parts'
+    
+    id = Column(Integer, primary_key=True)
+    cityPart = Column(String, nullable=False)

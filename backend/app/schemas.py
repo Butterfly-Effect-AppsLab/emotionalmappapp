@@ -25,3 +25,11 @@ class NewsScheme(Schema):
 
     class Meta:
         unknown = EXCLUDE
+        
+class InterestsSchema(Schema):
+    id = fields.Integer()
+    interest = fields.Str()
+    
+class CityPartsSchema(Schema):
+    id = fields.Integer()
+    cityPart = fields.Str()

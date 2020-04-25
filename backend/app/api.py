@@ -4,10 +4,11 @@ import requests
 from app import models as m
 from app import schemas
 from random import randint
+from datetime import datetime
 import os
 
 api = Flask("__main__")
-#api.debug = True
+api.debug = True
 api.root_path = os.path.dirname(os.path.abspath(__file__))
 CORS(api)
 
@@ -42,20 +43,31 @@ def get_users():
         result.append(r)
     return {'data': result}
 
-@api.route('/api/agegroups')
+@api.route('/api/age')
 def get_age_groups():
-    groups = { 'ageGroups': ['18-25','26-35','36-45','46-55','55-70','71+'] }
-    return {'data': groups}
+    year = datetime.today().year
+    r = range(year-150,year)
+    years = { 'year': list(reversed([*r])) }
+    return {'data': years}
 
 @api.route('/api/interests')
 def get_interests():
-    interests = { 'interests': ['Bezpecnost','Zelen','Zdravie','Cestovanie','Zabava','Oddych'] }
-    return {'data': interests}
+    ses = m.Session()
+    interests = ses.query(m.Interests)
+
+    interests_schema = schemas.InterestsSchema()
+    result = interests_schema.dump(interests, many=True)
+    
+    return {'data': result}
 
 @api.route('/api/cityparts')
 def get_cityparts():
-    parts = { 'cityParts': ['Centrum','Raca','Dubravka','Petrzalka','Karlovka','Nove Mesto'] }
-    return {'data': parts}
+    ses = m.Session()
+    parts = ses.query(m.CityParts)
+
+    cityParts_schema = schemas.CityPartsSchema()
+    result = cityParts_schema.dump(parts, many=True)
+    return {'data': result}
 
 
 if __name__ == "__main__":
