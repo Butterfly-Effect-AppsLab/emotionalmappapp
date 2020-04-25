@@ -11,9 +11,10 @@ api = Flask("__main__")
 api.root_path = os.path.dirname(os.path.abspath(__file__))
 CORS(api)
 
-@api.route('/')
-def get_index():
-    return  render_template("index.html")
+@api.route('/', defaults={'path': ''})
+@api.route('/<path:path>')
+def get_index(path):
+    return  render_template("index.html", token=path)
 
 @api.route('/api/news')
 def get_news():
