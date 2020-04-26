@@ -1,1 +1,0 @@
-// zmen nazov, samotny kod reduceru
