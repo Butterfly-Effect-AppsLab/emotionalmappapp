@@ -9,6 +9,12 @@
     docker-compose build
     docker-compose up
 
-## Database Migration
+## Migrate db
     docker exec -it emotionalmappapp_app_1 alembic upgrade head
+## Seed db
+    docker exec -it emotionalmappapp_app_1 python3 app/seed.py
+## Revision db
+    docker exec -it emotionalmappapp_app_1 alembic revision --autogenerate -m ""
+## Clear db
+    docker exec -it emotionalmappapp_app_1 python3 app/clearDB.py
 ### Enjoy

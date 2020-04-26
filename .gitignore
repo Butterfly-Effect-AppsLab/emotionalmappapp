@@ -12,6 +12,9 @@ backend/app/templates/index.html
 #build
 react
 
+#db
+.db-data
+
 # testing
 /coverage
 
