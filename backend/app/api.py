@@ -26,10 +26,10 @@ def get_news():
     response = requests.get(url)
     news_json = response.json()
     news_schema = schemas.NewsScheme()
-    
+
     result = news_schema.load(news_json['articles'],many=True)
     result_news = news_schema.dump(result,many=True)
-    
+
     return {'data': result_news}
 
 @api.route('/api/users')
@@ -58,7 +58,7 @@ def get_interests():
 
     interests_schema = schemas.InterestsSchema()
     result = interests_schema.dump(interests, many=True)
-    
+
     return {'data': result}
 
 @api.route('/api/cityparts')
@@ -73,18 +73,17 @@ def get_cityparts():
 @api.route('/api/regInfo')
 def get_regInfo():
     ses = m.Session()
-    streets = ses.query(m.Street)
+    streets = ses.query(m.Street).order_by(m.Street.street)
 
     street_schema = schemas.StreetsSchema()
     streets_result = street_schema.dump(streets, many=True)
-    
+
     year = datetime.today().year
     r = range(year-150,year)
     years = { 'year': list(reversed([*r])) }
     print(streets_result)
     data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
     return data
-    
 
 if __name__ == "__main__":
     api.run(host='0.0.0.0')
