@@ -10,6 +10,7 @@ import os
 api = Flask("__main__")
 api.debug = True
 api.root_path = os.path.dirname(os.path.abspath(__file__))
+api.config['JSON_AS_ASCII'] = False
 CORS(api)
 
 @api.route('/', defaults={'path': ''})
@@ -72,15 +73,16 @@ def get_cityparts():
 @api.route('/api/regInfo')
 def get_regInfo():
     ses = m.Session()
-    parts = ses.query(m.Street)
+    streets = ses.query(m.Street)
 
     street_schema = schemas.StreetsSchema()
-    city_parts = street_schema.dump(parts, many=True)
+    streets_result = street_schema.dump(streets, many=True)
     
     year = datetime.today().year
     r = range(year-150,year)
     years = { 'year': list(reversed([*r])) }
-    data = {'data': {"streets": city_parts, "years": years, "sexes": ["Female", "Male"]}}
+    print(streets_result)
+    data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
     return data
     
 

@@ -1,5 +1,9 @@
 from alembic import op
+import json
+import os
 from app import models as m
+
+cur_path = os.path.dirname(__file__)
 
 def seed_interests():
     ses = m.Session()
@@ -8,30 +12,34 @@ def seed_interests():
         ses.commit()
     except:
         ses.rollback()
-    interests = [m.Interests(id = 1, interest = 'Bezpecnost'),
-                 m.Interests(id = 2, interest = 'Zelen'),
-                 m.Interests(id = 3, interest = 'Transport'),
-                 m.Interests(id = 4, interest = 'Social')]
+    interests = [m.Interests(id=1, interest='Bezpecnost'),
+                 m.Interests(id=2, interest='Zelen'),
+                 m.Interests(id=3, interest='Transport'),
+                 m.Interests(id=4, interest='Social')]
     ses.add_all(interests)
     ses.commit()
     ses.close()
-    
-def seed_cityParts():
+
+
+def seed_streets():
     ses = m.Session()
     try:
-        ses.query(m.CityParts).delete()
+        ses.query(m.Street).delete()
         ses.commit()
     except:
         ses.rollback()
-    cityParts = [m.Street(id = 1, street = 'Raca'),
-                 m.Street(id = 2, street = 'Petrzalka'),
-                 m.Street(id = 3, street = 'Centrum'),
-                 m.Street(id = 4, street = 'Dubravka')]
-    ses.add_all(cityParts)
+    streets = []
+    with open('/opt/app/backend/importdata/streets.jsonc') as json_file:
+        data = json.load(json_file)
+        for p in data['data']:
+            for s in p['sub']:
+                for st in s['streets']:
+                    streets.append(m.Street(street = st, sub_part = s['sub-part'], part = p['part']))
+    ses.add_all(streets)
     ses.commit()
     ses.close()
 
+
 if __name__ == '__main__':
     seed_interests()
-    seed_cityParts()
-    
+    seed_streets()
