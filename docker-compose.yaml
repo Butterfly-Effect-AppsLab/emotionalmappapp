@@ -7,7 +7,7 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_DB: emu
         volumes:
-            - .db-data:/var/lib/postgresql/emu
+            - .db-data:/var/lib/postgresql/data
     app:
         build: ./
         ports:
@@ -24,4 +24,4 @@ services:
         working_dir: /opt/app/emuapp
         command: /bin/sh -c "npm install && npm run watch"
 volumes:
-    db-data:
+    .db-data:
