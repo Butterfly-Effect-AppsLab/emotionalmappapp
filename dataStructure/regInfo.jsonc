@@ -1,0 +1,16 @@
+{
+    "data": {
+        "years": [
+            2019,
+            2018
+        ],
+        "streets": [
+            "Racianska",
+            "Sturova"
+        ],
+        "sexes": [
+            "Female",
+            "Male"
+        ]
+    }
+}

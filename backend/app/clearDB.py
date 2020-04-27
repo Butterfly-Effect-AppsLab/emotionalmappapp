@@ -10,7 +10,7 @@ except:
     ses.rollback()
     
 try:
-    ses.query(m.CityParts).delete()
+    ses.query(m.Street).delete()
     ses.commit()
 except:
     ses.rollback()

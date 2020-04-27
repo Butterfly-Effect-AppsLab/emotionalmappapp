@@ -30,6 +30,5 @@ class InterestsSchema(Schema):
     id = fields.Integer()
     interest = fields.Str()
     
-class CityPartsSchema(Schema):
-    id = fields.Integer()
-    cityPart = fields.Str()
+class StreetsSchema(Schema):
+    street = fields.Str()

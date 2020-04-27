@@ -23,10 +23,10 @@ def seed_cityParts():
         ses.commit()
     except:
         ses.rollback()
-    cityParts = [m.CityParts(id = 1, cityPart = 'Raca'),
-                 m.CityParts(id = 2, cityPart = 'Petrzalka'),
-                 m.CityParts(id = 3, cityPart = 'Centrum'),
-                 m.CityParts(id = 4, cityPart = 'Dubravka')]
+    cityParts = [m.Street(id = 1, street = 'Raca'),
+                 m.Street(id = 2, street = 'Petrzalka'),
+                 m.Street(id = 3, street = 'Centrum'),
+                 m.Street(id = 4, street = 'Dubravka')]
     ses.add_all(cityParts)
     ses.commit()
     ses.close()

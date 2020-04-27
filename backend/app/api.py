@@ -63,12 +63,26 @@ def get_interests():
 @api.route('/api/cityparts')
 def get_cityparts():
     ses = m.Session()
-    parts = ses.query(m.CityParts)
+    parts = ses.query(m.Street)
 
-    cityParts_schema = schemas.CityPartsSchema()
-    result = cityParts_schema.dump(parts, many=True)
+    street_schema = schemas.StreetsSchema()
+    result = street_schema.dump(parts, many=True)
     return {'data': result}
 
+@api.route('/api/regInfo')
+def get_regInfo():
+    ses = m.Session()
+    parts = ses.query(m.Street)
+
+    street_schema = schemas.StreetsSchema()
+    city_parts = street_schema.dump(parts, many=True)
+    
+    year = datetime.today().year
+    r = range(year-150,year)
+    years = { 'year': list(reversed([*r])) }
+    data = {'data': {"streets": city_parts, "years": years, "sexes": ["Female", "Male"]}}
+    return data
+    
 
 if __name__ == "__main__":
     api.run(host='0.0.0.0')
