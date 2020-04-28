@@ -19,16 +19,17 @@ class NewsScheme(Schema):
     description = fields.Str()
     author = Author(attribute="author",allow_none = True)
     feedback = fields.Method("show_feedback")
-    
+
     def show_feedback(self, obj):
         return randint(0,1)
 
     class Meta:
         unknown = EXCLUDE
-        
+
 class InterestsSchema(Schema):
     id = fields.Integer()
     interest = fields.Str()
-    
+
 class StreetsSchema(Schema):
+    id = fields.Integer()
     street = fields.Str()

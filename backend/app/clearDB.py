@@ -8,7 +8,7 @@ try:
     ses.commit()
 except:
     ses.rollback()
-    
+
 try:
     ses.query(m.Street).delete()
     ses.commit()
