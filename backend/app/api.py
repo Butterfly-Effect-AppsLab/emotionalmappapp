@@ -80,7 +80,7 @@ def get_regInfo():
 
     year = datetime.today().year
     r = range(year-150,year)
-    years = { 'year': list(reversed([*r])) }
+    years = list(reversed([*r]))
     print(streets_result)
     data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
     return data
