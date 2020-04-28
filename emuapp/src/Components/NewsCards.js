@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 
 const NewsCards = (props) => {
-    const {news} = props
+    const { news } = props
     const classes = useStyles();
 
     const renderCard = (news, i) => {

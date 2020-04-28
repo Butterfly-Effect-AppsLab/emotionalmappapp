@@ -4,7 +4,6 @@ import { getYears } from '../redux/selectors';
 
 function TestApp(props) {
     const { years } = props.years;
-    console.log('poradie', years);
 
 
     return (
@@ -18,7 +17,6 @@ function TestApp(props) {
 
 const mapStateToProps = (state) => {
     const years = getYears(state);
-    console.log('mapStateToProps', years);
     return { years };
 };
 

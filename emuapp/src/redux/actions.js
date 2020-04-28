@@ -1,26 +1,25 @@
 import {
-    FETCH_YEARS_SUCCESS,
-    FETCH_YEARS_FAIL,
+    FETCH_REGINFO_SUCCESS,
+    FETCH_REGINFO_FAIL,
 } from './actionTypes';
 
-export const fetchYears = () => async dispatch => {
+export const fetchRegInfo = () => async dispatch => {
     try {
-        const response = await fetch('http://localhost:5000/api/age'); //Zmenit na 'api/years' po zapracovani poziadavky na BE
+        const response = await fetch('http://localhost:5000/api/regInfo');
         const json = await response.json();
-        // console.log(json);
-        dispatch(fetchYearsSuccess(json));
-        // console.log(fetchYearsSuccess(json));
+        dispatch(fetchRegInfoSuccess(json));
     } catch (err) {
         console.log(err);
-        dispatch(fetchYearsFail());
+        dispatch(fetchRegInfoFail());
+
     }
 };
 
-export const fetchYearsSuccess = (json) => ({
-        type: FETCH_YEARS_SUCCESS,
-        payload: json,
-    });
+export const fetchRegInfoSuccess = (json) => ({
+    type: FETCH_REGINFO_SUCCESS,
+    payload: json,
+});
 
-export const fetchYearsFail = () => ({
-    type: FETCH_YEARS_FAIL,
+export const fetchRegInfoFail = () => ({
+    type: FETCH_REGINFO_FAIL,
 });
