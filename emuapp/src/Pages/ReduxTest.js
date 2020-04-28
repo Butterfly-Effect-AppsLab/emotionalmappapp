@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TestApp from '../Components/TestApp';
-import { fetchYears } from '../redux/actions';
+import { fetchRegInfo } from '../redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -14,7 +14,7 @@ function ReduxTest(props) {
       <button
                 onClick={() => {
                     console.log('load from BE');
-                    props.fetchYears();
+                    props.fetchRegInfo();
                 }}
             >
                 LOAD FROM BE
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchYears: bindActionCreators(fetchYears, dispatch),
+  fetchRegInfo: bindActionCreators(fetchRegInfo, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxTest);

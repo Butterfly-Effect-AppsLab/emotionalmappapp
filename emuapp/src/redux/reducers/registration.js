@@ -1,24 +1,27 @@
 import {
-    FETCH_YEARS_SUCCESS,
-    FETCH_YEARS_FAIL,
+    FETCH_REGINFO_SUCCESS,
+    FETCH_REGINFO_FAIL,
 } from "../actionTypes";
 
 const initialState = {
+    sexes: [],
+    streets: [],
     years: [],
-    // byIds: {},
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case FETCH_YEARS_SUCCESS: {
+        case FETCH_REGINFO_SUCCESS: {
             const { data } = action.payload;
             return {
                 ...state,
-                years: [...data.year], //Zmenit na 'years' po zapracovani poziadavky na BE
-              };
+                sexes: [...data.sexes],
+                streets: [...data.streets],
+                years: [...data.years],
+            };
         }
 
-        case FETCH_YEARS_FAIL:
+        case FETCH_REGINFO_FAIL:
             return state;
 
         default:

@@ -29,7 +29,6 @@ const Header = () => {
   };
 
   const handleClose = () => {
-    console.log('som tu');
     setAnchorEl(null);
   };
 
