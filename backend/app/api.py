@@ -84,5 +84,10 @@ def get_regInfo():
     data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
     return data
 
+@api.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(api.root_path, 'static'),
+                          'favicon.ico',mimetype='image/vnd.microsoft.icon')
+
 if __name__ == "__main__":
     api.run(host='0.0.0.0')
