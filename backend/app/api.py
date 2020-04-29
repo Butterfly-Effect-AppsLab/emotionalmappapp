@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, send_from_directory
 from flask_cors import CORS
 import requests
 from app import models as m

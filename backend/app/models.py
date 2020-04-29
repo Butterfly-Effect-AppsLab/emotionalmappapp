@@ -27,10 +27,10 @@ class Interests(Base):
 
     id = Column(Integer, primary_key=True)
     interest = Column(String, nullable=False)
-    
+
 class Street(Base):
     __tablename__ = 'streets'
-    
+
     id = Column(Integer, primary_key=True)
     part = Column(String)
     sub_part = Column(String)
