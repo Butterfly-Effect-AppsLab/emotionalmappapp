@@ -4,9 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { connect } from 'react-redux';
-import { getYears } from '../redux/selectors';
-import { getSexes } from '../redux/selectors';
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dropdown = (props) => {
-    const { type, years, sexes, streets } = props;
-    console.log('blablabla', years)
+    const { type } = props;
     const classes = useStyles();
     const [fieldData, setFieldData] = React.useState('');
 
@@ -40,16 +37,6 @@ const Dropdown = (props) => {
             <MenuItem value={index}>{data}</MenuItem>
         )
     };
-
-    const fieldType = () => {
-    switch (type) {
-        case 'years':
-            return years;
-        case 'sexes':
-            return sexes;
-        case 'streets':
-            return streets;
-    }};
 
     return (
         <div>
@@ -74,11 +61,11 @@ const Dropdown = (props) => {
                         },
                         classes: { paper: classes.menuList }
                     }}
-                    // classes={{ root: classes.inputSize }}
+                    classes={{ root: classes.inputSize }}
                 >
 
                     {
-                        fieldType() ? fieldType().map((data, index) => createMenuItem(data, index)) : "Loading..."
+                        type ? type.map((data, index) => createMenuItem(data, index)) : "Loading..."
                     }
 
                 </Select>
@@ -87,12 +74,7 @@ const Dropdown = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    const years = getYears(state);
-    const sexes = getSexes(state);
-    return { years, sexes };
-};
 
-const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
+
+export default (Dropdown);
