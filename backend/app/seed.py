@@ -12,10 +12,10 @@ def seed_interests():
         ses.commit()
     except:
         ses.rollback()
-    interests = [m.Interests(id=1, interest='Bezpecnost'),
-                 m.Interests(id=2, interest='Zelen'),
-                 m.Interests(id=3, interest='Transport'),
-                 m.Interests(id=4, interest='Social')]
+    interests = [m.Interests(interest='Bezpecnost'),
+                 m.Interests(interest='Zelen'),
+                 m.Interests(interest='Transport'),
+                 m.Interests(interest='Social')]
     ses.add_all(interests)
     ses.commit()
     ses.close()
