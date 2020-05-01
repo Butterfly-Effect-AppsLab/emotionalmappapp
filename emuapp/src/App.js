@@ -1,29 +1,46 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import './App.css';
 import history from './utils/history';
 import Routes from './utils/routes';
 import Layout from './utils/layout';
+import { RED } from './utils/colours';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: RED
+    }
+  },
+  typography: {
+      fontFamily: "\"Roboto\", sans-serif",
+    }
+  });
+
 
 const useStyles = makeStyles({
   baseDiv: {
-    height: '100%'
-  }
+    height: '100vh',
+  },
+
 });
 
 const App = () => {
   const classes = useStyles();
 
-    return (
-      <div id='App.js' className={classes.baseDiv}>
+  return (
+    <div id='App.js' className={classes.baseDiv}>
+      <MuiThemeProvider theme={theme}>
         <Router history={history}>
           <Layout history={history}>
-            <Routes/>
+            <Routes />
           </Layout>
         </Router>
-      </div>
-    )
+      </MuiThemeProvider>
+    </div>
+  )
 };
 
 export default App;
