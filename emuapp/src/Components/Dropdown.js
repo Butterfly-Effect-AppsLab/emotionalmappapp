@@ -1,15 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withTheme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { WHITE } from '../utils/colours'
 
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
+        marginLeft: 0,
         minWidth: 120,
+        // backgroundColor: WHITE,
     },
     menuList: {
         maxHeight: 150,
@@ -22,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     // }
 
 }));
+
 
 const Dropdown = (props) => {
     const { type } = props;
