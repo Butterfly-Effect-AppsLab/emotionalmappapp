@@ -8,14 +8,14 @@ cur_path = os.path.dirname(__file__)
 def seed_interests():
     ses = m.Session()
     try:
-        ses.query(m.Interests).delete()
+        ses.query(m.Interest).delete()
         ses.commit()
     except:
         ses.rollback()
-    interests = [m.Interests(interest='Bezpecnost'),
-                 m.Interests(interest='Zelen'),
-                 m.Interests(interest='Transport'),
-                 m.Interests(interest='Social')]
+    interests = [m.Interest(interest='Bezpecnost'),
+                 m.Interest(interest='Zelen'),
+                 m.Interest(interest='Transport'),
+                 m.Interest(interest='Social')]
     ses.add_all(interests)
     ses.commit()
     ses.close()

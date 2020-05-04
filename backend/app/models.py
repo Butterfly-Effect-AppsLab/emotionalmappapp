@@ -1,11 +1,13 @@
 from sqlalchemy import(
     Column,
+    Table,
     Integer,
-    String
+    String,
+    ForeignKey
 )
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -13,16 +15,22 @@ Base = declarative_base()
 engine = create_engine('postgresql://postgres:postgres@db/emu')
 Session = sessionmaker(bind=engine)
 
+user_has_interests_table = Table('user_has_interests', Base.metadata,
+                                 Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+                                 Column('interest_id', Integer, ForeignKey('interests.id'), primary_key=True))
+
+
 class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    uuid = Column(String, nullable=False)
     sex = Column(String, nullable=False)
-    region = Column(String)
-    age_group_id = Column(Integer, nullable=False)
+    interests = relationship('Interest', secondary=user_has_interests_table)
+    residence_location = Column(String)
+    work_location = Column(String)
+    birthyear = Column(Integer, nullable=False)
 
-class Interests(Base):
+class Interest(Base):
     __tablename__ = 'interests'
 
     id = Column(Integer, primary_key=True)

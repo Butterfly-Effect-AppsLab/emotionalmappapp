@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, send_from_directory
+from flask import Flask, redirect, request, render_template, send_from_directory
 from flask_cors import CORS
 import requests
 from app import models as m
@@ -36,12 +36,9 @@ def get_news():
 def get_users():
     ses = m.Session()
     users = ses.query(m.User)
+    user_schema = schemas.UserSchema()
 
-    result = []
-    for u in users:
-        r = {'id': u.id,
-            'name': u.name}
-        result.append(r)
+    result = user_schema.dump(users, many=True)
     return {'data': result}
 
 @api.route('/api/age')
@@ -52,12 +49,12 @@ def get_age_groups():
     return {'data': years}
 
 @api.route('/api/interests')
-def get_interests():
+def get_Interest():
     ses = m.Session()
-    interests = ses.query(m.Interests)
+    Interest = ses.query(m.Interest)
 
-    interests_schema = schemas.InterestsSchema()
-    result = interests_schema.dump(interests, many=True)
+    Interest_schema = schemas.InterestSchema()
+    result = Interest_schema.dump(Interest, many=True)
 
     return {'data': result}
 
@@ -66,7 +63,7 @@ def get_cityparts():
     ses = m.Session()
     parts = ses.query(m.Street)
 
-    street_schema = schemas.StreetsSchema()
+    street_schema = schemas.StreetSchema()
     result = street_schema.dump(parts, many=True)
     return {'data': result}
 
@@ -75,7 +72,7 @@ def get_regInfo():
     ses = m.Session()
     streets = ses.query(m.Street).order_by(m.Street.street)
 
-    street_schema = schemas.StreetsSchema()
+    street_schema = schemas.StreetSchema()
     streets_result = street_schema.dump(streets, many=True)
 
     year = datetime.today().year
@@ -83,6 +80,21 @@ def get_regInfo():
     years = list(reversed([*r]))
     data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
     return data
+
+@api.route('/api/registerUser', methods=['POST'])
+def post_user():
+    ses = m.Session()
+    user_json = request.json
+    user_schema = schemas.UserSchema()
+
+    new_user = user_schema.load(user_json)
+    try:
+        ses.add(new_user)
+        ses.commit()
+        ses.close()
+    except Exception as e:
+        return {'error': e}
+    return {"Status": "ok"}
 
 @api.route('/favicon.ico')
 def favicon():

@@ -1,4 +1,5 @@
-from marshmallow import Schema, fields, pprint, EXCLUDE
+from marshmallow import Schema, fields, pprint, EXCLUDE, post_load
+from app import models as m
 from random import randint
 
 class Author(fields.Field):
@@ -26,10 +27,27 @@ class NewsScheme(Schema):
     class Meta:
         unknown = EXCLUDE
 
-class InterestsSchema(Schema):
+class InterestSchema(Schema):
     id = fields.Integer()
     interest = fields.Str()
 
-class StreetsSchema(Schema):
+    class Meta:
+        model = m.Interest
+
+class UserSchema(Schema):
+    id = fields.Integer()
+    sex = fields.String()
+    residence_location = fields.String()
+    work_location = fields.String()
+    birthyear = fields.Integer()
+
+    class Meta:
+        model = m.User
+
+    @post_load
+    def make_user(self, data, **kwargs):
+        return m.User(**data)
+
+class StreetSchema(Schema):
     id = fields.Integer()
     street = fields.Str()
