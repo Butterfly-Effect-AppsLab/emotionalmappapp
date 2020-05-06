@@ -1,22 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Navbar from '../Components/Header.js';
+import Header from '../Components/Header.js';
 import Footer from '../Components/Footer.js';
 
 const useStyles = makeStyles({
   root: {
     height: '100%',
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
   }
 });
 
 const Layout = ({ children, history }) => {
+  const [showHeader, setShowHeader] = React.useState(1);
+  const [showFooter, setShowFooter] = React.useState(1);
   const classes = useStyles();
+
+  useEffect(() => {
+    const processPathName = (pathname) => {
+      switch (pathname) {
+        case "/registration":
+          setShowHeader(0);
+          setShowFooter(0);
+          break;
+        default:
+          break;
+      }
+    };
+    if (history) {
+      processPathName(history.location.pathname);
+      history.listen((location) => {
+        processPathName(location.pathname);
+      });
+    }
+  }, [history]);
 
   return (
     <div id='layout.js' className={classes.root}>
-      <Navbar history={history} />
+      <Header history={history} showHeader={showHeader} />
       {children}
-      <Footer history={history} />
+      <Footer history={history} showFooter={showFooter} />
     </div>
   )
 };

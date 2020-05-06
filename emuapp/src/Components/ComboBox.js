@@ -2,29 +2,71 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Popper from '@material-ui/core/Popper';
+import { WHITE } from '../utils/colours';
+import { TEXTGRAY } from '../utils/colours';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     root: {
-        margin: theme.spacing(2),
-        marginLeft: 0,
         minWidth: 120,
+        marginTop: 10,
+        marginBottom: 30,
     },
-}));
+    boxSize: {
+
+    },
+    inputStyle: {
+        fontSize: 14,
+        color: TEXTGRAY,
+    },
+    textField: {
+        [`& fieldset`]: {
+            backgroundColor: WHITE,
+            borderRadius: 6,
+        },
+    }
+});
 
 const ComboBox = (props) => {
     const { type } = props;
     const classes = useStyles();
+    const [inputText, setInputText] = React.useState('');
+
+    const handleInputChange = (event) => {
+        setInputText(event.target.value);
+    };
+
+    const PopperMy = function (props) {
+        return (<Popper {...props} style={{ maxHeight: 150 }} placement='bottom-start' />)
+    };
+
+
 
     return (
+
         <Autocomplete
             className={classes.root}
-            // id="combo-box-demo"
             options={type ? type : 'Loading...'}
             getOptionLabel={(option) => option.street}
             style={{ width: 300 }}
-            shrink={false}
-            renderInput={(params) => <TextField {...params} label="Začnite písať" variant="outlined" />}
+            onInputChange={handleInputChange}
+            // PopperComponent={PopperMy}
+            // menuStyle={{maxHeight: 150}}
+            renderInput={(params) =>
+                <TextField
+                    {...params}
+                    margin='dense'
+                    onClick={console.log(inputText)}
+                    label={inputText === '' && 'Začnite písať'}
+                    variant='outlined'
+                    InputLabelProps={{
+                        shrink: false,
+                        classes: { root: classes.inputStyle }
+                    }}
+                    className={classes.textField}
+                />}
         />
+
     );
 }
 

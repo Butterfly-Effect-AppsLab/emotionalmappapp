@@ -20,7 +20,8 @@ const useStyles = makeStyles(({
   },
 }));
 
-const Header = () => {
+const Header = (props) => {
+  const {showHeader} = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -32,7 +33,7 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  return (
+  return showHeader == 1 ? (
     <div className={classes.appBar}>
       <AppBar position='fixed'>
         <Toolbar
@@ -59,7 +60,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
     </div>
-  )
+  ) : null;
 };
 
 export default Header;
