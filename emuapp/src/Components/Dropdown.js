@@ -12,12 +12,12 @@ const useStyles = makeStyles({
     formControl: {
         minWidth: 120,
         // backgroundColor: WHITE,
-        // borderRadius: 30,
         marginTop: 10,
         marginBottom: 30,
     },
     menuList: {
         maxHeight: 150,
+        borderRadius: 6,
     },
     labelStyle: {
         fontSize: 14,
@@ -25,16 +25,17 @@ const useStyles = makeStyles({
     },
     inputStyle: {
         fontSize: 14,
+        borderRadius: 6,
     },
     outlined: {
         backgroundColor: WHITE,
-        borderRadius: 30,
+        borderRadius: 6,
     }
 });
 
 
 const Dropdown = (props) => {
-    const { type, idComponent } = props;
+    const { type, idComponent, valueChange } = props;
     const classes = useStyles();
     const [fieldData, setFieldData] = React.useState('');
 
@@ -60,6 +61,7 @@ const Dropdown = (props) => {
                 </InputLabel>
                 <Select
                     className={classes.inputStyle}
+                    classes={{ outlined: classes.outlined }}
                     labelId="demo-simple-select-outlined-label"
                     id={idComponent}
                     value={fieldData}
@@ -72,14 +74,10 @@ const Dropdown = (props) => {
                         },
                         classes: { paper: classes.menuList }
                     }}
-                    inputProps={{
-                        classes: { input: classes.outlined }
-                    }}
                 >
-
                     {
-                    type ? type.map((data, index) => createMenuItem(data, index)) : "Loading..."
-                }
+                        type ? type.map((data, index) => createMenuItem(data, index)) : [] //alebo null
+                    }
 
                 </Select>
             </FormControl>
