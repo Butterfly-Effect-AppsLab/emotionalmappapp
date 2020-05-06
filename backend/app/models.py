@@ -57,4 +57,4 @@ class News(Base):
     description = Column(String)
     author = Column(String)
     feedback = Column(Boolean)
-    interests = relationship('Interest', secondary=user_has_interests_table)
+    interests = relationship('Interest', secondary=news_has_interests_table)

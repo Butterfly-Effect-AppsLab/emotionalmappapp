@@ -21,9 +21,11 @@ const useStyles = makeStyles({
     },
     textField: {
         [`& fieldset`]: {
-            backgroundColor: WHITE,
             borderRadius: 6,
         },
+        backgroundColor: WHITE,
+        borderRadius: 6,
+        color: TEXTGRAY
     }
 });
 
