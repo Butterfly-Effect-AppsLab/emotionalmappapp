@@ -49,6 +49,7 @@ const ComboBox = (props) => {
         <Autocomplete
             className={classes.root}
             options={type ? type : 'Loading...'}
+            maxSearchResults = {4}
             getOptionLabel={(option) => option.street}
             style={{ width: 300 }}
             onInputChange={handleInputChange}

@@ -15,11 +15,19 @@ class Author(fields.Field):
     def _deserialize(self, value, attr, data, **kwargs):
         return value
 
+class InterestSchema(Schema):
+    #id = fields.Integer()
+    interest = fields.Str()
+
+    class Meta:
+        model = m.Interest
+
 class NewsScheme(Schema):
     title = fields.Str()
     description = fields.Str()
     author = Author(attribute="author",allow_none = True)
     feedback = fields.Bool()
+    interests = fields.Nested(InterestSchema, many=True)
 
     @post_load
     def make_news(self, data, **kwargs):
@@ -28,13 +36,6 @@ class NewsScheme(Schema):
     class Meta:
         unknown = EXCLUDE
         model = m.News
-
-class InterestSchema(Schema):
-    id = fields.Integer()
-    interest = fields.Str()
-
-    class Meta:
-        model = m.Interest
 
 class UserSchema(Schema):
     id = fields.Integer()

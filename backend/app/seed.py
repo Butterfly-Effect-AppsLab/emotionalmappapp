@@ -2,6 +2,7 @@ from alembic import op
 import json
 import requests
 import os
+from random import randint
 from app import models as m
 from app import schemas
 
@@ -42,6 +43,12 @@ def seed_news():
 
     news = news_schema.load(news_json['articles'], many=True)
     ses.add_all(news)
+
+    interests = ses.query(m.Interest)
+
+    for n in news:
+        for i in range(0,randint(1,4)):
+            n.interests.append(interests[randint(0,4)])
     ses.commit()
     ses.close()
 

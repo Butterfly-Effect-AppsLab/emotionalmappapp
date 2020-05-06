@@ -1,14 +1,9 @@
 {
     "data": {
-        "uuid": "jdgidhbguodehgebfujsfhnweiofnoufhn",
-        "ageGroup": "18-25",
-        "workLocation":  "Centrum",
-        "residenceLocation": "Raca",
-        "interests": [
-            {
-                "id": "1",
-                "name": "security"
-            }
-        ]
+        "id": "jdgidhbguodehgebfujsfhnweiofnoufhn",
+        "birthyear": "1998",
+        "work_location":  "Centrum",
+        "residence_location": "Raca",
+        "sex": "Male"
     }
 }
