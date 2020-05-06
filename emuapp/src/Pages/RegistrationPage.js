@@ -60,7 +60,10 @@ const RegistrationPage = (props) => {
         props.fetchRegInfo();
     }, [])
 
+    //tu sprav funkciu o zmene hodnoty v komponente
 
+
+    //podmienka na dostanie dat z backendu, zatial vyrenderovat dajaky loading indikator
     return (
         <div className={classes.main}>
             <div className={classes.info}>
@@ -88,12 +91,12 @@ const RegistrationPage = (props) => {
                 <Typography variant='subtitle1' gutterBottom className={classes.text}>
                     Prosím, vyberte ulicu v Bratislave, na ktorej bývate. Na zákade toho vás správne priradíme k príslušnej mestskej časti.
                 </Typography>
-                <ComboBox type={streets} idComponent={'residance_location'} />
+                <ComboBox type={streets} otherOption={[{street: "Nebyvam v BA"}]} idComponent={'residance_location'} />
 
                 <Typography variant='subtitle1' gutterBottom className={classes.text}>
                     Prosím, vyberte ulicu v Bratislave, kde sa okrem bydliska nachádzate najčastejšie (kde pracujete, študujete...)
                 </Typography>
-                <ComboBox type={streets} idComponent={'work_location'} />
+                <ComboBox type={streets} otherOption={[{street: "Nepracujem v BA"}]} idComponent={'work_location'} />
 
                 <Grid container justify='center'>
                     <ButtonTemplate background={WHITE} text={TEXTGRAY} />

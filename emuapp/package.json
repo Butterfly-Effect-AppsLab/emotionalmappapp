@@ -77,6 +77,7 @@
     "start": "node scripts/start.js",
     "start-api": "cd ../backend && Flask run --no-debugger",
     "build": "node scripts/build.js",
+    "build:dev": "NODE_ENV=dev npm run build --dev --configuration=dev",
     "watch": "npm-watch",
     "test": "node scripts/test.js"
   },

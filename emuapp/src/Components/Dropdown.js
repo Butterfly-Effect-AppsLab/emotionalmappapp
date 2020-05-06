@@ -72,16 +72,18 @@ const Dropdown = (props) => {
                         },
                         classes: { paper: classes.menuList }
                     }}
-                    classes={{ select: classes.outlined}}
+                    inputProps={{
+                        classes: { input: classes.outlined }
+                    }}
                 >
 
                     {
-                        type ? type.map((data, index) => createMenuItem(data, index)) : "Loading..."
-                    }
+                    type ? type.map((data, index) => createMenuItem(data, index)) : "Loading..."
+                }
 
                 </Select>
             </FormControl>
-        </div>
+        </div >
     );
 };
 
