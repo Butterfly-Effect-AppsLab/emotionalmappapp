@@ -19,13 +19,15 @@ class NewsScheme(Schema):
     title = fields.Str()
     description = fields.Str()
     author = Author(attribute="author",allow_none = True)
-    feedback = fields.Method("show_feedback")
+    feedback = fields.Bool()
 
-    def show_feedback(self, obj):
-        return randint(0,1)
+    @post_load
+    def make_news(self, data, **kwargs):
+        return m.News(**data)
 
     class Meta:
         unknown = EXCLUDE
+        model = m.News
 
 class InterestSchema(Schema):
     id = fields.Integer()

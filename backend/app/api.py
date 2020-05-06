@@ -20,17 +20,12 @@ def get_index(path):
 
 @api.route('/api/news')
 def get_news():
-    url = ('http://newsapi.org/v2/top-headlines?'
-       'country=sk&'
-       'apiKey=937002ae68b342789cf3d3515c33a483')
-    response = requests.get(url)
-    news_json = response.json()
+    ses = m.Session()
+    news = ses.query(m.News)
     news_schema = schemas.NewsScheme()
 
-    result = news_schema.load(news_json['articles'],many=True)
-    result_news = news_schema.dump(result,many=True)
-
-    return {'data': result_news}
+    result = news_schema.dump(news, many=True)
+    return {'data': result}
 
 @api.route('/api/users')
 def get_users():
