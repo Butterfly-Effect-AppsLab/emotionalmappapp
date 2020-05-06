@@ -54,3 +54,4 @@ class UserSchema(Schema):
 class StreetSchema(Schema):
     id = fields.Integer()
     street = fields.Str()
+    sub_part = fields.Str()
