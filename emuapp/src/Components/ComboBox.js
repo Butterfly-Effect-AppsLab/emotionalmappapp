@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Popper from '@material-ui/core/Popper';
 import { WHITE } from '../utils/colours';
 import { TEXTGRAY } from '../utils/colours';
 
@@ -11,9 +10,6 @@ const useStyles = makeStyles({
         minWidth: 120,
         marginTop: 10,
         marginBottom: 30,
-    },
-    boxSize: {
-
     },
     inputStyle: {
         fontSize: 14,
@@ -25,7 +21,11 @@ const useStyles = makeStyles({
         },
         backgroundColor: WHITE,
         borderRadius: 6,
-        color: TEXTGRAY
+        color: TEXTGRAY,
+        fontSize: 14,
+    },
+    listbox: {
+        maxHeight: 150,
     }
 });
 
@@ -38,19 +38,15 @@ const ComboBox = (props) => {
         setInputText(event.target.value);
     };
 
-    const PopperMy = function (props) {
-        return (<Popper {...props} style={{ maxHeight: 150 }} placement='bottom-start' />)
-    };
-
-
-
     return (
 
         <Autocomplete
             className={classes.root}
+            // classes={{ listbox: classes.listbox }}
             options={type ? type : 'Loading...'}
             getOptionLabel={(option) => option.street}
             style={{ width: 300 }}
+            debug
             onInputChange={handleInputChange}
             // PopperComponent={PopperMy}
             // menuStyle={{maxHeight: 150}}
@@ -58,7 +54,7 @@ const ComboBox = (props) => {
                 <TextField
                     {...params}
                     margin='dense'
-                    onClick={console.log(inputText)}
+                    // onClick={console.log(inputText)}
                     label={inputText === '' && 'Začnite písať'}
                     variant='outlined'
                     InputLabelProps={{
@@ -66,6 +62,8 @@ const ComboBox = (props) => {
                         classes: { root: classes.inputStyle }
                     }}
                     className={classes.textField}
+
+
                 />}
         />
 
