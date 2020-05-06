@@ -60,9 +60,12 @@ const RegistrationPage = (props) => {
         props.fetchRegInfo();
     }, [])
 
+    //tu sprav funkciu o zmene hodnoty v komponente
 
+
+    //podmienka na dostanie dat z backendu, zatial vyrenderovat dajaky loading indikator
     return (
-        <div className={classes.main}>
+        <div className={classes.main}> 
             <div className={classes.info}>
                 <Typography variant='h5' className={classes.mainTitle}>
                     Vaše údaje
