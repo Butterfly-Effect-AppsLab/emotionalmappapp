@@ -9,7 +9,9 @@ import { getSexes } from '../redux/selectors';
 import { getStreets } from '../redux/selectors';
 import ComboBox from '../Components/ComboBox';
 import Typography from '@material-ui/core/Typography';
-import { GRAY } from  '../utils/colours';
+import ButtonTemplate from '../Components/ButtonTemplate';
+import Grid from '@material-ui/core/Grid'
+import { GRAY, RED, TEXTGRAY, WHITE } from '../utils/colours';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -19,15 +21,34 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     info: {
-        padding: theme.spacing(2),
+        paddingTop: 50,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingBottom: 20,
+        backgroundColor: RED,
+        color: WHITE,
     },
     data: {
-        padding: theme.spacing(2),
+        paddingTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingBottom: 50,
         backgroundColor: GRAY,
         flex: 1,
     },
+    mainTitle: {
+        fontSize: 28,
+        paddingBottom: 10,
+    },
     titles: {
         fontWeight: 'bold',
+        fontSize: 18,
+    },
+    mainText: {
+        fontSize: 14,
+    },
+    text: {
+        fontSize: 12,
     }
 }));
 
@@ -41,40 +62,42 @@ const RegistrationPage = (props) => {
 
 
     return (
-        <div className = {classes.main}>
-            <div className = {classes.info}>
-                <Typography variant='h5' className = {classes.titles}>
+        <div className={classes.main}>
+            <div className={classes.info}>
+                <Typography variant='h5' className={classes.mainTitle}>
                     Vaše údaje
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom>
+                <Typography variant='subtitle1' gutterBottom className={classes.mainText}>
                     Tieto informácie nám poslúžia na presnejšie oslovovanie v prieskumoch a anketách a nebudú nikde zverejnené.
                 </Typography>
             </div>
-            <div className = {classes.data}>
-                <Typography variant='h6' className = {classes.titles}>
+            <div className={classes.data}>
+                <Typography variant='h6' className={classes.titles}>
                     Rok narodenia
                 </Typography>
-                <Dropdown type={years} />
+                <Dropdown type={years} idComponent={'birthyear'} />
 
-                <Typography variant='h6' className = {classes.titles}>
+                <Typography variant='h6' className={classes.titles}>
                     Pohlavie
                 </Typography>
-                <Dropdown type={sexes} />
+                <Dropdown type={sexes} idComponent={'sex'} />
 
-                <Typography variant='h6' className = {classes.titles}>
-                    Primárna lokalita
+                <Typography variant='h6' className={classes.titles}>
+                    Lokalita
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom>
-                    Prosím, vyberte ulicu v Bratislave, kde bývate
+                <Typography variant='subtitle1' gutterBottom className={classes.text}>
+                    Prosím, vyberte ulicu v Bratislave, na ktorej bývate. Na zákade toho vás správne priradíme k príslušnej mestskej časti.
                 </Typography>
-                <ComboBox type={streets} />
+                <ComboBox type={streets} idComponent={'residance_location'} />
 
-                <Typography variant='h6' className = {classes.titles}>
-                    Sekundárna lokalita
+                <Typography variant='subtitle1' gutterBottom className={classes.text}>
+                    Prosím, vyberte ulicu v Bratislave, kde sa okrem bydliska nachádzate najčastejšie (kde pracujete, študujete...)
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom>
-                    Prosím, vyberte ulicu v Bratislave, kde sa okrem bydliska nachádzate najčastejšie (kde pracujete, študujete...)                </Typography>
-                <ComboBox type={streets} />
+                <ComboBox type={streets} idComponent={'work_location'} />
+
+                <Grid container justify='center'>
+                    <ButtonTemplate background={WHITE} text={TEXTGRAY} />
+                </Grid>
             </div>
         </div>
     )

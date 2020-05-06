@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
+import { createMuiTheme, MuiThemeProvider, Hidden } from "@material-ui/core";
 import './App.css';
 import history from './utils/history';
 import Routes from './utils/routes';
@@ -23,6 +23,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   baseDiv: {
     height: '100vh',
+    overflow: 'hidden',
   },
 
 });

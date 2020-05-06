@@ -17,11 +17,12 @@ const useStyles = makeStyles({
   }
 });
 
-const Footer = () => {
+const Footer = (props) => {
+  const {showFooter} = props;
   const classes = useStyles();
   const [isPressed, setIsPressed] = React.useState(0);
 
-  return (
+  return showFooter == 1 ? (
     <div className={classes.footerDiv}>
     <BottomNavigation
       value={isPressed}
@@ -36,7 +37,7 @@ const Footer = () => {
       <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
     </BottomNavigation>
      </div>
-  );
+  ) : null;
 }
 
 export default Footer;

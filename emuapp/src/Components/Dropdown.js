@@ -1,34 +1,40 @@
 import React from 'react';
-import { makeStyles, withTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { WHITE } from '../utils/colours'
+import { WHITE } from '../utils/colours';
+import { TEXTGRAY } from '../utils/colours';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     formControl: {
-        margin: theme.spacing(1),
-        marginLeft: 0,
         minWidth: 120,
         // backgroundColor: WHITE,
+        // borderRadius: 30,
+        marginTop: 10,
+        marginBottom: 30,
     },
     menuList: {
         maxHeight: 150,
     },
-    // inputSize: {
-    //     maxHeight: 5,
-    // },
-    // inputPosition: {
-    //     top: '-15%',
-    // }
-
-}));
+    labelStyle: {
+        fontSize: 14,
+        color: TEXTGRAY,
+    },
+    inputStyle: {
+        fontSize: 14,
+    },
+    outlined: {
+        backgroundColor: WHITE,
+        borderRadius: 30,
+    }
+});
 
 
 const Dropdown = (props) => {
-    const { type } = props;
+    const { type, idComponent } = props;
     const classes = useStyles();
     const [fieldData, setFieldData] = React.useState('');
 
@@ -44,17 +50,18 @@ const Dropdown = (props) => {
 
     return (
         <div>
-            <FormControl variant="outlined" className={classes.formControl}>
+            <FormControl variant="outlined" margin='dense' className={classes.formControl}>
                 <InputLabel
                     shrink={false}
                     id="demo-simple-select-outlined-label"
-                    // classes={{ formControl: classes.inputPosition }}
+                    classes={{ formControl: classes.labelStyle }}
                 >
                     {fieldData === '' && 'Vybrať'}
                 </InputLabel>
                 <Select
+                    className={classes.inputStyle}
                     labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
+                    id={idComponent}
                     value={fieldData}
                     onChange={handleChange}
                     MenuProps={{
@@ -65,7 +72,7 @@ const Dropdown = (props) => {
                         },
                         classes: { paper: classes.menuList }
                     }}
-                    classes={{ root: classes.inputSize }}
+                    classes={{ select: classes.outlined}}
                 >
 
                     {
