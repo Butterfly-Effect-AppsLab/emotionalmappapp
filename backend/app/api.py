@@ -1,8 +1,9 @@
-from flask import Flask, redirect, request, render_template, send_from_directory
+from flask import Flask, redirect, request, Response, render_template, send_from_directory
 from flask_cors import CORS
 import requests
 from app import models as m
 from app import schemas
+from app import decorators
 from random import randint
 from datetime import datetime
 import os
@@ -23,6 +24,12 @@ def get_news():
     ses = m.Session()
     news = ses.query(m.News)
     news_schema = schemas.NewsScheme()
+    """ filterInterests = []
+    try:
+        for n in request.args.get('interests').split(','):
+            filterInterests.append(n)
+    except:
+        pass """
 
     result = news_schema.dump(news, many=True)
     return {'data': result}
@@ -79,17 +86,17 @@ def get_regInfo():
 @api.route('/api/registerUser', methods=['POST'])
 def post_user():
     ses = m.Session()
-    user_json = request.json
-    user_schema = schemas.UserSchema()
-
-    new_user = user_schema.load(user_json)
     try:
+        user_json = request.json
+        user_schema = schemas.UserSchema()
+
+        new_user = user_schema.load(user_json)
         ses.add(new_user)
         ses.commit()
         ses.close()
     except Exception as e:
-        return {'error': e}
-    return {"Status": "ok"}
+        return {'error': str(e)}, 400, {'ContentType':'application/json'}
+    return {"data": user_json}
 
 @api.route('/favicon.ico')
 def favicon():

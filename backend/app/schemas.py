@@ -39,10 +39,10 @@ class NewsScheme(Schema):
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
-    sex = fields.String()
-    residence_location = fields.String()
-    work_location = fields.String()
-    birthyear = fields.Integer()
+    sex = fields.String(required=True)
+    residence_location = fields.String(required=True)
+    work_location = fields.String(required=True)
+    birthyear = fields.Integer(required=True)
 
     class Meta:
         model = m.User
