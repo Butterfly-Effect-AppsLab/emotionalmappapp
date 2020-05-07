@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { WHITE } from '../utils/colours';
-import { TEXTGRAY } from '../utils/colours';
+import { WHITE, DARKGRAY  } from '../utils/colours';
 
 const useStyles = makeStyles({
     root: {
@@ -14,7 +13,7 @@ const useStyles = makeStyles({
     },
     inputStyle: {
         fontSize: 14,
-        color: TEXTGRAY,
+        color: DARKGRAY,
     },
     textField: {
         [`& fieldset`]: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles({
         },
         backgroundColor: WHITE,
         borderRadius: 6,
-        color: TEXTGRAY
+        color: DARKGRAY
     },
     // listbox: {
     //     maxHeight: 150,

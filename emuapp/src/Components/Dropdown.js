@@ -4,9 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { WHITE } from '../utils/colours';
-import { TEXTGRAY } from '../utils/colours';
-
+import { WHITE, DARKGRAY } from '../utils/colours';
 
 const useStyles = makeStyles({
     formControl: {
@@ -22,7 +20,7 @@ const useStyles = makeStyles({
     labelStyle: {
         paddingBottom: "9px",
         fontSize: 14,
-        color: TEXTGRAY,
+        color: DARKGRAY,
     },
     inputStyle: {
         fontSize: 14,

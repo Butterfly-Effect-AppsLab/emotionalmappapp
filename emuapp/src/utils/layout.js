@@ -24,6 +24,10 @@ const Layout = ({ children, history }) => {
           setShowHeader(0);
           setShowFooter(0);
           break;
+        case "/onboarding":
+          setShowHeader(0);
+          setShowFooter(0);
+          break;
         default:
           setShowHeader(1);
           setShowFooter(1);

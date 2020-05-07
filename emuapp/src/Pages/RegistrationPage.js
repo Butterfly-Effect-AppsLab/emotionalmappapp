@@ -9,7 +9,7 @@ import ComboBox from '../Components/ComboBox';
 import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import Grid from '@material-ui/core/Grid'
-import { GRAY, RED, TEXTGRAY, WHITE } from '../utils/colours';
+import { LIGHTGRAY, RED, DARKGRAY, WHITE } from '../utils/colours';
 import history from "../utils/history";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 30,
         paddingRight: 30,
         paddingBottom: 50,
-        backgroundColor: GRAY,
+        backgroundColor: LIGHTGRAY,
         flex: 1,
     },
     mainTitle: {
         fontSize: 28,
         paddingBottom: 10,
+        fontWeight: 500,
     },
     titles: {
         fontWeight: 'bold',
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         fontSize: 12,
+        color: DARKGRAY,
     }
 }));
 
@@ -79,7 +81,7 @@ const RegistrationPage = (props) => {
         }
         else {
             setIsDisabled(true);
-            setButtonStyle({ ...buttonStyle, textColor: TEXTGRAY, background: WHITE })
+            setButtonStyle({ ...buttonStyle, textColor: DARKGRAY, background: WHITE })
         }
     }, [regData]);
 
