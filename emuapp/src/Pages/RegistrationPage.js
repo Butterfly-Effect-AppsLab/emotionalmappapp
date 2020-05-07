@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dropdown from '../Components/Dropdown';
-import { fetchRegInfo } from '../redux/actions';
+import { fetchRegInfo, postRegInfo } from '../redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getYears } from '../redux/selectors';
-import { getSexes } from '../redux/selectors';
-import { getStreets } from '../redux/selectors';
+import { getYears, getSexes, getStreets } from '../redux/selectors';
 import ComboBox from '../Components/ComboBox';
 import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import Grid from '@material-ui/core/Grid'
 import { GRAY, RED, TEXTGRAY, WHITE } from '../utils/colours';
+import history from "../utils/history";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -53,11 +52,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegistrationPage = (props) => {
-    const { years, sexes, streets, fetchRegInfo } = props;
+    const { years, sexes, streets, fetchRegInfo, postRegInfo } = props;
     const classes = useStyles();
     const [isDisabled, setIsDisabled] = React.useState(true)
     const [buttonStyle, setButtonStyle] = React.useState({
-        text: '',
+        textColor: '',
         background: '',
     })
     const [regData, setRegData] = React.useState({
@@ -76,23 +75,24 @@ const RegistrationPage = (props) => {
     useEffect(() => {
         if (regData.sex != '' && regData.birthyear != '' && regData.residence_location != '' && regData.work_location != '') {
             setIsDisabled(false);
-            setButtonStyle({ ...buttonStyle, text: WHITE, background: RED })
+            setButtonStyle({ ...buttonStyle, textColor: WHITE, background: RED })
         }
         else {
             setIsDisabled(true);
-            setButtonStyle({ ...buttonStyle, text: TEXTGRAY, background: WHITE })
+            setButtonStyle({ ...buttonStyle, textColor: TEXTGRAY, background: WHITE })
         }
     }, [regData]);
-
-    // useEffect(() => {
-        
-    // }, [isDisabled]);
 
     const getData = (value, idComponent) => {
         if (value != 'undefined') {
             setRegData({ ...regData, [idComponent]: value })
         };
-    }
+    };
+
+    const onButtonClick = () => {
+        postRegInfo(regData);
+        // history.push('/');
+    };
 
     if (years && sexes && streets)
         return (
@@ -130,7 +130,12 @@ const RegistrationPage = (props) => {
                     <ComboBox type={streets} otherOption={[{ street: "Mimo Bratislavy" }]} idComponent={'work_location'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
 
                     <Grid container justify='center'>
-                        <ButtonTemplate background={buttonStyle.background} text={buttonStyle.text} isDisabled={isDisabled} />
+                        <ButtonTemplate 
+                        background={buttonStyle.background} 
+                        textColor={buttonStyle.textColor} 
+                        isDisabled={isDisabled} 
+                        text={'Odoslať'}
+                        onButtonClick={() => { onButtonClick() }}/>
                     </Grid>
                 </div>
             </div>
@@ -149,6 +154,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchRegInfo: bindActionCreators(fetchRegInfo, dispatch),
+    postRegInfo: bindActionCreators(postRegInfo, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationPage);

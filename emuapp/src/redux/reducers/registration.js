@@ -1,6 +1,7 @@
 import {
     FETCH_REGINFO_SUCCESS,
     FETCH_REGINFO_FAIL,
+
 } from "../actionTypes";
 
 const initialState = {

@@ -25,6 +25,8 @@ const Layout = ({ children, history }) => {
           setShowFooter(0);
           break;
         default:
+          setShowHeader(1);
+          setShowFooter(1);
           break;
       }
     };

@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import {Link} from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     root: {
         '& > *': {
             borderRadius: 24,
@@ -11,16 +12,23 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 16,
         },
     },
-}));
+});
 
 const ButtonTemplate = (props) => {
-    const {background, text, isDisabled} = props
+    const {background, textColor, isDisabled, onButtonClick, text} = props
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            <Button variant="contained" disabled={isDisabled} style={{color: text, background: background}}>
-                Odoslať
+            <Button 
+            variant="contained" 
+            disabled={isDisabled}
+            onClick={(event) => onButtonClick()} 
+            style={{color: textColor, background: background}}
+            component={Link} 
+            to="/"
+            >
+                {text}
             </Button>
         </div>
     );
