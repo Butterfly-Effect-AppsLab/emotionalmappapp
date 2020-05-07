@@ -96,7 +96,7 @@ def post_user():
         ses.close()
     except Exception as e:
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
-    return {"data": user_json}
+    return {"data": user_json}, 201, {'ContentType':'application/json'}
 
 @api.route('/favicon.ico')
 def favicon():
