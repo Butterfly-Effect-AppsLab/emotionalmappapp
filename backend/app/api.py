@@ -3,7 +3,6 @@ from flask_cors import CORS
 import requests
 from app import models as m
 from app import schemas
-from app import decorators
 from random import randint
 from datetime import datetime
 import os
