@@ -14,12 +14,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ButtonTemplate = (props) => {
-    const {background, text} = props
+    const {background, text, isDisabled} = props
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            <Button variant="contained" style={{color: text, background: background}}>
+            <Button variant="contained" disabled={isDisabled} style={{color: text, background: background}}>
                 Odoslať
             </Button>
         </div>

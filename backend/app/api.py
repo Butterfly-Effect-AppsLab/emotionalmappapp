@@ -65,7 +65,7 @@ def get_cityparts():
 @api.route('/api/regInfo')
 def get_regInfo():
     ses = m.Session()
-    streets = ses.query(m.Street).order_by(m.Street.street)
+    streets = ses.query(m.Street).order_by(m.Street.sub_part).order_by(m.Street.street)
 
     street_schema = schemas.StreetSchema()
     streets_result = street_schema.dump(streets, many=True)

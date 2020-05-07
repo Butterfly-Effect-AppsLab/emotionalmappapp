@@ -53,9 +53,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegistrationPage = (props) => {
-    const { years, sexes, streets } = props;
+    const { years, sexes, streets, fetchRegInfo } = props;
     const classes = useStyles();
-    // const [valueComponent, setValueComponent] = React.useState('');
+    const [isDisabled, setIsDisabled] = React.useState(true)
+    const [buttonStyle, setButtonStyle] = React.useState({
+        text: '',
+        background: '',
+    })
     const [regData, setRegData] = React.useState({
         // id: ,
         sex: '',
@@ -66,64 +70,73 @@ const RegistrationPage = (props) => {
     });
 
     useEffect(() => {
-        props.fetchRegInfo();
+        fetchRegInfo();
     }, []);
 
     useEffect(() => {
-        console.log('regData', regData)
+        if (regData.sex != '' && regData.birthyear != '' && regData.residence_location != '' && regData.work_location != '') {
+            setIsDisabled(false);
+            setButtonStyle({ ...buttonStyle, text: WHITE, background: RED })
+        }
+        else {
+            setIsDisabled(true);
+            setButtonStyle({ ...buttonStyle, text: TEXTGRAY, background: WHITE })
+        }
     }, [regData]);
 
+    // useEffect(() => {
+        
+    // }, [isDisabled]);
+
     const getData = (value, idComponent) => {
-        if (value) {
-        setRegData({ ...regData, [idComponent]: value })
+        if (value != 'undefined') {
+            setRegData({ ...regData, [idComponent]: value })
         };
     }
 
+    if (years && sexes && streets)
+        return (
+            <div className={classes.main}>
+                <div className={classes.info}>
+                    <Typography variant='h5' className={classes.mainTitle}>
+                        Vaše údaje
+                </Typography>
+                    <Typography variant='subtitle1' gutterBottom className={classes.mainText}>
+                        Tieto informácie nám poslúžia na presnejšie oslovovanie v prieskumoch a anketách a nebudú nikde zverejnené.
+                </Typography>
+                </div>
+                <div className={classes.data}>
+                    <Typography variant='h6' className={classes.titles}>
+                        Rok narodenia
+                </Typography>
+                    <Dropdown type={years} idComponent={'birthyear'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
 
-//podmienka na dostanie dat z backendu, zatial vyrenderovat dajaky loading indikator
-if (years && sexes && streets)
-    return (
-        <div className={classes.main}>
-            <div className={classes.info}>
-                <Typography variant='h5' className={classes.mainTitle}>
-                    Vaše údaje
+                    <Typography variant='h6' className={classes.titles}>
+                        Pohlavie
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom className={classes.mainText}>
-                    Tieto informácie nám poslúžia na presnejšie oslovovanie v prieskumoch a anketách a nebudú nikde zverejnené.
+                    <Dropdown type={sexes} idComponent={'sex'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
+
+                    <Typography variant='h6' className={classes.titles}>
+                        Lokalita
                 </Typography>
+                    <Typography variant='subtitle1' gutterBottom className={classes.text}>
+                        Prosím, vyberte ulicu v Bratislave, na ktorej bývate. Na zákade toho vás správne priradíme k príslušnej mestskej časti.
+                </Typography>
+                    <ComboBox type={streets} otherOption={[{ street: "Nebývam v Bratislave" }]} idComponent={'residence_location'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
+
+                    <Typography variant='subtitle1' gutterBottom className={classes.text}>
+                        Prosím, vyberte ulicu v Bratislave, kde sa okrem bydliska nachádzate najčastejšie (kde pracujete, študujete...)
+                </Typography>
+                    <ComboBox type={streets} otherOption={[{ street: "Mimo Bratislavy" }]} idComponent={'work_location'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
+
+                    <Grid container justify='center'>
+                        <ButtonTemplate background={buttonStyle.background} text={buttonStyle.text} isDisabled={isDisabled} />
+                    </Grid>
+                </div>
             </div>
-            <div className={classes.data}>
-                <Typography variant='h6' className={classes.titles}>
-                    Rok narodenia
-                </Typography>
-                <Dropdown type={years} idComponent={'birthyear'} />
-
-                <Typography variant='h6' className={classes.titles}>
-                    Pohlavie
-                </Typography>
-                <Dropdown type={sexes} idComponent={'sex'} />
-
-                <Typography variant='h6' className={classes.titles}>
-                    Lokalita
-                </Typography>
-                <Typography variant='subtitle1' gutterBottom className={classes.text}>
-                    Prosím, vyberte ulicu v Bratislave, na ktorej bývate. Na zákade toho vás správne priradíme k príslušnej mestskej časti.
-                </Typography>
-                <ComboBox type={streets} otherOption={[{ street: "Nebyvam v BA" }]} idComponent={'residance_location'} sendData={(value, idComponent) => {getData(value, idComponent)}}/>
-
-                <Typography variant='subtitle1' gutterBottom className={classes.text}>
-                    Prosím, vyberte ulicu v Bratislave, kde sa okrem bydliska nachádzate najčastejšie (kde pracujete, študujete...)
-                </Typography>
-                <ComboBox type={streets} otherOption={[{ street: "Nepracujem v BA" }]} idComponent={'work_location'} sendData={(value, idComponent) => {getData(value, idComponent)}}/>
-
-                <Grid container justify='center'>
-                    <ButtonTemplate background={WHITE} text={TEXTGRAY} />
-                </Grid>
-            </div>
-        </div>
-    )
-else
-    return null;
+        )
+    else
+        return null;
 };
 
 
