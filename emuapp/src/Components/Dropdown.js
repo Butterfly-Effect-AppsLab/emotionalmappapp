@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -39,12 +39,19 @@ const useStyles = makeStyles({
 
 
 const Dropdown = (props) => {
-    const { type, idComponent, valueChange } = props;
+    const { type, idComponent, sendData } = props;
     const classes = useStyles();
-    const [fieldData, setFieldData] = React.useState('');
+    const [inputOption, setInputOption] = React.useState('');
 
-    const handleChange = (event) => {
-        setFieldData(event.target.value);
+    useEffect(() => {
+        if(inputOption){
+           sendData(inputOption.props.children, idComponent)
+        }
+    }, [inputOption])
+
+
+    const handleChange = (child) => {
+        setInputOption(child);
     };
 
     const createMenuItem = (data, index) => {
@@ -61,15 +68,14 @@ const Dropdown = (props) => {
                     id="demo-simple-select-outlined-label"
                     classes={{ formControl: classes.labelStyle, marginDense: classes.centerLabel }}
                 >
-                    {fieldData === '' && 'Vybrať'}
+                    {inputOption === '' && 'Vybrať'}
                 </InputLabel>
                 <Select
                     className={classes.inputStyle}
                     classes={{ root: classes.inputStyle, outlined: classes.outlined }}
                     labelId="demo-simple-select-outlined-label"
                     id={idComponent}
-                    value={fieldData}
-                    onChange={handleChange}
+                    onChange={(event, child) => handleChange(child)}
                     MenuProps={{
                         getContentAnchorEl: null,
                         anchorOrigin: {

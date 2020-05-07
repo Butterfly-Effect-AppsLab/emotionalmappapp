@@ -24,9 +24,9 @@ const useStyles = makeStyles({
         borderRadius: 6,
         color: TEXTGRAY
     },
-    listbox: {
-        maxHeight: 150,
-    },
+    // listbox: {
+    //     maxHeight: 150,
+    // },
     resize: {
         fontSize: 14
     }
@@ -68,7 +68,7 @@ const ComboBox = (props) => {
             className={classes.root}
             classes={{
                 input: classes.resize,
-                listbox: classes.listbox
+                // listbox: classes.listbox
             }}
             options={[...otherOption, ...type]}
             maxSearchResults={4}
