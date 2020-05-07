@@ -20,6 +20,7 @@ const useStyles = makeStyles({
         borderRadius: 6,
     },
     labelStyle: {
+        paddingBottom: "9px",
         fontSize: 14,
         color: TEXTGRAY,
     },
@@ -30,6 +31,9 @@ const useStyles = makeStyles({
     outlined: {
         backgroundColor: WHITE,
         borderRadius: 6,
+    },
+    centerLabel:{
+        paddingBottom: 9
     }
 });
 
@@ -55,13 +59,13 @@ const Dropdown = (props) => {
                 <InputLabel
                     shrink={false}
                     id="demo-simple-select-outlined-label"
-                    classes={{ formControl: classes.labelStyle }}
+                    classes={{ formControl: classes.labelStyle, marginDense: classes.centerLabel }}
                 >
                     {fieldData === '' && 'Vybrať'}
                 </InputLabel>
                 <Select
                     className={classes.inputStyle}
-                    classes={{ outlined: classes.outlined }}
+                    classes={{ root: classes.inputStyle, outlined: classes.outlined }}
                     labelId="demo-simple-select-outlined-label"
                     id={idComponent}
                     value={fieldData}
