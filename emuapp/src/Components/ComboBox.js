@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -10,6 +10,7 @@ const useStyles = makeStyles({
         minWidth: 120,
         marginTop: 10,
         marginBottom: 30,
+        width: 300
     },
     inputStyle: {
         fontSize: 14,
@@ -32,31 +33,56 @@ const useStyles = makeStyles({
 });
 
 const ComboBox = (props) => {
-    const { type, otherOption } = props;
+    const { type, otherOption, idComponent, sendData } = props;
     const classes = useStyles();
     const [inputText, setInputText] = React.useState('');
+    const [inputOption, setInputOption] = React.useState({
+        id: '',
+        street: '',
+        sub_part: '',
+    });
 
-    const handleInputChange = (event) => {
-        setInputText(event.target.value);
+    useEffect(() => {
+        if(inputOption){
+           sendData(inputOption.street, idComponent)
+        }
+    }, [inputOption])
+
+
+    const handleInputChange = (value) => {
+        setInputText(value);
+        if (value == '') {
+            setInputOption({...value, id: value, street: value, sub_part: value});
+        }
     };
+
+    const handleChange = (value) => {
+        if (value) {
+        setInputOption({...value, id: value.id, street: value.street, sub_part: value.sub_part});
+        }
+    }
 
     return (
 
         <Autocomplete
             className={classes.root}
-            classes={{ input: classes.resize }}
-            options={type ? [...otherOption, ...type] : 'Loading...'}
-            maxSearchResults = {4}
+            classes={{
+                input: classes.resize,
+                listbox: classes.listbox
+            }}
+            options={[...otherOption, ...type]}
+            maxSearchResults={4}
             getOptionLabel={(option) => option.street}
-            style={{ width: 300 }}
-            inputStyle={{}}
-            onInputChange={handleInputChange}
-            menuStyle={{maxHeight: 150}}
+            groupBy={(option) => option.sub_part}
+            onInputChange={(event, value) => handleInputChange(value)}
+            onChange={(event, value) => handleChange(value)}
+            noOptionsText="Ulica sa nenašla"
+            // onClose={(event, value) => handleClose(value)}
+            debug
             renderInput={(params) =>
                 <TextField
                     {...params}
                     margin='dense'
-                    // onClick={console.log(inputText)}
                     label={inputText === '' && 'Začnite písať'}
                     variant='outlined'
                     InputLabelProps={{

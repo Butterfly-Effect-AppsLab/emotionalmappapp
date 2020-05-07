@@ -55,15 +55,33 @@ const useStyles = makeStyles((theme) => ({
 const RegistrationPage = (props) => {
     const { years, sexes, streets } = props;
     const classes = useStyles();
+    // const [valueComponent, setValueComponent] = React.useState('');
+    const [regData, setRegData] = React.useState({
+        // id: ,
+        sex: '',
+        // interests: [],
+        residence_location: '',
+        work_location: '',
+        birthyear: ''
+    });
 
     useEffect(() => {
         props.fetchRegInfo();
-    }, [])
+    }, []);
 
-    //tu sprav funkciu o zmene hodnoty v komponente
+    useEffect(() => {
+        console.log('regData', regData)
+    }, [regData]);
+
+    const getData = (value, idComponent) => {
+        if (value) {
+        setRegData({ ...regData, [idComponent]: value })
+        };
+    }
 
 
-    //podmienka na dostanie dat z backendu, zatial vyrenderovat dajaky loading indikator
+//podmienka na dostanie dat z backendu, zatial vyrenderovat dajaky loading indikator
+if (years && sexes && streets)
     return (
         <div className={classes.main}>
             <div className={classes.info}>
@@ -91,12 +109,12 @@ const RegistrationPage = (props) => {
                 <Typography variant='subtitle1' gutterBottom className={classes.text}>
                     Prosím, vyberte ulicu v Bratislave, na ktorej bývate. Na zákade toho vás správne priradíme k príslušnej mestskej časti.
                 </Typography>
-                <ComboBox type={streets} otherOption={[{street: "Nebyvam v BA"}]} idComponent={'residance_location'} />
+                <ComboBox type={streets} otherOption={[{ street: "Nebyvam v BA" }]} idComponent={'residance_location'} sendData={(value, idComponent) => {getData(value, idComponent)}}/>
 
                 <Typography variant='subtitle1' gutterBottom className={classes.text}>
                     Prosím, vyberte ulicu v Bratislave, kde sa okrem bydliska nachádzate najčastejšie (kde pracujete, študujete...)
                 </Typography>
-                <ComboBox type={streets} otherOption={[{street: "Nepracujem v BA"}]} idComponent={'work_location'} />
+                <ComboBox type={streets} otherOption={[{ street: "Nepracujem v BA" }]} idComponent={'work_location'} sendData={(value, idComponent) => {getData(value, idComponent)}}/>
 
                 <Grid container justify='center'>
                     <ButtonTemplate background={WHITE} text={TEXTGRAY} />
@@ -104,7 +122,10 @@ const RegistrationPage = (props) => {
             </div>
         </div>
     )
+else
+    return null;
 };
+
 
 const mapStateToProps = (state) => {
     const years = getYears(state);
