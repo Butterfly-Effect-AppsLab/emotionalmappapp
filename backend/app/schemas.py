@@ -38,7 +38,7 @@ class NewsScheme(Schema):
         model = m.News
 
 class UserSchema(Schema):
-    id = fields.Integer()
+    id = fields.Integer(dump_only=True)
     sex = fields.String()
     residence_location = fields.String()
     work_location = fields.String()
