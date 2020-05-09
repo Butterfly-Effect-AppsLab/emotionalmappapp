@@ -3,8 +3,8 @@ import json
 import requests
 import os
 from random import randint
-from app import models as m
-from app import schemas
+from emuapp import models as m
+from emuapp import schemas
 
 cur_path = os.path.dirname(__file__)
 

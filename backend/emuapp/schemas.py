@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, pprint, EXCLUDE, post_load
-from app import models as m
+from emuapp import models as m
 from random import randint
 
 class Author(fields.Field):
