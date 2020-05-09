@@ -1,5 +1,5 @@
 from alembic import op
-from app import models as m
+from emuapp import models as m
 
 
 ses = m.Session()

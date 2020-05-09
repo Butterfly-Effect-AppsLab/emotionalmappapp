@@ -8,6 +8,6 @@ COPY ./backend /opt/app/backend
 EXPOSE 5000
 ENV PYTHONPATH=/opt/app/backend
 
-WORKDIR /opt/app/backend
-CMD ["flask","run","--host=0.0.0.0"]
+WORKDIR /opt/app/backend/emuapp
+CMD ["gunicorn","-b=0.0.0.0:5000", "wsgi"]
 
