@@ -7,7 +7,7 @@ import {
 
 export const fetchRegInfo = () => async dispatch => {
     try {
-        const response = await fetch('http://localhost:5000/api/regInfo');
+        const response = await fetch('/api/regInfo');
         const json = await response.json();
         dispatch(fetchRegInfoSuccess(json));
     } catch (err) {
@@ -20,7 +20,7 @@ export const fetchRegInfo = () => async dispatch => {
 export const postRegInfo = (regData) => async dispatch => {
     // console.log('som v akcii', regData)
     try {
-        const response = await fetch('http://localhost:5000/api/registerUser', {
+        const response = await fetch('/api/registerUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(regData)

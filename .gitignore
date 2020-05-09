@@ -8,6 +8,7 @@ __pycache__
 /.pnp
 .pnp.js
 backend/app/templates/index.html
+backend/.flaskenv
 
 #build
 react

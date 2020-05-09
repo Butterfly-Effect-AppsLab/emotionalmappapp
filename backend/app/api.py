@@ -21,16 +21,28 @@ def get_index(path):
 @api.route('/api/news')
 def get_news():
     ses = m.Session()
-    news = ses.query(m.News)
+    filterInterests = []
     news_schema = schemas.NewsScheme()
-    """ filterInterests = []
     try:
-        for n in request.args.get('interests').split(','):
-            filterInterests.append(n)
+        if request.args.get('interests'):
+            for n in request.args.get('interests').split(','):
+                filterInterests.append(n)
     except:
-        pass """
-
-    result = news_schema.dump(news, many=True)
+        pass
+    news = ses.query(m.News)
+    filteredNews = []
+    if len(filterInterests) != 0:
+        for n in news:
+            has_interest = False
+            for i in n.interests:
+                if filterInterests.__contains__(i.interest):
+                    has_interest = True
+                    break
+            if has_interest:
+                filteredNews.append(n)
+        result = news_schema.dump(filteredNews, many=True)
+    else:
+        result = news_schema.dump(news, many=True)
     return {'data': result}
 
 @api.route('/api/users')
