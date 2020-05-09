@@ -12,9 +12,9 @@
 ## Migrate db
     docker exec -it emotionalmappapp_app_1 alembic upgrade head
 ## Seed db
-    docker exec -it emotionalmappapp_app_1 python3 app/seed.py
+    docker exec -it emotionalmappapp_app_1 python3 emuapp/seed.py
 ## Revision db
     docker exec -it emotionalmappapp_app_1 alembic revision --autogenerate -m ""
 ## Clear db
-    docker exec -it emotionalmappapp_app_1 python3 app/clearDB.py
+    docker exec -it emotionalmappapp_app_1 python3 emuapp/clearDB.py
 ### Enjoy
