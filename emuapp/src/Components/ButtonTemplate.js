@@ -23,6 +23,7 @@ const ButtonTemplate = (props) => {
             <Button 
             variant="contained" 
             disabled={isDisabled}
+            onClick={(event) => onButtonClick()} 
             style={{color: textColor, background: background}}
             component={Link} 
             to={path}
