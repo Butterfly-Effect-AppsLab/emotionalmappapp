@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import Grid from '@material-ui/core/Grid'
 import { LIGHTGRAY, RED, DARKGRAY, WHITE } from '../utils/colours';
+import Loading from '../Components/Loading';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -94,7 +95,7 @@ const RegistrationPage = (props) => {
         postRegInfo(regData);
         };
 
-    if (years && sexes && streets)
+    if (years && sexes && streets) {
         return (
             <div className={classes.main}>
                 <div className={classes.info}>
@@ -141,8 +142,9 @@ const RegistrationPage = (props) => {
                 </div>
             </div>
         )
+    }
     else
-        return null;
+        return <Loading />;
 };
 
 
