@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     root: {
         '& > *': {
             borderRadius: 24,
-            minWidth: 300,
+            minWidth: 250,
             minHeight: 50,
             fontSize: 16,
         },
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 });
 
 const ButtonTemplate = (props) => {
-    const {background, textColor, isDisabled, onButtonClick, text} = props
+    const {background, textColor, isDisabled, onButtonClick, text, path} = props
     const classes = useStyles();
 
     return (
@@ -23,10 +23,9 @@ const ButtonTemplate = (props) => {
             <Button 
             variant="contained" 
             disabled={isDisabled}
-            onClick={(event) => onButtonClick()} 
             style={{color: textColor, background: background}}
             component={Link} 
-            to="/"
+            to={path}
             >
                 {text}
             </Button>

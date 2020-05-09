@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import Grid from '@material-ui/core/Grid'
 import { LIGHTGRAY, RED, DARKGRAY, WHITE } from '../utils/colours';
-import history from "../utils/history";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -93,8 +92,7 @@ const RegistrationPage = (props) => {
 
     const onButtonClick = () => {
         postRegInfo(regData);
-        // history.push('/');
-    };
+        };
 
     if (years && sexes && streets)
         return (
@@ -137,6 +135,7 @@ const RegistrationPage = (props) => {
                         textColor={buttonStyle.textColor} 
                         isDisabled={isDisabled} 
                         text={'Odoslať'}
+                        path={'/'}
                         onButtonClick={() => { onButtonClick() }}/>
                     </Grid>
                 </div>
