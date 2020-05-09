@@ -3,7 +3,7 @@ import {Route, withRouter} from 'react-router-dom';
 import NewsPage from '../Pages/NewsPage';
 import RegistrationPage from '../Pages/RegistrationPage';
 import OnboardingPage from '../Pages/OnboardingPage';
-import ReduxTest from '../Pages/ReduxTest';
+import Loading from '../Components/Loading';
 
 
 
@@ -13,7 +13,7 @@ const Routes = () => (
     <Route exact path={'/registration'} component={RegistrationPage} />
     <Route exact path={'/onboarding'} component={OnboardingPage} />
 
-    <Route exact path={'/test'} component={ReduxTest} />
+    <Route exact path={'/test'} component={Loading} />
     
   </>
 );
