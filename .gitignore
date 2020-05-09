@@ -7,7 +7,7 @@ venv
 __pycache__
 /.pnp
 .pnp.js
-backend/app/templates/index.html
+backend/emuapp/templates/index.html
 backend/.flaskenv
 
 #build
