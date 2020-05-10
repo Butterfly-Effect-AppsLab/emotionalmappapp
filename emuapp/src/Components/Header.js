@@ -3,14 +3,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import NewsMenu from './NewsMenu';
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(({
   appBar: {
     minHeight: 56,
+    flexWrap: 'wrap',
+  },
+  toolBar: {
+    minHeight: 56,
+    flexWrap: 'wrap',
   },
   menuButton: {
     marginLeft: 'auto',
@@ -18,49 +21,46 @@ const useStyles = makeStyles(({
   title: {
     flexGrow: 1,
   },
+  tabs: {
+    paddingTop: 50,
+  },
+  tabsRoot: {
+    minHeight: 40,
+    height: 40,
+  },
+  tabRoot: {
+    minHeight: 40,
+    height: 40,
+  },
+  size: {
+    minHeight: 86,
+  }
 }));
 
 const Header = (props) => {
-  const {showHeader} = props;
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [value, setValue] = React.useState(2);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return showHeader == 1 ? (
-    <div className={classes.appBar}>
-      <AppBar position='fixed'>
-        <Toolbar
-          classes={{ regular: classes.appBar }}
-        >
-          <Typography variant='h6' className={classes.title}>
-            News
-          </Typography>
-          <IconButton onClick={handleClick} edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
-            <MenuIcon />
-            <Menu
-              id='simple-menu'
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onBlur={handleClose}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose} component='a' href='https://google.com'>Profile</MenuItem>
-              <MenuItem onClick={handleClose} component='a' href='https://messenger.com'>My account</MenuItem>
-              <MenuItem onClick={handleClose} component='a' href='https://bing.com'>Logout</MenuItem>
-            </Menu>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+  return (
+    <div id='HeaderMenu.js' >
+      <Box display='flex' flexDirection='column' className={classes.size}>
+        <AppBar elevation={0} position='fixed'>
+          <Toolbar
+            classes={{ regular: classes.toolBar }}
+          >
+            <Typography variant='h6' className={classes.title}>
+              News
+                    </Typography>
+          </Toolbar>
+          <NewsMenu />
+        </AppBar>
+      </Box>
     </div>
-  ) : null;
+  );
 };
 
 export default Header;
