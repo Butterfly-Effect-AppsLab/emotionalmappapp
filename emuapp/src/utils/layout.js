@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Components/Header.js';
 import Footer from '../Components/Footer.js';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
   root: {
@@ -9,7 +10,13 @@ const useStyles = makeStyles({
     overflow: 'auto',
     display: 'flex',
     flexDirection: 'column',
-  }
+  },
+  // childDiv: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   // marginTop: 86,
+  //   // marginBottom: 56,
+  // }
 });
 
 const Layout = ({ children, history }) => {
@@ -48,9 +55,13 @@ const Layout = ({ children, history }) => {
 
   return (
     <div id='layout.js' className={classes.root}>
-      <Header history={history} showHeader={showHeader} />
-      {children}
-      <Footer history={history} showFooter={showFooter} />
+      <Box display='flex' flexDirection='column'>
+        <Header history={history} showHeader={showHeader} />
+        {/* <div className={classes.childDiv}> */}
+          {children}
+        {/* </div> */}
+        <Footer history={history} showFooter={showFooter} />
+      </Box>
     </div>
   )
 };

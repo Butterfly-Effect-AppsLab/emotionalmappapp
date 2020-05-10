@@ -8,6 +8,8 @@ import { DARKGRAY, WHITE, BLACK, DARKBLUE } from '../utils/colours';
 import { ReactComponent as SmallLogo } from '../icons/logo_small.svg';
 import { ReactComponent as LargeLogo } from '../icons/logo_large.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+
 
 const useStyles = makeStyles({
     root: {
@@ -43,9 +45,12 @@ const OnboardingPage = () => {
             el: '.swiper-pagination',
             renderBullet: () => {
                 return '<span class="swiper-pagination-bullet swiper-pagination-bullet-active" style="background-color:' + DARKGRAY + '; border-color:' + DARKGRAY + '; border-radius: 50%; border-style: solid; border-width: 1px; width: 8px; height: 8px; display: inline-block; margin: 10px;"></span>';
-            }
+            },
+            clickable: true,
         },
+        clickable: true,
     };
+    
     return (
         <div className={classes.root}>
             <Swiper {...params}>
@@ -78,11 +83,11 @@ const OnboardingPage = () => {
                 </div>
                 <div className={classes.swipe}>
                     <LargeLogo className={classes.logo} />
-                    <div style={{marginTop: 100, marginBottom: 15}}>
-                        <ButtonTemplate  background={WHITE} textColor={BLACK} isDisabled={false} text={'Prihlásiť cez Google'} path={'/registration'}/>
+                    <div style={{ marginTop: 100, marginBottom: 15 }}>
+                        <ButtonTemplate background={WHITE} textColor={BLACK} isDisabled={false} text={'Prihlásiť cez Google'} path={'/registration'} />
                     </div>
-                    <div style={{marginBottom: 30}}> 
-                        <ButtonTemplate  background={DARKBLUE} textColor={WHITE} isDisabled={false} text={'Prihlásiť cez Facebook'} path={'/registration'}/>
+                    <div style={{ marginBottom: 30 }}>
+                        <ButtonTemplate background={DARKBLUE} textColor={WHITE} isDisabled={false} text={'Prihlásiť cez Facebook'} path={'/registration'} />
                     </div>
                 </div>
             </Swiper>
