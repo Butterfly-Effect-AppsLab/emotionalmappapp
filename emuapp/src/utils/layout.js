@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   //   flexDirection: 'column',
   //   // marginTop: 86,
   //   // marginBottom: 56,
-  }
+  // }
 });
 
 const Layout = ({ children, history }) => {
