@@ -6,10 +6,10 @@ import { WHITE, DARKGRAY  } from '../utils/colours';
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 120,
         marginTop: 10,
         marginBottom: 30,
-        width: 300
+        width: '80vw',
+
     },
     inputStyle: {
         fontSize: 14,

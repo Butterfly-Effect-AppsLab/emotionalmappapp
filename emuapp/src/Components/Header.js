@@ -38,29 +38,29 @@ const useStyles = makeStyles(({
 }));
 
 const Header = (props) => {
+  const { showHeader } = props;
   const classes = useStyles();
-  const [value, setValue] = React.useState(2);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
-  return (
-    <div id='HeaderMenu.js' >
-      <Box display='flex' flexDirection='column' className={classes.size}>
-        <AppBar elevation={0} position='fixed'>
-          <Toolbar
-            classes={{ regular: classes.toolBar }}
-          >
-            <Typography variant='h6' className={classes.title}>
-              News
+  if (showHeader) {
+    return (
+      <div id='HeaderMenu.js' >
+        <Box display='flex' flexDirection='column' className={classes.size}>
+          <AppBar elevation={0} position='fixed'>
+            <Toolbar
+              classes={{ regular: classes.toolBar }}
+            >
+              <Typography variant='h6' className={classes.title}>
+                News
                     </Typography>
-          </Toolbar>
-          <NewsMenu />
-        </AppBar>
-      </Box>
-    </div>
-  );
+            </Toolbar>
+            <NewsMenu />
+          </AppBar>
+        </Box>
+      </div>
+    )
+  }
+  else return null;
 };
 
 export default Header;

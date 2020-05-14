@@ -8,7 +8,7 @@ import { WHITE, DARKGRAY } from '../utils/colours';
 
 const useStyles = makeStyles({
     formControl: {
-        minWidth: 120,
+        width: '80vw',
         // backgroundColor: WHITE,
         marginTop: 10,
         marginBottom: 30,

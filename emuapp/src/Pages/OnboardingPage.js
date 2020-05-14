@@ -3,12 +3,9 @@ import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
-import { DARKGRAY, WHITE, BLACK, DARKBLUE } from '../utils/colours';
+import { DARKGRAY, WHITE, RED } from '../utils/colours';
 import { ReactComponent as SmallLogo } from '../icons/logo_small.svg';
-import { ReactComponent as LargeLogo } from '../icons/logo_large.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 
 
 const useStyles = makeStyles({
@@ -16,26 +13,31 @@ const useStyles = makeStyles({
         height: '100vh',
         justifyContent: 'center',
         textAlign: 'center',
-
-    },
-    title: {
-        fontSize: 28,
-        marginBottom: 50,
-        fontWeight: 500,
     },
     swipe: {
         height: '100vh',
-        paddingLeft: 50,
-        paddingRight: 50,
-        paddingTop: 150,
-        paddingBottom: 150
+        paddingLeft: '10vw',
+        paddingRight: '10vw',
+        paddingTop: '10vh',
+    },
+    logo: {
+        marginBottom: "10vh"
+    },
+    title: {
+        fontSize: 28,
+        marginBottom: "5vh",
+        fontWeight: 500,
     },
     text: {
         fontSize: 12,
+        marginBottom: "40vh"
     },
-    logo: {
-        marginBottom: 50,
-    },
+    button: {
+        position: "absolute",
+        bottom: '10vh',
+        left: '10vw',
+        right: '10vw',
+    }
 });
 
 const OnboardingPage = () => {
@@ -50,7 +52,7 @@ const OnboardingPage = () => {
         },
         clickable: true,
     };
-    
+
     return (
         <div className={classes.root}>
             <Swiper {...params}>
@@ -62,6 +64,9 @@ const OnboardingPage = () => {
                     <Typography variant='subtitle1' className={classes.text}>
                         Pomôžte nám budovať lepšie mesto. Vyjadrite svoj názor v prieskumoch a sledujte dianie vo vašom meste.
                     </Typography>
+                    <div className={classes.button}>
+                        <ButtonTemplate variant="text" background='transparent' textColor={RED} isDisabled={false} text={'Preskočiť'} path={'/login'} />
+                    </div>
                 </div>
                 <div className={classes.swipe}>
                     <SmallLogo className={classes.logo} />
@@ -71,6 +76,9 @@ const OnboardingPage = () => {
                     <Typography variant='subtitle1' className={classes.text}>
                         Zostaňte v obraze vďaka mestským správam na mieru. Vyberte si vaše záujmy a sledujte to, čo vás skutočne zaujíma.
                     </Typography>
+                    <div className={classes.button}>
+                        <ButtonTemplate variant="text" background={WHITE} textColor={RED} isDisabled={false} text={'Preskočiť'} path={'/login'} />
+                    </div>
                 </div>
                 <div className={classes.swipe}>
                     <SmallLogo className={classes.logo} />
@@ -80,14 +88,8 @@ const OnboardingPage = () => {
                     <Typography variant='subtitle1' className={classes.text}>
                         Zapojte sa do prieskumov a ankiet a ovplyvnite tak priamo dianie vo vašom meste. Vyjadrite svoj názor, chceme ho počuť.
                     </Typography>
-                </div>
-                <div className={classes.swipe}>
-                    <LargeLogo className={classes.logo} />
-                    <div style={{ marginTop: 100, marginBottom: 15 }}>
-                        <ButtonTemplate background={WHITE} textColor={BLACK} isDisabled={false} text={'Prihlásiť cez Google'} path={'/registration'} />
-                    </div>
-                    <div style={{ marginBottom: 30 }}>
-                        <ButtonTemplate background={DARKBLUE} textColor={WHITE} isDisabled={false} text={'Prihlásiť cez Facebook'} path={'/registration'} />
+                    <div className={classes.button}>
+                        <ButtonTemplate variant="outlined" background={WHITE} textColor={RED} isDisabled={false} text={'Začnite'} path={'/login'} primary={true} />
                     </div>
                 </div>
             </Swiper>
