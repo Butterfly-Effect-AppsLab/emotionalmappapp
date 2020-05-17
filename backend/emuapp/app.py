@@ -129,15 +129,15 @@ def post_survey():
 
         new_survey = survey_schema.load(survey_json)
         ses.add(new_survey)
-        if survey_json['interests']:
+        if 'interests' in survey_json:
             for interest in survey_json['interests']:
                 new_survey.interests.append(ses.query(m.Interest).get(interest['id']))
 
-        if survey_json['questions']:
+        if 'questions' in survey_json:
             for question in survey_json['questions']:
                 new_question = question_schema.load(question)
                 new_survey.questions.append(new_question)
-                if new_question.type != 'text' and question['options']:
+                if new_question.type != 'text' and 'options' in question:
                     new_question.options.extend(question_option_schema.load(question['options'], many=True))
         ses.commit()
     except Exception as e:

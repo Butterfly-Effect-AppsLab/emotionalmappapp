@@ -2,14 +2,15 @@ from alembic import op
 import json
 import requests
 import os
+from emuapp import decorators as dec
 from random import randint
 from emuapp import models as m
 from emuapp import schemas
 
 cur_path = os.path.dirname(__file__)
 
-def seed_interests():
-    ses = m.Session()
+@dec.init_db
+def seed_interests(ses):
     try:
         ses.query(m.Interest).delete()
         ses.commit()
@@ -23,11 +24,9 @@ def seed_interests():
                  m.Interest(interest='Vzdelávanie a šport')]
     ses.add_all(interests)
     ses.commit()
-    ses.close()
 
-
-def seed_news():
-    ses = m.Session()
+@dec.init_db
+def seed_news(ses):
     try:
         ses.query(m.News).delete()
         ses.commit()
@@ -50,27 +49,33 @@ def seed_news():
         for i in range(0,randint(1,4)):
             n.interests.append(interests[randint(0,4)])
     ses.commit()
-    ses.close()
 
-def seed_streets():
-    ses = m.Session()
+@dec.init_db
+def seed_streets(ses):
     try:
         ses.query(m.Street).delete()
         ses.commit()
     except:
         ses.rollback()
     streets = []
-    with open('/opt/app/backend/importdata/streets.jsonc') as json_file:
-        data = json.load(json_file)
-        for p in data['data']:
-            for s in p['sub']:
-                for st in s['streets']:
-                    streets.append(m.Street(street = st, sub_part = s['sub-part'], part = p['part']))
     ses.add_all(streets)
     ses.commit()
-    ses.close()
+
+@dec.init_db
+def seed_surveys(ses):
+    try:
+        ses.query(m.Street).delete()
+        ses.commit()
+    except:
+        ses.rollback()
+    with open('/opt/app/backend/importdata/surveysTemp.jsonc') as json_file:
+        data = json.load(json_file)
+        for s in data:
+            requests.post('http://localhost:5000/api/createSurvey', headers = {'ContentType':'application/json'}, json=s)
+
 
 if __name__ == '__main__':
     seed_interests()
     seed_streets()
     seed_news()
+    seed_surveys()
