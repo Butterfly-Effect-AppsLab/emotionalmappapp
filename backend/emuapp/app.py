@@ -3,6 +3,7 @@ from flask_cors import CORS
 import requests
 from emuapp import models as m
 from emuapp import schemas
+from emuapp import decorators as dec
 from random import randint
 from datetime import datetime
 import os
@@ -52,6 +53,15 @@ def get_users():
     user_schema = schemas.UserSchema()
 
     result = user_schema.dump(users, many=True)
+    return {'data': result}
+
+@app.route('/api/surveys')
+def get_surveys():
+    ses = m.Session()
+    surveys = ses.query(m.Survey)
+    survey_schema = schemas.SurveySchema()
+
+    result = survey_schema.dump(surveys, many=True)
     return {'data': result}
 
 @app.route('/api/age')
@@ -104,10 +114,35 @@ def post_user():
         new_user = user_schema.load(user_json)
         ses.add(new_user)
         ses.commit()
-        ses.close()
     except Exception as e:
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
     return {"data": user_json}, 201, {'ContentType':'application/json'}
+
+@app.route('/api/createSurvey', methods=['POST'])
+def post_survey():
+    ses = m.Session()
+    try:
+        survey_json = request.json
+        survey_schema = schemas.SurveySchema()
+        question_schema = schemas.QuestionSchema()
+        question_option_schema = schemas.QuestionOptionSchema()
+
+        new_survey = survey_schema.load(survey_json)
+        ses.add(new_survey)
+        if survey_json['interests']:
+            for interest in survey_json['interests']:
+                new_survey.interests.append(ses.query(m.Interest).get(interest['id']))
+
+        if survey_json['questions']:
+            for question in survey_json['questions']:
+                new_question = question_schema.load(question)
+                new_survey.questions.append(new_question)
+                if new_question.type != 'text' and question['options']:
+                    new_question.options.extend(question_option_schema.load(question['options'], many=True))
+        ses.commit()
+    except Exception as e:
+        return {'error': str(e)}, 400, {'ContentType':'application/json'}
+    return {"data": survey_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/favicon.ico')
 def favicon():

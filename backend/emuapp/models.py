@@ -24,6 +24,18 @@ news_has_interests_table = Table('news_has_interests', Base.metadata,
                                  Column('news_id', Integer, ForeignKey('news.id'), primary_key=True),
                                  Column('interest_id', Integer, ForeignKey('interests.id'), primary_key=True))
 
+survey_has_interests_table = Table('survey_has_interests', Base.metadata,
+                                 Column('survey_id', Integer, ForeignKey('surveys.id'), primary_key=True),
+                                 Column('interest_id', Integer, ForeignKey('interests.id'), primary_key=True))
+
+survey_has_residence_region_table = Table('survey_has_residence_region', Base.metadata,
+                                 Column('survey_id', Integer, ForeignKey('surveys.id'), primary_key=True),
+                                 Column('street_id', Integer, ForeignKey('streets.id'), primary_key=True))
+
+survey_has_work_region_table = Table('survey_has_work_region', Base.metadata,
+                                 Column('survey_id', Integer, ForeignKey('surveys.id'), primary_key=True),
+                                 Column('street_id', Integer, ForeignKey('streets.id'), primary_key=True))
+
 
 class User(Base):
     __tablename__ = 'users'
@@ -31,8 +43,11 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     sex = Column(String, nullable=False)
     interests = relationship('Interest', secondary=user_has_interests_table)
-    residence_location = Column(String)
-    work_location = Column(String)
+    residence_location_id = Column(Integer, ForeignKey('streets.id'))
+    work_location_id = Column(Integer, ForeignKey('streets.id'))
+    residence_location = relationship('Street', foreign_keys=[residence_location_id])
+    work_location = relationship('Street', foreign_keys=[work_location_id])
+    survey_records = relationship('SurveyRecord')
     birthyear = Column(Integer, nullable=False)
 
 class Interest(Base):
@@ -58,3 +73,52 @@ class News(Base):
     author = Column(String)
     feedback = Column(Boolean)
     interests = relationship('Interest', secondary=news_has_interests_table)
+
+class Answer(Base):
+    __tablename__ = 'answer'
+
+    id = Column(Integer, primary_key=True)
+    survey_record_id = Column(Integer, ForeignKey('survey_records.id'))
+    answer = Column(String)
+
+class SurveyRecord(Base):
+    __tablename__ = 'survey_records'
+
+    id = Column(Integer, primary_key=True)
+    survey_id = Column(Integer, ForeignKey('surveys.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    users = relationship('User', foreign_keys=[user_id])
+    surveys = relationship('Survey', foreign_keys=[survey_id])
+
+
+class Question(Base):
+    __tablename__ = 'questions'
+
+    id = Column(Integer, primary_key=True)
+    survey_id = Column(Integer, ForeignKey('surveys.id'))
+    surveys = relationship('Survey', back_populates='questions')
+    question = Column(String)
+    type = Column(String)
+    options = relationship('QuestionOption', back_populates='questions')
+
+class QuestionOption(Base):
+    __tablename__ = 'question_options'
+
+    id = Column(Integer, primary_key=True)
+    question_id = Column(Integer, ForeignKey('questions.id'))
+    questions = relationship('Question', back_populates='options')
+    option = Column(String)
+
+class Survey(Base):
+    __tablename__ = 'surveys'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String, nullable=False)
+    estimated_time = Column(Integer)
+    age_group_bottom = Column(Integer)
+    age_group_top = Column(Integer)
+    interests = relationship('Interest', secondary=survey_has_interests_table)
+    residence_regions = relationship('Street', secondary=survey_has_residence_region_table)
+    work_regions = relationship('Street', secondary=survey_has_work_region_table)
+    questions = relationship('Question', back_populates='surveys')
+    survey_records = relationship('SurveyRecord', back_populates='surveys')

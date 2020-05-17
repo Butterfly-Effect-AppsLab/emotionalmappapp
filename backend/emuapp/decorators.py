@@ -1,11 +1,11 @@
-from app import models as m
+from emuapp import models as m
 
 def init_db(func):
     def wrapper(*args, **kwargs):
         db = m.Session()
-        func(*args, **kwargs, ses = db)
-        db.commit()
+        value = func(*args, **kwargs, ses = db)
         db.close()
+        return value
     return wrapper
 
 @init_db
