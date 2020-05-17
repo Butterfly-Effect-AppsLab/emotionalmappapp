@@ -132,6 +132,7 @@ const RegistrationPage = (props) => {
 
                     <Grid container justify='center'>
                         <ButtonTemplate 
+                        variant="contained"
                         background={buttonStyle.background} 
                         textColor={buttonStyle.textColor} 
                         isDisabled={isDisabled} 

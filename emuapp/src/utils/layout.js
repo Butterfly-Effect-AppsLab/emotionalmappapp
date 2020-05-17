@@ -39,6 +39,10 @@ const Layout = ({ children, history }) => {
           setShowHeader(0);
           setShowFooter(0);
           break;
+          case "/login":
+          setShowHeader(0);
+          setShowFooter(0);
+          break;
         default:
           setShowHeader(1);
           setShowFooter(1);
@@ -57,9 +61,7 @@ const Layout = ({ children, history }) => {
     <div id='layout.js' className={classes.root}>
       <Box display='flex' flexDirection='column'>
         <Header history={history} showHeader={showHeader} />
-        {/* <div className={classes.childDiv}> */}
           {children}
-        {/* </div> */}
         <Footer history={history} showFooter={showFooter} />
       </Box>
     </div>
