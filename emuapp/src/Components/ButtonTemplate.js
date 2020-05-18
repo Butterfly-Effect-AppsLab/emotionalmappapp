@@ -7,7 +7,8 @@ const useStyles = makeStyles({
     root: {
         '& > *': {
             borderRadius: 24,
-            minWidth: '70vw',
+            width: '70vw',
+            maxWidth: 350,
             minHeight: 50,
             fontSize: '2vh',
         },

@@ -11,6 +11,7 @@ import ButtonTemplate from '../Components/ButtonTemplate';
 import Grid from '@material-ui/core/Grid'
 import { LIGHTGRAY, RED, DARKGRAY, WHITE } from '../utils/colours';
 import Loading from '../Components/Loading';
+import DatePicker from 'react-datepicker';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -56,11 +57,12 @@ const useStyles = makeStyles((theme) => ({
 const RegistrationPage = (props) => {
     const { years, sexes, streets, fetchRegInfo, postRegInfo } = props;
     const classes = useStyles();
-    const [isDisabled, setIsDisabled] = React.useState(true)
+    const [isDisabled, setIsDisabled] = React.useState(true);
+    const [startDate, setStartDate] = React.useState(new Date());
     const [buttonStyle, setButtonStyle] = React.useState({
         textColor: '',
         background: '',
-    })
+    });
     const [regData, setRegData] = React.useState({
         // id: ,
         sex: '',
@@ -93,7 +95,7 @@ const RegistrationPage = (props) => {
 
     const onButtonClick = () => {
         postRegInfo(regData);
-        };
+    };
 
     if (years && sexes && streets) {
         return (
@@ -111,7 +113,12 @@ const RegistrationPage = (props) => {
                         Rok narodenia
                 </Typography>
                     <Dropdown type={years} idComponent={'birthyear'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
-
+                    {/* <DatePicker
+                        selected={startDate}
+                        onChange={date => setStartDate(date)}
+                        showYearPicker
+                        dateFormat="yyyy"
+                    /> */}
                     <Typography variant='h6' className={classes.titles}>
                         Pohlavie
                 </Typography>
@@ -131,14 +138,14 @@ const RegistrationPage = (props) => {
                     <ComboBox type={streets} otherOption={[{ street: "Mimo Bratislavy" }]} idComponent={'work_location'} sendData={(value, idComponent) => { getData(value, idComponent) }} />
 
                     <Grid container justify='center'>
-                        <ButtonTemplate 
-                        variant="contained"
-                        background={buttonStyle.background} 
-                        textColor={buttonStyle.textColor} 
-                        isDisabled={isDisabled} 
-                        text={'Odoslať'}
-                        path={'/'}
-                        onButtonClick={() => { onButtonClick() }}/>
+                        <ButtonTemplate
+                            variant="contained"
+                            background={buttonStyle.background}
+                            textColor={buttonStyle.textColor}
+                            isDisabled={isDisabled}
+                            text={'Odoslať'}
+                            path={'/'}
+                            onButtonClick={() => { onButtonClick() }} />
                     </Grid>
                 </div>
             </div>
