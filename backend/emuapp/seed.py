@@ -58,6 +58,12 @@ def seed_streets(ses):
     except:
         ses.rollback()
     streets = []
+    with open('/opt/app/backend/importdata/streets.jsonc') as json_file:
+        data = json.load(json_file)
+        for p in data['data']:
+            for s in p['sub']:
+                for st in s['streets']:
+                    streets.append(m.Street(street = st, sub_part = s['sub-part'], part = p['part']))
     ses.add_all(streets)
     ses.commit()
 
