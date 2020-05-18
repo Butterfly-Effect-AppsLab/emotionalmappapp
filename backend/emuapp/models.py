@@ -41,7 +41,6 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    social_id = Column(String)
     sex = Column(String, nullable=False)
     interests = relationship('Interest', secondary=user_has_interests_table)
     residence_location_id = Column(Integer, ForeignKey('streets.id'))
