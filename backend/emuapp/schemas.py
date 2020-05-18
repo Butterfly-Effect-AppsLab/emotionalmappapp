@@ -91,6 +91,8 @@ class SurveySchema(Schema):
     estimated_time = fields.Integer()
     age_group_bottom = fields.Integer()
     age_group_top = fields.Integer()
+    residence_regions = fields.Nested(StreetSchema, dump_only=True, many=True)
+    work_regions = fields.Nested(StreetSchema, dump_only=True, many=True)
     interests = fields.Nested(InterestSchema, many=True, dump_only=True)
     questions = fields.Nested(QuestionSchema, many=True, dump_only=True)
 

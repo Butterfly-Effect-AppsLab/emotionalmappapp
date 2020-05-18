@@ -64,7 +64,7 @@ def seed_streets(ses):
 @dec.init_db
 def seed_surveys(ses):
     try:
-        ses.query(m.Street).delete()
+        ses.query(m.Survey).delete()
         ses.commit()
     except:
         ses.rollback()

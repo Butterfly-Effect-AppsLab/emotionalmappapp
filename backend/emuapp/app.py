@@ -59,9 +59,18 @@ def get_users():
 def get_surveys():
     ses = m.Session()
     surveys = ses.query(m.Survey)
-    survey_schema = schemas.SurveySchema()
+    survey_schema = schemas.SurveySchema(exclude=('questions', 'interests', 'residence_regions', 'work_regions'))
 
     result = survey_schema.dump(surveys, many=True)
+    return {'data': result}
+
+@app.route('/api/surveys/<id>')
+def get_surveys_by_id(id):
+    ses = m.Session()
+    surveys = ses.query(m.Survey).get(id)
+    survey_schema = schemas.SurveySchema()
+
+    result = survey_schema.dump(surveys)
     return {'data': result}
 
 @app.route('/api/age')
@@ -139,7 +148,16 @@ def post_survey():
                 new_survey.questions.append(new_question)
                 if new_question.type != 'text' and 'options' in question:
                     new_question.options.extend(question_option_schema.load(question['options'], many=True))
+
+        if 'residence_regions' in survey_json:
+            for residence in survey_json['residence_regions']:
+                new_survey.residence_regions.append(ses.query(m.Street).get(residence['id']))
+
+        if 'work_regions' in survey_json:
+            for work in survey_json['work_regions']:
+                new_survey.work_regions.append(ses.query(m.Street).get(work['id']))
         ses.commit()
+        ses.close()
     except Exception as e:
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
     return {"data": survey_json}, 201, {'ContentType':'application/json'}
