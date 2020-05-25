@@ -5,7 +5,7 @@ import RegistrationPage from '../Pages/RegistrationPage';
 import OnboardingPage from '../Pages/OnboardingPage';
 import Loading from '../Components/Loading';
 import LogInPage from '../Pages/LogInPage';
-
+import SurveysPage from '../Pages/SurveysPage';
 
 const Routes = () => (
   <>
@@ -13,6 +13,8 @@ const Routes = () => (
     <Route exact path={'/onboarding'} component={OnboardingPage} />
     <Route exact path={'/registration'} component={RegistrationPage} />
     <Route exact path={'/login'} component={LogInPage} />
+    <Route exact path={'/surveys'} component={SurveysPage} />
+
 
 
     <Route exact path={'/test'} component={Loading} />

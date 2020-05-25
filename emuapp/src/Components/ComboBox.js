@@ -36,14 +36,15 @@ const ComboBox = (props) => {
     const classes = useStyles();
     const [inputText, setInputText] = React.useState('');
     const [inputOption, setInputOption] = React.useState({
-        id: '',
+        id: null,
         street: '',
         sub_part: '',
     });
 
     useEffect(() => {
+        console.log(inputOption)
         if(inputOption){
-           sendData(inputOption.street, idComponent)
+           sendData(inputOption, idComponent)
         }
     }, [inputOption])
 

@@ -63,12 +63,16 @@ const RegistrationPage = (props) => {
         textColor: '',
         background: '',
     });
+    const [locationData, setLocationData] = React.useState({
+        residence_location: null,
+        work_location: null,
+    });
     const [regData, setRegData] = React.useState({
         // id: ,
         sex: '',
         // interests: [],
-        residence_location: '',
-        work_location: '',
+        residence_location_id: null,
+        work_location_id: null,
         birthyear: ''
     });
 
@@ -77,7 +81,8 @@ const RegistrationPage = (props) => {
     }, []);
 
     useEffect(() => {
-        if (regData.sex != '' && regData.birthyear != '' && regData.residence_location != '' && regData.work_location != '') {
+        console.log('regData', regData)
+        if (regData.sex != '' && regData.birthyear != '' && regData.residence_location_id != null && regData.work_location_id != null) {
             setIsDisabled(false);
             setButtonStyle({ ...buttonStyle, textColor: WHITE, background: RED })
         }
@@ -85,13 +90,32 @@ const RegistrationPage = (props) => {
             setIsDisabled(true);
             setButtonStyle({ ...buttonStyle, textColor: DARKGRAY, background: WHITE })
         }
-    }, [regData]);
+    }, [regData,]);
+
+    useEffect(() => {
+        if (locationData.residence_location) {
+            setRegData({ ...regData, residence_location_id: locationData.residence_location.id })
+        }
+        if (locationData.work_location) {
+            setRegData({ ...regData, work_location_id: locationData.work_location.id })
+        }
+    }, [locationData]);
+
+
 
     const getData = (value, idComponent) => {
         if (value != 'undefined') {
-            setRegData({ ...regData, [idComponent]: value })
+            if (idComponent !== 'work_location' && idComponent !== 'residence_location') {
+                console.log('som tu', idComponent)
+                setRegData({ ...regData, [idComponent]: value })
+            }
+            else {
+                console.log('value', value)
+                setLocationData({ ...locationData, [idComponent]: value })
+            };
         };
     };
+
 
     const onButtonClick = () => {
         postRegInfo(regData);
