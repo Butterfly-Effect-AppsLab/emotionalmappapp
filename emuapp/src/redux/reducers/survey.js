@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case FETCH_SURVEY_SUCCESS: {
             const { data } = action.payload;
-            return { data };
+            return { ...state, data };
         }
 
         case FETCH_SURVEY_FAIL:

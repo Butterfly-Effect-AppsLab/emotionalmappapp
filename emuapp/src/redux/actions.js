@@ -53,9 +53,9 @@ export const fetchSurveysList = () => async dispatch => {
 };
 
 export const fetchSurvey = (id) => async dispatch => {
-    console.log('som v akcii')
+    console.log('idcko', id)
     try {
-        const response = await fetch('/api/surveys/' + {id});
+        const response = await fetch('/api/surveys/' + id);
         const json = await response.json();
         dispatch(fetchSurveySuccess(json));
     } catch (err) {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import SurveyCards from '../Components/SurveyCards';
+import SurveysCards from '../Components/SurveysCards';
 import Loading from '../Components/Loading';
 import { fetchSurveysList, fetchSurvey } from '../redux/actions';
 import { bindActionCreators } from 'redux';
@@ -7,38 +7,31 @@ import { connect } from 'react-redux';
 import { getSurveysList, getSurvey } from '../redux/selectors';
 
 const SurveysPage = (props) => {
-    const { surveys, survey } = props;
-    const [text, setText] = React.useState()
-    
+    const { surveys, fetchSurveysList } = props;
 
     useEffect(() => {
-        console.log('som tu v effecte');
         fetchSurveysList();
-        fetchSurvey(1);
-        console.log('som tu za effectom');
     }, []);
 
-    // if (surveys) {
+    if (surveys) {
         return (
             <div>
-                {/* <SurveyCards surveys={surveys} /> */}
-                <h1>Surveys</h1>
+                <h1><center>Surveys</center></h1>
+                <SurveysCards surveys={surveys} />
             </div>
         )
-    // }
-    // else
-    //     return <Loading />
+    }
+    else
+        return <Loading />
 };
 
 const mapStateToProps = (state) => {
     const surveys = getSurveysList(state);
-    const survey = getSurvey(state);
-    return { surveys, survey };
+    return { surveys };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchSurveysList: bindActionCreators(fetchSurveysList, dispatch),
-    fetchSurvey: bindActionCreators(fetchSurvey, dispatch),
+    fetchSurveysList: bindActionCreators(fetchSurveysList, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SurveysPage);
