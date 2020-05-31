@@ -45,13 +45,15 @@ class StreetSchema(Schema):
     part = fields.Str()
 
 class UserSchema(Schema):
-    id = fields.Integer(dump_only=True)
-    sex = fields.String(required=True)
+    id = fields.String(dump_only=True)
+    sex = fields.String()
+    social_id = fields.String(required=False)
     residence_location_id = fields.Integer(load_only=True)
     work_location_id = fields.Integer(load_only=True)
     residence_location = fields.Nested(StreetSchema, dump_only=True)
     work_location = fields.Nested(StreetSchema, dump_only=True)
-    birthyear = fields.Integer(required=True)
+    birthyear = fields.Integer()
+    created = fields.DateTime(dump_only=True)
 
     class Meta:
         model = m.User

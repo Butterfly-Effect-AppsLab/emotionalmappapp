@@ -54,7 +54,7 @@ def get_google_provider_cfg():
 def get_index(path):
     return  render_template("index.html", token=path)
 
-@app.route('/login')
+@app.route('/glogin')
 def get_login():
     google_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
@@ -66,7 +66,7 @@ def get_login():
     )
     return redirect(request_uri)
 
-@app.route('/login/callback')
+@app.route('/glogin/callback')
 def create_or_update_user():
     code = request.args.get("code")
     google_provider_cfg = get_google_provider_cfg()
@@ -86,11 +86,28 @@ def create_or_update_user():
     )
 
     client.parse_request_body_response(json.dumps(token_response.json()))
+    try:
+        userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
+        uri, headers, body = client.add_token(userinfo_endpoint)
+        userinfo_response = requests.get(uri, headers=headers, data=body)
+        user_id = userinfo_response.json()['sub']
+        ses = m.Session()
+        user = ses.query(m.User).filter(m.User.social_id == user_id).first()
 
-    userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
-    uri, headers, body = client.add_token(userinfo_endpoint)
-    userinfo_response = requests.get(uri, headers=headers, data=body)
-    return userinfo_response.json()
+        if not user:
+            user_schema = schemas.UserSchema()
+            new_user = user_schema.load({'social_id': user_id})
+            ses.add(new_user)
+            ses.commit()
+            ses.refresh(new_user)
+            ses.close()
+            return redirect('/registration/' + new_user.id)
+        elif not user.sex:
+            return redirect('/registration/' + user.id)
+        else:
+            return redirect("/")
+    except:
+        return "google down" #TODO doplnit error handling
 
 @app.route('/logout')
 def get_logout():
@@ -99,28 +116,29 @@ def get_logout():
 @app.route('/api/news')
 def get_news():
     ses = m.Session()
-    filterInterests = []
+    filter_interests = []
     news_schema = schemas.NewsScheme()
     try:
         if request.args.get('interests'):
             for n in request.args.get('interests').split(','):
-                filterInterests.append(n)
+                filter_interests.append(n)
     except:
         pass
     news = ses.query(m.News)
-    filteredNews = []
-    if len(filterInterests) != 0:
+    filtered_news = []
+    if len(filter_interests) != 0:
         for n in news:
             has_interest = False
             for i in n.interests:
-                if filterInterests.__contains__(i.interest):
+                if filter_interests.__contains__(i.interest):
                     has_interest = True
                     break
             if has_interest:
-                filteredNews.append(n)
-        result = news_schema.dump(filteredNews, many=True)
+                filtered_news.append(n)
+        result = news_schema.dump(filtered_news, many=True)
     else:
         result = news_schema.dump(news, many=True)
+    ses.close()
     return {'data': result}
 
 @app.route('/api/users')
@@ -130,6 +148,7 @@ def get_users():
     user_schema = schemas.UserSchema()
 
     result = user_schema.dump(users, many=True)
+    ses.close()
     return {'data': result}
 
 @app.route('/api/surveys')
@@ -139,6 +158,7 @@ def get_surveys():
     survey_schema = schemas.SurveySchema(exclude=('questions', 'interests', 'residence_regions', 'work_regions'))
 
     result = survey_schema.dump(surveys, many=True)
+    ses.close()
     return {'data': result}
 
 @app.route('/api/surveys/<id>')
@@ -148,6 +168,7 @@ def get_surveys_by_id(id):
     survey_schema = schemas.SurveySchema()
 
     result = survey_schema.dump(surveys)
+    ses.close()
     return {'data': result}
 
 @app.route('/api/age')
@@ -164,6 +185,7 @@ def get_Interest():
 
     Interest_schema = schemas.InterestSchema()
     result = Interest_schema.dump(Interest, many=True)
+    ses.close()
 
     return {'data': result}
 
@@ -174,6 +196,7 @@ def get_cityparts():
 
     street_schema = schemas.StreetSchema()
     result = street_schema.dump(parts, many=True)
+    ses.close()
     return {'data': result}
 
 @app.route('/api/regInfo')
@@ -188,9 +211,10 @@ def get_regInfo():
     r = range(year-150,year)
     years = list(reversed([*r]))
     data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
+    ses.close()
     return data
 
-@app.route('/api/registerUser', methods=['POST'])
+@app.route('/api/registerUserOld', methods=['POST'])
 def post_user():
     ses = m.Session()
     try:
@@ -200,6 +224,22 @@ def post_user():
         new_user = user_schema.load(user_json)
         ses.add(new_user)
         ses.commit()
+        ses.close()
+    except Exception as e:
+        return {'error': str(e)}, 400, {'ContentType':'application/json'}
+    return {"data": user_json}, 201, {'ContentType':'application/json'}
+
+@app.route('/api/registerUser/<id>', methods=['POST'])
+def update_user(id):
+    ses = m.Session()
+    try:
+        user_json = request.json
+        user_schema = schemas.UserSchema()
+
+        user = ses.query(m.User).filter(m.User.id == id)
+        user.update(user_json)
+        ses.commit()
+        ses.close()
     except Exception as e:
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
     return {"data": user_json}, 201, {'ContentType':'application/json'}
@@ -218,6 +258,7 @@ def post_answer():
                 new_survey_record.answers.extend(answer_schema.load(answer_json['answers'], many=True))
 
         ses.commit()
+        ses.close()
     except Exception as e:
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
     return {"data": answer_json}, 201, {'ContentType':'application/json'}

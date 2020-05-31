@@ -8,6 +8,7 @@ from sqlalchemy import(
     ForeignKey
 )
 
+import uuid
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -19,7 +20,7 @@ engine = create_engine('postgresql://postgres:postgres@db/emu')
 Session = sessionmaker(bind=engine)
 
 user_has_interests_table = Table('user_has_interests', Base.metadata,
-                                 Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+                                 Column('user_id', String(32), ForeignKey('users.id'), primary_key=True),
                                  Column('interest_id', Integer, ForeignKey('interests.id'), primary_key=True))
 
 news_has_interests_table = Table('news_has_interests', Base.metadata,
@@ -42,16 +43,17 @@ survey_has_work_region_table = Table('survey_has_work_region', Base.metadata,
 class User(Base):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(String(32), default=lambda: uuid.uuid4().hex, primary_key=True)
     social_id = Column(String)
-    sex = Column(String, nullable=False)
+    sex = Column(String)
     interests = relationship('Interest', secondary=user_has_interests_table)
     residence_location_id = Column(Integer, ForeignKey('streets.id'))
     work_location_id = Column(Integer, ForeignKey('streets.id'))
     residence_location = relationship('Street', foreign_keys=[residence_location_id])
     work_location = relationship('Street', foreign_keys=[work_location_id])
     survey_records = relationship('SurveyRecord')
-    birthyear = Column(Integer, nullable=False)
+    birthyear = Column(Integer)
+    created = Column(DateTime, default= datetime.datetime.utcnow())
 
 class Interest(Base):
     __tablename__ = 'interests'
@@ -90,7 +92,7 @@ class SurveyRecord(Base):
 
     id = Column(Integer, primary_key=True)
     survey_id = Column(Integer, ForeignKey('surveys.id'))
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(String(32), ForeignKey('users.id'))
     users = relationship('User', foreign_keys=[user_id])
     surveys = relationship('Survey', foreign_keys=[survey_id])
     created = Column(DateTime, default= datetime.datetime.utcnow())
@@ -129,3 +131,4 @@ class Survey(Base):
     survey_records = relationship('SurveyRecord', back_populates='surveys')
     survey_type = Column(String)
     active_to = Column(DateTime)
+    created = Column(DateTime, default= datetime.datetime.utcnow())
