@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import SurveysCards from '../Components/SurveysCards';
 import Loading from '../Components/Loading';
-import { fetchSurveysList, fetchSurvey } from '../redux/actions';
+import { fetchSurveysList } from '../redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getSurveysList, getSurvey } from '../redux/selectors';
+import { getSurveysList } from '../redux/selectors';
+import { LIGHTGRAY } from '../utils/colours';
+
+const useStyles = makeStyles({
+    root: {
+        background: LIGHTGRAY
+    }
+});
 
 const SurveysPage = (props) => {
     const { surveys, fetchSurveysList } = props;
+    const classes = useStyles();
 
     useEffect(() => {
         fetchSurveysList();
@@ -15,8 +24,7 @@ const SurveysPage = (props) => {
 
     if (surveys) {
         return (
-            <div>
-                <h1><center>Surveys</center></h1>
+            <div className={classes.root}>
                 <SurveysCards surveys={surveys} />
             </div>
         )

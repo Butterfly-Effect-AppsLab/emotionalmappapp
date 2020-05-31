@@ -8,6 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate'
 import { RED, WHITE } from '../utils/colours';
 import history from '../utils/history';
+import { ReactComponent as SurveyIcon } from '../icons/prieskum_icon.svg';
+import { ReactComponent as PollIcon } from '../icons/anketa_icon.svg';
+import { ReactComponent as TimeIcon } from '../icons/time.svg';
+import { ReactComponent as FilledCountIcon } from '../icons/filled_count.svg';
 
 const useStyles = makeStyles({
     root: {
@@ -16,9 +20,34 @@ const useStyles = makeStyles({
     },
     text: {
         marginBottom: 10,
+        marginTop: 0
+
+    },
+    label: {
+        marginTop: 10,
+        marginBottom: 0,
     },
     button: {
         justifyContent: 'center'
+    },
+    card: {
+        borderRadius: 20,
+    },
+    row: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    column: {
+        marginLeft: 20,
+    },
+    iconDiv: {
+        width: '10vw',
+        textAlign: 'center',
+        justifyContent: 'center',
+        display: 'inline-block',
+    },
+    icon: {
+        verticalAlign: 'middle',
     }
 
 });
@@ -34,18 +63,41 @@ const SurveysCards = (props) => {
     const renderCard = (survey, i) => {
         return (
             <div key={i}>
-                <Card className={classes.root} variant="outlined">
-                        <CardContent>
-                            <Typography className={classes.text} style={{ fontWeight: 'bold' }} variant="h5" component="h2">
-                                {survey.title}
-                            </Typography>
-                            <Typography className={classes.text} variant="body2" component="p">
-                                {survey.description}
-                            </Typography>
-                            <Typography className={classes.text} variant="body2" component="p">
-                                - {surveys.author ? survey.author : "Unknown"}
-                            </Typography>
-                        </CardContent>
+                <Card className={classes.root}
+                    variant="outlined"
+                    classes={{ root: classes.card }}
+                >
+                    <CardContent>
+                        <div className={classes.row}>
+                            <div className={classes.iconDiv}>
+                                <SurveyIcon />
+                            </div>
+                            <div className={classes.column}>
+                                <Typography className={classes.label} variant="body2" component="p">
+                                    Prieskum
+                                </Typography>
+                                <Typography className={classes.text} style={{ fontWeight: 'bold' }} variant="h5" component="h2">
+                                    {survey.title}
+                                </Typography>
+                            </div>
+                        </div>
+                        <div className={classes.row}>
+                            <div className={classes.iconDiv}>
+                                <TimeIcon />
+                            </div>
+                            <div className={classes.column}>
+                                <Typography className={classes.label} variant="body2" component="p">
+                                    Aktívne do
+                                </Typography>
+                                <Typography className={classes.text} variant="subtitle2" component="p">
+                                    30.5.2020 do 20:00
+                                </Typography>
+                            </div>
+                        </div>
+                        <Typography className={classes.text} variant="body2" component="p">
+                            2700 hlasovalo
+                        </Typography>
+                    </CardContent>
                     <CardActions className={classes.button}>
                         {<ButtonTemplate variant="contained"
                             background={RED}
@@ -53,7 +105,7 @@ const SurveysCards = (props) => {
                             isDisabled={0}
                             text={'Vyplniť prieskum'}
                             onButtonClick={() => { onButtonClick(survey.id) }}
-                            >
+                        >
                         </ButtonTemplate>}
                     </CardActions>
                 </Card>

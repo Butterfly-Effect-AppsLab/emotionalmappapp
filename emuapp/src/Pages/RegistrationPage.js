@@ -90,14 +90,18 @@ const RegistrationPage = (props) => {
             setIsDisabled(true);
             setButtonStyle({ ...buttonStyle, textColor: DARKGRAY, background: WHITE })
         }
-    }, [regData,]);
+    }, [regData]);
 
     useEffect(() => {
-        if (locationData.residence_location) {
-            setRegData({ ...regData, residence_location_id: locationData.residence_location.id })
+        console.log('locationData', locationData)
+        if (locationData.work_location && locationData.residence_location) {
+            setRegData({ ...regData, work_location_id: locationData.work_location.id, residence_location_id: locationData.residence_location.id })
         }
-        if (locationData.work_location) {
-            setRegData({ ...regData, work_location_id: locationData.work_location.id })
+        else if (locationData.work_location) {
+           setRegData({ ...regData, work_location_id: locationData.work_location.id })
+        }
+        else if (locationData.residence_location) {
+            setRegData({ ...regData, residence_location_id: locationData.residence_location.id })
         }
     }, [locationData]);
 
