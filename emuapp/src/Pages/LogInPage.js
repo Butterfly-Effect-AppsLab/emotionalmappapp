@@ -26,13 +26,13 @@ const LogInPage = () => {
     return (
         <div className={classes.layout}>
             <LargeLogo className={classes.logo} />
-            <div className={classes.button} style={{bottom: '30vh'}}>
-                <ButtonTemplate variant="outlined" background={WHITE} textColor={BLACK} isDisabled={false} text={'Prihlásiť cez Google'} path={'/registration'} />
+            {/* <div className={classes.button} style={{bottom: '30vh'}}>
+                <ButtonTemplate variant="outlined" background={WHITE} textColor={BLACK} isDisabled={false} text={'Prihlásiť cez Google'} path={'/glogin'} />
+            </div> */}
+            <div className={classes.button} style={{ bottom: '20vh' }}>
+                <ButtonTemplate variant="outlined" background={WHITE} textColor={BLACK} isDisabled={false} text={'Prihlásiť cez Google'} path={'/glogin'} />
             </div>
-            <div className={classes.button} style={{bottom: '20vh'}}>
-                <ButtonTemplate variant="outlined" background={DARKBLUE} textColor={WHITE} isDisabled={false} text={'Prihlásiť cez Facebook'} path={'/registration'} />
-            </div>
-            <div className={classes.button} style={{bottom: '10vh'}}>
+            <div className={classes.button} style={{ bottom: '10vh' }}>
                 <ButtonTemplate variant="text" background={WHITE} textColor={RED} isDisabled={false} text={'Pokračovať bez prihlásenia'} path={'/'} />
             </div>
         </div>
