@@ -90,12 +90,13 @@ const SurveysCards = (props) => {
                                     Aktívne do
                                 </Typography>
                                 <Typography className={classes.text} variant="subtitle2" component="p">
-                                    30.5.2020 do 20:00
+                                    {console.log('answers',surveys.answer_count)}
+                                    {surveys.active_to} hlasovalo
                                 </Typography>
                             </div>
                         </div>
                         <Typography className={classes.text} variant="body2" component="p">
-                            2700 hlasovalo
+                            {surveys.answer_count}
                         </Typography>
                     </CardContent>
                     <CardActions className={classes.button}>

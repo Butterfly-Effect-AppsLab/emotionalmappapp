@@ -27,8 +27,7 @@ const ButtonTemplate = (props) => {
             disabled={isDisabled}
             onClick={onButtonClick ? (event) => onButtonClick() : null} 
             style={{color: textColor, background: background}}
-            component={Link} 
-            to={path}
+            href={path}
             >
                 {text}
             </Button>
