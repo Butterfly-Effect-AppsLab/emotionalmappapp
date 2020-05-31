@@ -77,7 +77,8 @@ def seed_surveys(ses):
     with open('/opt/app/backend/importdata/surveysTemp.jsonc') as json_file:
         data = json.load(json_file)
         for s in data:
-            requests.post('http://localhost:5000/api/createSurvey', headers = {'ContentType':'application/json'}, json=s)
+            response = requests.post('http://localhost:5000/api/createSurvey', headers = {'ContentType':'application/json'}, json=s)
+            #print(response.content)
 
 
 if __name__ == '__main__':
