@@ -1,6 +1,5 @@
 import feedparser
 
-NewsFeed = feedparser.parse("https://bratislava.sk/rss?projection=529")
-entry = NewsFeed.entries[1]
-
-print(NewsFeed.entries)
+def parse_rss(feed_link):
+    news = feedparser.parse(feed_link)
+    return news

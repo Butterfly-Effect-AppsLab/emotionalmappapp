@@ -93,10 +93,11 @@ const RegistrationPage = (props) => {
     }, [regData,]);
 
     useEffect(() => {
-        if (locationData.residence_location) {
+        console.log(locationData)
+        if (locationData.residence_location && locationData.residence_location.id) {
             setRegData({ ...regData, residence_location_id: locationData.residence_location.id })
         }
-        if (locationData.work_location) {
+        if (locationData.work_location && locationData.work_location.id) {
             setRegData({ ...regData, work_location_id: locationData.work_location.id })
         }
     }, [locationData]);

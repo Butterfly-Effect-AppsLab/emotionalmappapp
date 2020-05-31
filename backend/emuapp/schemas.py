@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields, pprint, EXCLUDE, post_load
 from emuapp import models as m
+from emuapp import decorators as dec
 from random import randint
 
 class Author(fields.Field):
@@ -95,11 +96,40 @@ class SurveySchema(Schema):
     work_regions = fields.Nested(StreetSchema, dump_only=True, many=True)
     interests = fields.Nested(InterestSchema, many=True, dump_only=True)
     questions = fields.Nested(QuestionSchema, many=True, dump_only=True)
+    survey_type = fields.String()
+    active_to = fields.DateTime()
+    answer_count = fields.Method('count_answers')
 
     class Meta:
         model = m.Survey
         unknown = EXCLUDE
 
+    @dec.init_db
+    def count_answers(self, obj, ses):
+        answers = ses.query(m.SurveyRecord).filter(m.SurveyRecord.survey_id == obj.id)
+        return answers.count()
+
     @post_load
     def make_survey(self, data, **kwargs):
         return m.Survey(**data)
+
+class AnswerSchema(Schema):
+    question_id = fields.Integer()
+    answer = fields.String()
+
+    @post_load
+    def make_survey_record(self, data, **kwargs):
+        return m.Answer(**data)
+
+class SurveyRecordSchema(Schema):
+    user_id = fields.Integer(load_only=True)
+    survey_id = fields.Integer()
+    answers = fields.Nested(AnswerSchema, many=True)
+
+    class Meta:
+        model = m.SurveyRecord
+        unknown = EXCLUDE
+
+    @post_load
+    def make_survey_record(self, data, **kwargs):
+        return m.SurveyRecord(**data)

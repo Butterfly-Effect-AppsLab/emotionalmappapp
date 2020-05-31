@@ -4,12 +4,14 @@ from sqlalchemy import(
     Integer,
     String,
     Boolean,
+    DateTime,
     ForeignKey
 )
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
+import datetime
 
 Base = declarative_base()
 
@@ -41,6 +43,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
+    social_id = Column(String)
     sex = Column(String, nullable=False)
     interests = relationship('Interest', secondary=user_has_interests_table)
     residence_location_id = Column(Integer, ForeignKey('streets.id'))
@@ -79,6 +82,7 @@ class Answer(Base):
 
     id = Column(Integer, primary_key=True)
     survey_record_id = Column(Integer, ForeignKey('survey_records.id'))
+    question_id = Column(Integer, ForeignKey('questions.id'))
     answer = Column(String)
 
 class SurveyRecord(Base):
@@ -89,7 +93,8 @@ class SurveyRecord(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     users = relationship('User', foreign_keys=[user_id])
     surveys = relationship('Survey', foreign_keys=[survey_id])
-
+    created = Column(DateTime, default= datetime.datetime.utcnow())
+    answers = relationship('Answer')
 
 class Question(Base):
     __tablename__ = 'questions'
@@ -122,3 +127,5 @@ class Survey(Base):
     work_regions = relationship('Street', secondary=survey_has_work_region_table)
     questions = relationship('Question', back_populates='surveys')
     survey_records = relationship('SurveyRecord', back_populates='surveys')
+    survey_type = Column(String)
+    active_to = Column(DateTime)
