@@ -2,6 +2,7 @@
     {
         "estimated_time": 10000,
         "title": "Testujeme surveys",
+        "description" : "Pozri na tento uplne uzasny survey",
         "age_group_bottom": 1000,
         "age_group_top": 5000,
         "survey_type": "Prieskum",
@@ -31,6 +32,7 @@
     {
         "estimated_time": 25000,
         "title": "Najlepsi survey ever",
+        "description" : "Pozri na tento uplne (este lepsi) uzasny (este lepsi) survey",
         "age_group_bottom": 500,
         "age_group_top": 1000,
         "survey_type": "Anketu",

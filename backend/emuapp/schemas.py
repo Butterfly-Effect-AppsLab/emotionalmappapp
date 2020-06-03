@@ -91,6 +91,7 @@ class QuestionSchema(Schema):
 class SurveySchema(Schema):
     id = fields.Integer(dump_only=True)
     title = fields.String(required=True)
+    description = fields.String()
     estimated_time = fields.Integer()
     age_group_bottom = fields.Integer()
     age_group_top = fields.Integer()

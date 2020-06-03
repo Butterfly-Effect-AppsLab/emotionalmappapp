@@ -121,6 +121,7 @@ class Survey(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
+    description = Column(String)
     estimated_time = Column(Integer)
     age_group_bottom = Column(Integer)
     age_group_top = Column(Integer)
