@@ -78,7 +78,7 @@ class News(Base):
     link = Column(String)
     pub_date = Column(DateTime)
     rss_feed = relationship('RssFeed')
-    rss_feed_id = Column(Integer, ForeignKey='rss_feeds.id')
+    rss_feed_id = Column(Integer, ForeignKey('rss_feeds.id'))
     interests = relationship('Interest', secondary=news_has_interests_table)
 
 class Answer(Base):
@@ -141,7 +141,7 @@ class RssAddress:
 
     id = Column(Integer, primary_key=True)
     address = Column(String)
-    rss_feed_id = Column(Integer, ForeignKey='rss_feeds.id')
+    rss_feed_id = Column(Integer, ForeignKey('rss_feeds.id'))
 class RssFeed(Base):
     __tablename__ = 'rss_feeds'
 
