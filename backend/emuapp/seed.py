@@ -79,7 +79,14 @@ def seed_surveys(ses):
         for s in data:
             response = requests.post('http://localhost:5000/api/createSurvey', headers = {'ContentType':'application/json'}, json=s)
             #print(response.content)
-
+@dec.init_db
+def seed_feeds(ses):
+    try:
+        ses.query(m.RssFeed).delete()
+        ses.commit()
+    except:
+        ses.rollback()
+    print('test')
 
 if __name__ == '__main__':
     seed_interests()

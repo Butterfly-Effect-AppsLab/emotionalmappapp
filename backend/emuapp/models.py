@@ -75,8 +75,10 @@ class News(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     description = Column(String)
-    author = Column(String)
-    feedback = Column(Boolean)
+    link = Column(String)
+    pub_date = Column(DateTime)
+    rss_feed = relationship('RssFeed')
+    rss_feed_id = Column(Integer, ForeignKey='rss_feeds.id')
     interests = relationship('Interest', secondary=news_has_interests_table)
 
 class Answer(Base):
@@ -133,3 +135,17 @@ class Survey(Base):
     survey_type = Column(String)
     active_to = Column(DateTime)
     created = Column(DateTime, default= datetime.datetime.utcnow())
+
+class RssAddress:
+    __tablename__ = 'rss_feed_address'
+
+    id = Column(Integer, primary_key=True)
+    address = Column(String)
+    rss_feed_id = Column(Integer, ForeignKey='rss_feeds.id')
+class RssFeed(Base):
+    __tablename__ = 'rss_feeds'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    rss_address = relationship(RssAddress)
+    image = Column(String)

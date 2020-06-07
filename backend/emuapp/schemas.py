@@ -26,8 +26,12 @@ class InterestSchema(Schema):
 class NewsScheme(Schema):
     title = fields.Str()
     description = fields.Str()
-    author = Author(attribute="author",allow_none = True)
-    feedback = fields.Bool()
+    pub_date = fields.DateTime()
+    link = fields.String()
+    rss_feed_id = fields.Integer(load_only=True)
+    rss_feed = fields.Nested('RssFeedSchema',dump_only=True)
+    #author = Author(attribute="author",allow_none = True)
+    #feedback = fields.Bool()
     interests = fields.Nested(InterestSchema, many=True)
 
     @post_load
@@ -128,6 +132,20 @@ class SurveyRecordSchema(Schema):
     user_id = fields.Integer(load_only=True)
     survey_id = fields.Integer()
     answers = fields.Nested(AnswerSchema, many=True)
+
+    class Meta:
+        model = m.SurveyRecord
+        unknown = EXCLUDE
+
+    @post_load
+    def make_survey_record(self, data, **kwargs):
+        return m.SurveyRecord(**data)
+
+class RssFeedSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.Integer()
+    address = fields.Integer()
+    image = fields.Integer()
 
     class Meta:
         model = m.SurveyRecord
