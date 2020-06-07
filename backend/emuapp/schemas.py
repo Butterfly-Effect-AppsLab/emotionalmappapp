@@ -51,7 +51,7 @@ class StreetSchema(Schema):
 class UserSchema(Schema):
     id = fields.String(dump_only=True)
     sex = fields.String()
-    social_id = fields.String(required=False)
+    social_id = fields.String(required=False, load_only=True)
     residence_location_id = fields.Integer(load_only=True)
     work_location_id = fields.Integer(load_only=True)
     residence_location = fields.Nested(StreetSchema, dump_only=True)
