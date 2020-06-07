@@ -6,10 +6,10 @@ import { WHITE, DARKGRAY  } from '../utils/colours';
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 120,
         marginTop: 10,
         marginBottom: 30,
-        width: 300
+        width: '80vw',
+
     },
     inputStyle: {
         fontSize: 14,
@@ -35,15 +35,16 @@ const ComboBox = (props) => {
     const { type, otherOption, idComponent, sendData } = props;
     const classes = useStyles();
     const [inputText, setInputText] = React.useState('');
-    const [inputOption, setInputOption] = React.useState({
-        id: '',
-        street: '',
-        sub_part: '',
-    });
+    const [inputOption, setInputOption] = React.useState(null
+        // id: null,
+        // street: '',
+        // sub_part: '',
+    );
 
     useEffect(() => {
+        console.log(inputOption)
         if(inputOption){
-           sendData(inputOption.street, idComponent)
+           sendData(inputOption, idComponent)
         }
     }, [inputOption])
 

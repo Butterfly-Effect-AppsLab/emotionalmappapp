@@ -1,0 +1,15 @@
+{
+    "user_id": 10,
+    "survey_id": 1,
+    "answers":
+    [
+        {
+            "question_id": 1,
+            "answer": "test otazky 1"
+        },
+        {
+            "question_id": 2,
+            "answer": "test 2"
+        }
+    ]
+}

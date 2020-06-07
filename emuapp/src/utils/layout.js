@@ -26,23 +26,29 @@ const Layout = ({ children, history }) => {
 
   useEffect(() => {
     const processPathName = (pathname) => {
-      switch (pathname) {
-        case "/registration":
-          setShowHeader(0);
-          setShowFooter(0);
-          break;
-        case "/onboarding":
-          setShowHeader(0);
-          setShowFooter(0);
-          break;
-        case "/test":
-          setShowHeader(0);
-          setShowFooter(0);
-          break;
-        default:
-          setShowHeader(1);
-          setShowFooter(1);
-          break;
+      if (pathname.indexOf('/registration') !== -1) {
+        setShowHeader(0);
+        setShowFooter(0);
+      }
+      else {
+        switch (pathname) {
+          case "/onboarding":
+            setShowHeader(0);
+            setShowFooter(0);
+            break;
+          case "/test":
+            setShowHeader(0);
+            setShowFooter(0);
+            break;
+          case "/login":
+            setShowHeader(0);
+            setShowFooter(0);
+            break;
+          default:
+            setShowHeader(1);
+            setShowFooter(1);
+            break;
+        }
       }
     };
     if (history) {
@@ -57,9 +63,7 @@ const Layout = ({ children, history }) => {
     <div id='layout.js' className={classes.root}>
       <Box display='flex' flexDirection='column'>
         <Header history={history} showHeader={showHeader} />
-        {/* <div className={classes.childDiv}> */}
-          {children}
-        {/* </div> */}
+        {children}
         <Footer history={history} showFooter={showFooter} />
       </Box>
     </div>

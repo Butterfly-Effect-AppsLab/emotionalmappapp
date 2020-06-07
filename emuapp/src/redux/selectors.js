@@ -17,3 +17,13 @@ export const getSexes = (store) => {
 export const getStreets = (store) => {
     return isEmpty(store.registration.streets) ? null : store.registration.streets
 }
+
+export const getSurveysList = (store) => {
+    return isEmpty(store.surveys.data) ? null : store.surveys.data
+}
+
+export const getSurvey = (store) => {
+    return isEmpty(store.survey.data) ? null : store.survey.data
+}
+
+
