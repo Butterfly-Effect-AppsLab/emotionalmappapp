@@ -136,12 +136,13 @@ class Survey(Base):
     active_to = Column(DateTime)
     created = Column(DateTime, default= datetime.datetime.utcnow())
 
-class RssAddress:
+class RssAddress(Base):
     __tablename__ = 'rss_feed_address'
 
     id = Column(Integer, primary_key=True)
     address = Column(String)
     rss_feed_id = Column(Integer, ForeignKey('rss_feeds.id'))
+
 class RssFeed(Base):
     __tablename__ = 'rss_feeds'
 
