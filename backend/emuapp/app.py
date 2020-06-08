@@ -106,8 +106,8 @@ def create_or_update_user():
             return redirect('/registration/' + user.id)
         else:
             return redirect("/")
-    except:
-        return "google down" #TODO doplnit error handling
+    except Exception as e:
+        return str(e) #TODO doplnit error handling
 
 @app.route('/logout')
 def get_logout():
