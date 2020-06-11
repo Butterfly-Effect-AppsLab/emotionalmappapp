@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { DARKGRAY, WHITE, RED } from '../utils/colours';
 import { ReactComponent as SmallLogo } from '../icons/logo_small.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';
-
+import history from '../utils/history'
 
 const useStyles = makeStyles({
     root: {
@@ -53,6 +53,11 @@ const OnboardingPage = () => {
         clickable: true,
     };
 
+    const onButtonClick = () => {
+        history.push('/login')
+    };
+
+
     return (
         <div className={classes.root}>
             <Swiper {...params}>
@@ -65,7 +70,7 @@ const OnboardingPage = () => {
                         Pomôžte nám budovať lepšie mesto. Vyjadrite svoj názor v prieskumoch a sledujte dianie vo vašom meste.
                     </Typography>
                     <div className={classes.button}>
-                        <ButtonTemplate variant="text" background='transparent' textColor={RED} isDisabled={false} text={'Preskočiť'} path={'/login'} />
+                        <ButtonTemplate variant="text" background='transparent' textColor={RED} isDisabled={false} text={'Preskočiť'} onButtonClick={() => { onButtonClick() }} />
                     </div>
                 </div>
                 <div className={classes.swipe}>
@@ -77,7 +82,7 @@ const OnboardingPage = () => {
                         Zostaňte v obraze vďaka mestským správam na mieru. Vyberte si vaše záujmy a sledujte to, čo vás skutočne zaujíma.
                     </Typography>
                     <div className={classes.button}>
-                        <ButtonTemplate variant="text" background={WHITE} textColor={RED} isDisabled={false} text={'Preskočiť'} path={'/login'} />
+                        <ButtonTemplate variant="text" background={WHITE} textColor={RED} isDisabled={false} text={'Preskočiť'} onButtonClick={() => { onButtonClick() }} />
                     </div>
                 </div>
                 <div className={classes.swipe}>
@@ -89,7 +94,7 @@ const OnboardingPage = () => {
                         Zapojte sa do prieskumov a ankiet a ovplyvnite tak priamo dianie vo vašom meste. Vyjadrite svoj názor, chceme ho počuť.
                     </Typography>
                     <div className={classes.button}>
-                        <ButtonTemplate variant="outlined" background={WHITE} textColor={RED} isDisabled={false} text={'Začnite'} path={'/login'} primary={true} />
+                        <ButtonTemplate variant="outlined" background={WHITE} textColor={RED} isDisabled={false} text={'Začnite'} primary={true} onButtonClick={() => { onButtonClick() }} />
                     </div>
                 </div>
             </Swiper>
