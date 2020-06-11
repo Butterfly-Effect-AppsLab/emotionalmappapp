@@ -199,6 +199,16 @@ def get_cityparts():
     ses.close()
     return {'data': result}
 
+@app.route('/api/answers')
+def get_answers():
+    ses = m.Session()
+    survey_records = ses.query(m.SurveyRecord)
+
+    survey_record_schema = schemas.SurveyRecordSchema()
+    result = survey_record_schema.dump(survey_records, many=True)
+    ses.close()
+    return {'data': result}
+
 @app.route('/api/regInfo')
 def get_regInfo():
     ses = m.Session()
