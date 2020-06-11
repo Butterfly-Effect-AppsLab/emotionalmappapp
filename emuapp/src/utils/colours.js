@@ -5,4 +5,5 @@ export const WHITE = '#FFFFFF';
 export const BLACK = '#000000';
 export const DARKBLUE = '#3B5998';
 export const TRANSWHITE = 'rgba(255, 255, 255, 0.7)';
+export const PINK = '#FFF6F6';
 

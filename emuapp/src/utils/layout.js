@@ -30,6 +30,9 @@ const Layout = ({ children, history }) => {
         setShowHeader(0);
         setShowFooter(0);
       }
+      else if (pathname.indexOf('/surveys/') !== -1) {
+        setShowFooter(0);
+      }
       else {
         switch (pathname) {
           case "/onboarding":

@@ -10,6 +10,7 @@ import { LIGHTGRAY } from '../utils/colours';
 
 const useStyles = makeStyles({
     root: {
+        minHeight: '100vh',
         background: LIGHTGRAY
     }
 });

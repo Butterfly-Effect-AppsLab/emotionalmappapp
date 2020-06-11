@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid'
 import { LIGHTGRAY, RED, DARKGRAY, WHITE } from '../utils/colours';
 import Loading from '../Components/Loading';
 import DatePicker from 'react-datepicker';
+import history from '../utils/history'
+
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegistrationPage = (props) => {
-    const { years, sexes, streets, fetchRegInfo, postRegInfo } = props;
+    const { years, sexes, streets, fetchRegInfo, postRegInfo, id } = props;
     const classes = useStyles();
     const [isDisabled, setIsDisabled] = React.useState(true);
     const [startDate, setStartDate] = React.useState(new Date());
@@ -120,9 +122,9 @@ const RegistrationPage = (props) => {
         };
     };
 
-
     const onButtonClick = () => {
-        postRegInfo(regData);
+        postRegInfo(regData, id);
+        history.push('/')
     };
 
     if (years && sexes && streets) {

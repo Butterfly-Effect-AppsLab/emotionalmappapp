@@ -14,13 +14,49 @@
             },
             {
                 "question": "Ako sa mate znovu?",
-                "type": "radiohorizontal",
+                "type": "radiovertical",
                 "options": [
                     {
                         "option": "test 1"
                     },
                     {
                         "option": "test 2"
+                    },
+                    {
+                        "option": "other"
+                    }
+                ]
+            },
+            {
+                "question": "Ako sa mate znovu?",
+                "type": "checkbox",
+                "options": [
+                    {
+                        "option": "test 1"
+                    },
+                    {
+                        "option": "test 2"
+                    },
+                    {
+                        "option": "test 3"
+                    },
+                    {
+                        "option": "other"
+                    }
+                ]
+            },
+            {
+                "question": "Ako sa mate znovu a znovu a znovu?",
+                "type": "checkbox",
+                "options": [
+                    {
+                        "option": "test 1"
+                    },
+                    {
+                        "option": "test 2"
+                    },
+                    {
+                        "option": "test 3"
                     },
                     {
                         "option": "other"

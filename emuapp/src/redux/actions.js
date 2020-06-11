@@ -10,6 +10,7 @@ import {
 } from './actionTypes';
 
 export const fetchRegInfo = () => async dispatch => {
+        // console.log('IDcko', id)
     try {
         const response = await fetch('/api/regInfo');
         const json = await response.json();
@@ -21,14 +22,15 @@ export const fetchRegInfo = () => async dispatch => {
     }
 };
 
-export const postRegInfo = (regData) => async dispatch => {
-    // console.log('som v akcii', regData)
+export const postRegInfo = (regData, id) => async dispatch => {
+    console.log('IDcko', id)
     try {
-        const response = await fetch('/api/registerUser', {
+        const response = await fetch('/api/registerUser/' + id, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(regData)
         });
+        console.log(response.content)
         const json = await response.json();
         // console.log(json);
         dispatch(postRegInfoSuccess(json));
@@ -40,7 +42,7 @@ export const postRegInfo = (regData) => async dispatch => {
 };
 
 export const fetchSurveysList = () => async dispatch => {
-    console.log('som v akcii')
+    // console.log('som v akcii')
     try {
         const response = await fetch('/api/surveys');
         const json = await response.json();

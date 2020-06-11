@@ -6,26 +6,33 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate'
-import { RED, WHITE } from '../utils/colours';
+import { RED, WHITE, DARKGRAY } from '../utils/colours';
 import history from '../utils/history';
 import { ReactComponent as SurveyIcon } from '../icons/prieskum_icon.svg';
 import { ReactComponent as PollIcon } from '../icons/anketa_icon.svg';
 import { ReactComponent as TimeIcon } from '../icons/time.svg';
 import { ReactComponent as FilledCountIcon } from '../icons/filled_count.svg';
+import moment from 'moment';
 
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
         marginBottom: 10,
     },
+    title: {
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        fontWeight: 'bold'
+    },
     text: {
-        marginBottom: 10,
-        marginTop: 0
-
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        fontWeight: 'bold'
     },
     label: {
-        marginTop: 10,
-        marginBottom: 0,
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        color: DARKGRAY,
     },
     button: {
         justifyContent: 'center'
@@ -34,17 +41,21 @@ const useStyles = makeStyles({
         borderRadius: 20,
     },
     row: {
+        marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
     },
     column: {
         marginLeft: 20,
+        marginTop: 'auto',
+        marginBottom: 'auto',
     },
     iconDiv: {
         width: '10vw',
         textAlign: 'center',
         justifyContent: 'center',
-        display: 'inline-block',
+        marginTop: 'auto',
+        marginBottom: 'auto',
     },
     icon: {
         verticalAlign: 'middle',
@@ -62,7 +73,7 @@ const SurveysCards = (props) => {
 
     const renderCard = (survey, i) => {
         return (
-            <div key={i}>
+            <div>
                 <Card className={classes.root}
                     variant="outlined"
                     classes={{ root: classes.card }}
@@ -76,7 +87,7 @@ const SurveysCards = (props) => {
                                 <Typography className={classes.label} variant="body2" component="p">
                                     Prieskum
                                 </Typography>
-                                <Typography className={classes.text} style={{ fontWeight: 'bold' }} variant="h5" component="h2">
+                                <Typography className={classes.title} variant="h5" component="h2">
                                     {survey.title}
                                 </Typography>
                             </div>
@@ -90,14 +101,20 @@ const SurveysCards = (props) => {
                                     Aktívne do
                                 </Typography>
                                 <Typography className={classes.text} variant="subtitle2" component="p">
-                                    {console.log('answers',surveys.answer_count)}
-                                    {surveys.active_to} hlasovalo
+                                    {moment(survey.active_to).format('DD.MM.YYYY, kk:mm')}
                                 </Typography>
                             </div>
                         </div>
-                        <Typography className={classes.text} variant="body2" component="p">
-                            {surveys.answer_count}
-                        </Typography>
+                        <div className={classes.row}>
+                            <div className={classes.iconDiv}>
+                                <FilledCountIcon />
+                            </div>
+                            <div className={classes.column}>
+                                <Typography className={classes.label} variant="body2" component="p">
+                                    {survey.answer_count} hlasovalo
+                                </Typography>
+                            </div>
+                        </div>
                     </CardContent>
                     <CardActions className={classes.button}>
                         {<ButtonTemplate variant="contained"
@@ -115,9 +132,9 @@ const SurveysCards = (props) => {
     };
 
     return (
-        <>
+        <div style={{marginTop: 10}}>
             {surveys.map((survey, i) => renderCard(survey, i))}
-        </>
+        </div>
 
     );
 }
