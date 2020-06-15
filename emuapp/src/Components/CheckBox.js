@@ -45,24 +45,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CheckBox = (props) => {
-    const { options } = props;
+    const { options, sendData, questionId } = props;
     const classes = useStyles();
     const [state, setState] = React.useState({});
+    const [value, setValue] = React.useState('');
+
+    useEffect(() => {
+        options.forEach(option => { if (option.option !== 'other') { setState({ ...state, [option.option]: false }) } });
+    }, []);
+
+    useEffect(() => {
+        let data = []
+        Object.keys(state).forEach((key) => {
+            if (state[key]) {
+                data.push({ question_id: questionId, answer: key })
+            }
+        });
+        sendData(data);
+    }, [state]);
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
     };
 
-    useEffect(() => {
-        options.forEach(option => setState({ ...state, [option.id]: false }));
-    }, []);
+    const handleBlur = (event) => {
+        let newValue = event.target.value
+        if (newValue !== '' && value !== newValue) {
+            setState({ ...state, [newValue]: true });
+        }
+        setValue(newValue)
 
+    };
 
     const renderOptions = (option) => {
         if (option.option !== "other") {
             return (
                 <div className={classes.div} >
-                    <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.id]} onChange={handleChange} name={option.id} />} label={option.option} />
+                    <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.id]} onChange={handleChange} name={option.option} />} label={option.option} />
                 </div>
             )
         }
@@ -72,7 +91,7 @@ const CheckBox = (props) => {
                     <Typography className={classes.text} variant="subtitle2" component="p">
                         Iné
                     </Typography>
-                    <MultilineTextField />
+                    <MultilineTextField handleBlur={(value) => { handleBlur(value) }} />
                 </div>
             )
         }

@@ -5,9 +5,8 @@ import {
 } from "../actionTypes";
 
 const initialState = {
-    sexes: [],
-    streets: [],
-    years: [],
+    survey_id: null,
+    answers: {},
 };
 
 export default function (state = initialState, action) {
@@ -16,9 +15,8 @@ export default function (state = initialState, action) {
             const { data } = action.payload;
             return {
                 ...state,
-                sexes: [...data.sexes],
-                streets: [...data.streets],
-                years: [...data.years],
+                survey_id: [...data.survey_id],
+                answers: [...data.answers],
             };
         }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -36,19 +36,37 @@ const useStyles = makeStyles({
 });
 
 const RadioButton = (props) => {
-    const { options } = props;
+    const { options, sendData, questionId } = props;
     const [value, setValue] = React.useState();
     const classes = useStyles();
+    const [state, setState] = React.useState({});
+
+    useEffect(() => {
+        options.forEach(option => { if (option.option !== 'other') { setState({ ...state, [option.option]: false }) } });
+    }, []);
+
+    useEffect(() => {
+        let data = []
+        Object.keys(state).forEach((key) => {
+            if (state[key]) {
+                data.push({ question_id: questionId, answer: key })
+            }
+        });
+        sendData(data);
+        console.log('state', state)
+    }, [state]);
+
 
     const handleChange = (event) => {
         setValue(event.target.value);
+        setState({ ...state, [event.target.name]: true });
     };
 
     const renderOptions = (option) => {
 
         return (
             <div className={classes.root} >
-                <FormControlLabel className={classes.box} value={option.option} control={< RedRadio />} label={option.option} />
+                <FormControlLabel className={classes.box} value={option.option} name={option.option} control={< RedRadio />} label={option.option} />
             </div>
         )
 

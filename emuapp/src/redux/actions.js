@@ -6,11 +6,12 @@ import {
     FETCH_SURVEYSLIST_SUCCESS,
     FETCH_SURVEYSLIST_FAIL,
     FETCH_SURVEY_SUCCESS,
-    FETCH_SURVEY_FAIL
+    FETCH_SURVEY_FAIL,
+    FETCH_ANSWER_SUCCESS,
+    FETCH_ANSWER_FAIL,
 } from './actionTypes';
 
 export const fetchRegInfo = () => async dispatch => {
-        // console.log('IDcko', id)
     try {
         const response = await fetch('/api/regInfo');
         const json = await response.json();
@@ -23,14 +24,14 @@ export const fetchRegInfo = () => async dispatch => {
 };
 
 export const postRegInfo = (regData, id) => async dispatch => {
-    console.log('IDcko', id)
+    // console.log('IDcko', id)
     try {
         const response = await fetch('/api/registerUser/' + id, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(regData)
         });
-        console.log(response.content)
+        // console.log(response.content)
         const json = await response.json();
         // console.log(json);
         dispatch(postRegInfoSuccess(json));
@@ -63,6 +64,24 @@ export const fetchSurvey = (id) => async dispatch => {
     } catch (err) {
         console.log(err);
         dispatch(fetchSurveyFail());
+
+    }
+};
+
+export const postAnswer = (answData) => async dispatch => {
+    // console.log(JSON.stringify(answData))
+    try {
+        const response = await fetch('/api/sendAnswer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(answData)
+        });
+        const json = await response.json();
+        // console.log(json);
+        dispatch(postAnswerSuccess(json));
+    } catch (err) {
+        console.log(err);
+        dispatch(postAnswerFail());
 
     }
 };
@@ -101,6 +120,15 @@ export const fetchSurveySuccess = (json) => ({
 
 export const fetchSurveyFail = () => ({
     type: FETCH_SURVEY_FAIL,
+});
+
+export const postAnswerSuccess = (json) => ({
+    type: FETCH_ANSWER_SUCCESS,
+    payload: json,
+});
+
+export const postAnswerFail = () => ({
+    type: FETCH_ANSWER_FAIL,
 });
 
 

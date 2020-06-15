@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { PINK, DARKGRAY, WHITE } from '../utils/colours';
@@ -28,14 +28,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MultilineTextField = () => {
+const MultilineTextField = (props) => {
+    const { handleBlur, questionId, sendData } = props;
     const classes = useStyles();
+    const [state, setState] = React.useState({});
     const [value, setValue] = React.useState('');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-        console.log(value)
+    useEffect(() => {
+        if (sendData) {
+            let data = []
+            Object.keys(state).forEach((key) => {
+                if (state[key]) {
+                    data.push({ question_id: questionId, answer: key })
+                }
+            });
+            sendData(data);
+        }
+    }, [state]);
+
+    const handleBlurLocal = (event) => {
+        let newValue = event.target.value
+        if (newValue !== '' && value !== newValue) {
+            setState({ ...state, [newValue]: true });
+        }
+        setValue(newValue)
+
     };
+
 
     return (
         <form className={classes.root} noValidate autoComplete='off'>
@@ -45,16 +64,16 @@ const MultilineTextField = () => {
                     label='...vaša odpoveď'
                     multiline
                     rows={4}
-                    onChange={handleChange}
+                    onBlur={handleBlur ? handleBlur : handleBlurLocal}
                     classes={{
                         input: classes.resize,
                     }}
                     className={classes.textField}
                     InputProps={{
                         classes: {
-                          notchedOutline: classes.notchedOutline
+                            notchedOutline: classes.notchedOutline
                         }
-                      }}
+                    }}
                 />
             </div>
         </form>

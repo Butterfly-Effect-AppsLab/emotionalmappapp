@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SurveyCards from '../Components/SurveyCards';
 import DescriptionCard from '../Components/DescriptionCard';
 import Loading from '../Components/Loading';
-import { fetchSurvey } from '../redux/actions';
+import { fetchSurvey, postAnswer } from '../redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSurvey } from '../redux/selectors';
@@ -34,12 +34,28 @@ const useStyles = makeStyles({
 
 
 const SurveyPage = (props) => {
-    const { id, survey, fetchSurvey } = props;
+    const { id, survey, fetchSurvey, postAnswer } = props;
     const classes = useStyles();
     const [currPage, setCurrPage] = React.useState(1);
     var currQuestions = [];
     const questionsPerPage = 3;
     const [buttonText, setButtonText] = React.useState('');
+    const [answData, setAnswData] = React.useState({
+        survey_id: id,
+        answers: {},
+    });
+
+    const getDataToPage = (value) => {
+        if(value[0])
+        {
+            setAnswData({...answData,  answers: {...answData.answers, [value[0].question_id]: value}})
+        }
+    };
+
+    useEffect(() => {
+        console.log('som v Pagei', answData)
+    }, [answData]); //A ASI AJ TU... nevieme, zistis 
+    
 
     useEffect(() => {
         fetchSurvey(id);
@@ -49,6 +65,16 @@ const SurveyPage = (props) => {
         if (currPage === pages) {
             setButtonText('Dokončiť')
         }
+        else if(currPage > pages)
+        {
+            let answers = []
+            console.log(answData)
+            console.log(Object.values(answData))
+            Object.values(answData.answers).forEach(ans => {ans.forEach(x => {answers.push(x)})})
+            let payload = {'survey_id':answData.survey_id, 'answers': answers}
+            console.log(payload)
+            postAnswer(payload)
+        }
         else {
             setButtonText('Ďalej')
         }
@@ -56,6 +82,11 @@ const SurveyPage = (props) => {
 
     const onButtonClick = () => {
         setCurrPage(currPage + 1);
+        console.log(currPage)
+        if(currPage > pages)
+        {
+            
+        }
     };
 
     const renderCards = (currPage, pages) => {
@@ -86,7 +117,7 @@ const SurveyPage = (props) => {
         else {
             return (
                 <>
-                    <SurveyCards questions={currQuestions} />
+                    <SurveyCards  sendDataToPage={(value) => { getDataToPage(value) }} id={id} questionsPerPage={questionsPerPage} questions={currQuestions} currPage={currPage} />
                     <ProgressBar currPage={currPage} numPages={pages} />
                     <div className={classes.button}>
                         <Button
@@ -131,6 +162,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchSurvey: bindActionCreators(fetchSurvey, dispatch),
+    postAnswer: bindActionCreators(postAnswer, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SurveyPage);

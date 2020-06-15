@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { DARKGRAY } from '../utils/colours';
 import RadioButton from './RadioButton'
 import CheckBox from './CheckBox';
-import TextField from './MultilineTextField';
+import MultilineTextField from './MultilineTextField';
 
 
 const useStyles = makeStyles({
@@ -31,43 +31,48 @@ const useStyles = makeStyles({
 });
 
 const SurveysCards = (props) => {
-    const { questions } = props
+    const { questions, id, currPage, questionsPerPage, sendDataToPage } = props
     const classes = useStyles();
 
-    const renderForm = (type, options) => {
+    const getData = (value) => {
+        if(value[0])
+        {
+            sendDataToPage(value)
+        }
+    };
+
+    const renderForm = (type, options, questionId) => {
         switch (type) {
             case 'radiovertical':
                 return (
-                    <RadioButton options={options} />
+                    <RadioButton sendData={(value) => { getData(value) }} options={options} questionId={questionId} />
                 );
             case 'checkbox':
                 return (
-                    <CheckBox options={options} />
+                    <CheckBox sendData={(value) => { getData(value) }} options={options} questionId={questionId}/>
                 );
             case 'text':
                 return (
-                    <TextField />
+                    <MultilineTextField sendData={(value) => { getData(value) }} questionId={questionId}/>
                 );
             default:
                 break;
 
         }
-
-
     };
 
-    const renderQuestions = (question) => {
+    const renderQuestions = (question, i) => {
         return (
-            <div key={question.id}>
+            <div key={i}>
                 <Card className={classes.root}
                     variant="outlined"
                     classes={{ root: classes.card }}
                 >
                     <CardContent>
                         <Typography className={classes.text} variant="subtitle2" component="p">
-                            {question.id}. {question.question}
+                            {i}. {question.question}
                         </Typography>
-                        {renderForm(question.type, question.options)}
+                        {renderForm(question.type, question.options, question.id)}
                     </CardContent>
                     <CardActions className={classes.button}>
                     </CardActions>
@@ -79,7 +84,7 @@ const SurveysCards = (props) => {
 
     return (
         <div style={{ marginTop: 10 }}>
-            {questions.map((question) => renderQuestions(question))}
+            {questions.map((question, i) => renderQuestions(question, ((currPage - 2) * questionsPerPage) + i + 1))}
         </ div>
 
     );
