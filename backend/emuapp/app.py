@@ -273,6 +273,21 @@ def post_answer():
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
     return {"data": answer_json}, 201, {'ContentType':'application/json'}
 
+@app.route('/api/sendNote', methods=['POST'])
+def post_note():
+    ses = m.Session()
+    try:
+        note_json = request.json
+        survey_note_schema = schemas.SurveyNoteSchema()
+
+        new_survey_note = survey_note_schema.load(note_json)
+        ses.add(new_survey_note)
+        ses.commit()
+        ses.close()
+    except Exception as e:
+        return {'error': str(e)}, 400, {'ContentType':'application/json'}
+    return {"data": note_json}, 201, {'ContentType':'application/json'}
+
 @app.route('/api/createSurvey', methods=['POST'])
 def post_survey():
     ses = m.Session()

@@ -148,9 +148,23 @@ class RssFeedSchema(Schema):
     image = fields.Integer()
 
     class Meta:
-        model = m.SurveyRecord
+        model = m.RssFeed
         unknown = EXCLUDE
 
     @post_load
     def make_survey_record(self, data, **kwargs):
-        return m.SurveyRecord(**data)
+        return m.RssFeed(**data)
+
+
+class SurveyNoteSchema(Schema):
+    user_id = fields.Integer()
+    survey_id = fields.Integer()
+    note = fields.String()
+
+    class Meta:
+        model = m.SurveyNote
+        unknown = EXCLUDE
+
+    @post_load
+    def make_survey_record(self, data, **kwargs):
+        return m.SurveyNote(**data)
