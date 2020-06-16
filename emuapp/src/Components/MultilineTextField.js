@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { PINK, DARKGRAY, WHITE } from '../utils/colours';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -47,12 +46,10 @@ const MultilineTextField = (props) => {
     }, [state]);
 
     const handleBlurLocal = (event) => {
-        let newValue = event.target.value
-        if (newValue !== '' && value !== newValue) {
-            setState({ ...state, [newValue]: true });
-        }
-        setValue(newValue)
-
+        let newValue = event.target.value;
+        let newState = Object.assign({},state);
+        setState({ ...newState, [newValue]: true, [value]: false });
+        setValue(newValue);
     };
 
 

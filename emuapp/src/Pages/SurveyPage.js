@@ -10,7 +10,8 @@ import { getSurvey } from '../redux/selectors';
 import { LIGHTGRAY, RED, WHITE } from '../utils/colours';
 import ProgressBar from '../Components/ProgressBar';
 import Button from '@material-ui/core/Button';
-import ThankYouCard from '../Components/ThankYouCard'
+import ThankYouCard from '../Components/ThankYouCard';
+import { ScrollTo, ScrollArea } from "react-scroll-to";
 
 const useStyles = makeStyles({
     root: {
@@ -46,16 +47,15 @@ const SurveyPage = (props) => {
     });
 
     const getDataToPage = (value) => {
-        if(value[0])
-        {
-            setAnswData({...answData,  answers: {...answData.answers, [value[0].question_id]: value}})
+        if (value[0]) {
+            setAnswData({ ...answData, answers: { ...answData.answers, [value[0].question_id]: value } })
         }
     };
 
     useEffect(() => {
         console.log('som v Pagei', answData)
     }, [answData]); //A ASI AJ TU... nevieme, zistis 
-    
+
 
     useEffect(() => {
         fetchSurvey(id);
@@ -65,13 +65,12 @@ const SurveyPage = (props) => {
         if (currPage === pages) {
             setButtonText('Dokončiť')
         }
-        else if(currPage > pages)
-        {
+        else if (currPage > pages) {
             let answers = []
             console.log(answData)
             console.log(Object.values(answData))
-            Object.values(answData.answers).forEach(ans => {ans.forEach(x => {answers.push(x)})})
-            let payload = {'survey_id':answData.survey_id, 'answers': answers}
+            Object.values(answData.answers).forEach(ans => { ans.forEach(x => { answers.push(x) }) })
+            let payload = { 'survey_id': answData.survey_id, 'answers': answers }
             console.log(payload)
             postAnswer(payload)
         }
@@ -83,9 +82,8 @@ const SurveyPage = (props) => {
     const onButtonClick = () => {
         setCurrPage(currPage + 1);
         console.log(currPage)
-        if(currPage > pages)
-        {
-            
+        if (currPage > pages) {
+
         }
     };
 
@@ -93,66 +91,78 @@ const SurveyPage = (props) => {
         if (currPage === 1) {
             return (
                 <>
-                    <DescriptionCard survey={survey} />
-                    <ProgressBar currPage={currPage} numPages={pages} />
-                    <div className={classes.button}>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            // disabled='0'
-                            onClick={(event) => onButtonClick()}
-                            style={{ color: WHITE, background: RED }}
-                        >
-                            {buttonText}
-                        </Button>
-                    </div>
+                    {/* <ScrollTo>
+                        {({ scroll }) => (
+                            <ScrollArea> */}
+                            <DescriptionCard survey={survey} />
+                            <ProgressBar currPage={currPage} numPages={pages} />
+                            <div className={classes.button}>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    // disabled='0'
+                                    onClick={(event) => onButtonClick() /*, () => scroll({ y: 0, x: 0 })*/}
+                                    style={{ color: WHITE, background: RED }}
+                                >
+                                    {buttonText}
+                                </Button>
+                            </div>
+                       {/* </ScrollArea>
+                       )}
+                </ScrollTo> */}
                 </>
             )
         }
         else if (currPage > pages) {
-            return (
-                <ThankYouCard />
-            )
-        }
-        else {
-            return (
-                <>
-                    <SurveyCards  sendDataToPage={(value) => { getDataToPage(value) }} id={id} questionsPerPage={questionsPerPage} questions={currQuestions} currPage={currPage} />
-                    <ProgressBar currPage={currPage} numPages={pages} />
-                    <div className={classes.button}>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            // disabled='0'
-                            onClick={(event) => onButtonClick()}
-                            style={{ color: WHITE, background: RED }}
-                        >
-                            {buttonText}
-                        </Button>
-                    </div>
-                </>
-            )
-        }
+    return (
+        <ThankYouCard />
+    )
+}
+else {
+    return (
+        <>
+            {/* <ScrollTo>
+                {({ scroll }) => (
+                    <ScrollArea> */}
+                        <SurveyCards sendDataToPage={(value) => { getDataToPage(value) }} id={id} questionsPerPage={questionsPerPage} questions={currQuestions} currPage={currPage} />
+                        <ProgressBar currPage={currPage} numPages={pages} />
+                        <div className={classes.button}>
+                            <Button
+                                variant='contained'
+                                color='primary'
+                                // disabled='0'
+                                onClick={(event) => onButtonClick() /*, () => scroll({ y: 0, x: 0 })*/}
+                                style={{ color: WHITE, background: RED }}
+                            >
+                                {buttonText}
+                            </Button>
+                        </div>
+                    {/* </ScrollArea>
+                )}
+            </ScrollTo> */}
+        </>
+    )
+}
     };
 
 
-    if (survey) {
-        var pages = Math.ceil((survey.questions.length / questionsPerPage)) + 1;
-        currQuestions = [];
-        for (var i = 0; i < questionsPerPage; i++) {
-            if (survey.questions.length > (currPage - 2) * questionsPerPage + i)
-                currQuestions.push(survey.questions[(currPage - 2) * questionsPerPage + i])
-        }
-        return (
-            <div className={classes.root}>
-                {
-                    renderCards(currPage, pages)
-                }
-            </div>
-        )
+if (survey) {
+    var pages = Math.ceil((survey.questions.length / questionsPerPage)) + 1;
+    currQuestions = [];
+    for (var i = 0; i < questionsPerPage; i++) {
+        if (survey.questions.length > (currPage - 2) * questionsPerPage + i)
+            currQuestions.push(survey.questions[(currPage - 2) * questionsPerPage + i])
     }
-    else
-        return <Loading />
+    return (
+        <div className={classes.root}>
+            {
+                renderCards(currPage, pages)
+            }
+        </div>
+    )
+}
+else
+    return <Loading />
 };
 
 const mapStateToProps = (state) => {

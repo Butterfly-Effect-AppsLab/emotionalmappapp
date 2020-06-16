@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 });
 
 const SurveysCards = (props) => {
-    const { questions, id, currPage, questionsPerPage, sendDataToPage } = props
+    const { questions, currPage, questionsPerPage, sendDataToPage } = props
     const classes = useStyles();
 
     const getData = (value) => {

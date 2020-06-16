@@ -59,7 +59,7 @@ const RadioButton = (props) => {
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        setState({ ...state, [event.target.name]: true });
+        setState({[event.target.name]: true });
     };
 
     const renderOptions = (option) => {

@@ -69,12 +69,10 @@ const CheckBox = (props) => {
     };
 
     const handleBlur = (event) => {
-        let newValue = event.target.value
-        if (newValue !== '' && value !== newValue) {
-            setState({ ...state, [newValue]: true });
-        }
-        setValue(newValue)
-
+        let newValue = event.target.value;
+        let newState = Object.assign({},state);
+        setState({ ...newState, [newValue]: true, [value]: false });
+        setValue(newValue);
     };
 
     const renderOptions = (option) => {
