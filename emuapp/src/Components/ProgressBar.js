@@ -38,7 +38,6 @@ const ProgressBar = (props) => {
     const {numPages, currPage} = props; 
     const classes = useStyles();
 
-    console.log(currPage)
     var progressValue = currPage/numPages * 100;
 
     return (
