@@ -75,7 +75,7 @@ class News(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     description = Column(String)
-    link = Column(String)
+    link = Column(String, unique=True)
     pub_date = Column(DateTime)
     rss_feed = relationship('RssFeed')
     rss_feed_id = Column(Integer, ForeignKey('rss_feeds.id'))
@@ -150,3 +150,11 @@ class RssFeed(Base):
     name = Column(String)
     rss_address = relationship(RssAddress)
     image = Column(String)
+
+class SurveyNote(Base):
+    __tablename__ = 'survey_notes'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(String(32), ForeignKey('users.id'))
+    survey_id = Column(Integer, ForeignKey('surveys.id'))
+    note = Column(String)
