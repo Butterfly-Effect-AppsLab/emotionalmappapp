@@ -1,26 +1,26 @@
 import {
-    POST_ANSWER_SUCCESS,
-    POST_ANSWER_FAIL,
+    POST_NOTE_SUCCESS,
+    POST_NOTE_FAIL,
 
 } from "../actionTypes";
 
 const initialState = {
     survey_id: null,
-    answers: {},
+    note: {},
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case POST_ANSWER_SUCCESS: {
+        case POST_NOTE_SUCCESS: {
             const { data } = action.payload;
             return {
                 ...state,
                 survey_id: [...data.survey_id],
-                answers: [...data.answers],
+                note: [...data.answers],
             };
         }
 
-        case POST_ANSWER_FAIL:
+        case POST_NOTE_FAIL:
             return state;
 
         default:

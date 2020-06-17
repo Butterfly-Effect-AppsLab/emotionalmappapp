@@ -42,7 +42,6 @@ const ComboBox = (props) => {
     );
 
     useEffect(() => {
-        console.log(inputOption)
         if(inputOption){
            sendData(inputOption, idComponent)
         }

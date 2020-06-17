@@ -83,9 +83,9 @@ const SurveysCards = (props) => {
 
 
     return (
-        <div style={{ marginTop: 10 }}>
+        <>
             {questions.map((question, i) => renderQuestions(question, ((currPage - 2) * questionsPerPage) + i + 1))}
-        </ div>
+        </>
 
     );
 }

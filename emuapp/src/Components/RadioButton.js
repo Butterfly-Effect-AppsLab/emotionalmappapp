@@ -18,17 +18,13 @@ const RedRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const useStyles = makeStyles({
-    root: {
-        width: '90vw',
-        backgroundColor: PINK,
-        borderRadius: 10,
-        height: 40,
-        marginLeft: 0,
-        marginBottom: 10,
-    },
     box: {
         marginLeft: 5,
         marginRight: 5,
+        width: '90vw',
+        backgroundColor: PINK,
+        borderRadius: 10,
+        verticalAlign: 'middle',
     },
     form: {
         marginTop: 10,
@@ -53,7 +49,6 @@ const RadioButton = (props) => {
             }
         });
         sendData(data);
-        console.log('state', state)
     }, [state]);
 
 
@@ -65,9 +60,7 @@ const RadioButton = (props) => {
     const renderOptions = (option) => {
 
         return (
-            <div className={classes.root} >
                 <FormControlLabel className={classes.box} value={option.option} name={option.option} control={< RedRadio />} label={option.option} />
-            </div>
         )
 
     };

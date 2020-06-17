@@ -7,8 +7,10 @@ import {
     FETCH_SURVEYSLIST_FAIL,
     FETCH_SURVEY_SUCCESS,
     FETCH_SURVEY_FAIL,
-    FETCH_ANSWER_SUCCESS,
-    FETCH_ANSWER_FAIL,
+    POST_ANSWER_SUCCESS,
+    POST_ANSWER_FAIL,
+    POST_NOTE_SUCCESS,
+    POST_NOTE_FAIL
 } from './actionTypes';
 
 export const fetchRegInfo = () => async dispatch => {
@@ -24,7 +26,6 @@ export const fetchRegInfo = () => async dispatch => {
 };
 
 export const postRegInfo = (regData, id) => async dispatch => {
-    // console.log('IDcko', id)
     try {
         const response = await fetch('/api/registerUser/' + id, {
             method: 'POST',
@@ -43,7 +44,6 @@ export const postRegInfo = (regData, id) => async dispatch => {
 };
 
 export const fetchSurveysList = () => async dispatch => {
-    // console.log('som v akcii')
     try {
         const response = await fetch('/api/surveys');
         const json = await response.json();
@@ -56,7 +56,6 @@ export const fetchSurveysList = () => async dispatch => {
 };
 
 export const fetchSurvey = (id) => async dispatch => {
-    console.log('idcko', id)
     try {
         const response = await fetch('/api/surveys/' + id);
         const json = await response.json();
@@ -69,7 +68,6 @@ export const fetchSurvey = (id) => async dispatch => {
 };
 
 export const postAnswer = (answData) => async dispatch => {
-    // console.log(JSON.stringify(answData))
     try {
         const response = await fetch('/api/sendAnswer', {
             method: 'POST',
@@ -77,11 +75,26 @@ export const postAnswer = (answData) => async dispatch => {
             body: JSON.stringify(answData)
         });
         const json = await response.json();
-        // console.log(json);
         dispatch(postAnswerSuccess(json));
     } catch (err) {
         console.log(err);
         dispatch(postAnswerFail());
+
+    }
+};
+
+export const postNote = (noteData) => async dispatch => {
+    try {
+        const response = await fetch('/api/sendNote', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(noteData)
+        });
+        const json = await response.json();
+        dispatch(postNoteSuccess(json));
+    } catch (err) {
+        console.log(err);
+        dispatch(postNoteFail());
 
     }
 };
@@ -123,12 +136,21 @@ export const fetchSurveyFail = () => ({
 });
 
 export const postAnswerSuccess = (json) => ({
-    type: FETCH_ANSWER_SUCCESS,
+    type: POST_ANSWER_SUCCESS,
     payload: json,
 });
 
 export const postAnswerFail = () => ({
-    type: FETCH_ANSWER_FAIL,
+    type: POST_ANSWER_FAIL,
+});
+
+export const postNoteSuccess = (json) => ({
+    type: POST_NOTE_SUCCESS,
+    payload: json,
+});
+
+export const postNoteFail = () => ({
+    type: POST_NOTE_FAIL,
 });
 
 

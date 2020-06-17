@@ -25,17 +25,13 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         marginTop: 10,
     },
-    div: {
-        width: '90vw',
-        backgroundColor: PINK,
-        borderRadius: 10,
-        height: 40,
-        marginLeft: 0,
-        marginBottom: 10,
-    },
     box: {
         marginLeft: 5,
         marginRight: 5,
+        width: '90vw',
+        backgroundColor: PINK,
+        borderRadius: 10,
+        verticalAlign: 'middle',
     },
     text: {
         marginTop: 'auto',
@@ -78,9 +74,7 @@ const CheckBox = (props) => {
     const renderOptions = (option) => {
         if (option.option !== "other") {
             return (
-                <div className={classes.div} >
                     <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.id]} onChange={handleChange} name={option.option} />} label={option.option} />
-                </div>
             )
         }
         else {

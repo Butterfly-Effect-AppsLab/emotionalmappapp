@@ -6,14 +6,14 @@ import { ReactComponent as LargeWhiteLogo } from '../icons/logo_large_white.svg'
 
 const useStyles = makeStyles({
     root: {
-        height: '100vh',
+        height: '100%',
+        width: '100%',
         justifyContent: 'center',
         textAlign: 'center',
-        // paddingLeft: 50,
-        // paddingRight: 50,
-        paddingTop: 150,
-        paddingBottom: 150,
         background: RED,
+        position: 'absolute',
+        top: 0,
+        zIndex: 1100,
     },
     text: {
         fontSize: 18,

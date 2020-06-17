@@ -83,7 +83,6 @@ const RegistrationPage = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log('regData', regData)
         if (regData.sex != '' && regData.birthyear != '' && regData.residence_location_id != null && regData.work_location_id != null) {
             setIsDisabled(false);
             setButtonStyle({ ...buttonStyle, textColor: WHITE, background: RED })
@@ -95,7 +94,6 @@ const RegistrationPage = (props) => {
     }, [regData]);
 
     useEffect(() => {
-        console.log('locationData', locationData)
         if (locationData.work_location && locationData.residence_location) {
             setRegData({ ...regData, work_location_id: locationData.work_location.id, residence_location_id: locationData.residence_location.id })
         }
@@ -112,11 +110,9 @@ const RegistrationPage = (props) => {
     const getData = (value, idComponent) => {
         if (value != 'undefined') {
             if (idComponent !== 'work_location' && idComponent !== 'residence_location') {
-                console.log('som tu', idComponent)
                 setRegData({ ...regData, [idComponent]: value })
             }
             else {
-                console.log('value', value)
                 setLocationData({ ...locationData, [idComponent]: value })
             };
         };

@@ -15,7 +15,6 @@ import moment from 'moment';
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-        marginBottom: 10,
     },
     title: {
         marginTop: 'auto',
@@ -66,7 +65,7 @@ const SurveysCards = (props) => {
     const classes = useStyles();
 
     return (
-        <div style={{ marginTop: 10 }}>
+        <div>
             <Card className={classes.root}
                 variant="outlined"
                 classes={{ root: classes.card }}

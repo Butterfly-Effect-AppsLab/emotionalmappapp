@@ -28,10 +28,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MultilineTextField = (props) => {
-    const { handleBlur, questionId, sendData } = props;
+    const { handleBlur, questionId, sendData, sendNote } = props;
     const classes = useStyles();
     const [state, setState] = React.useState({});
     const [value, setValue] = React.useState('');
+    const [noteValue, setNoteValue] = React.useState('');
 
     useEffect(() => {
         if (sendData) {
@@ -45,13 +46,26 @@ const MultilineTextField = (props) => {
         }
     }, [state]);
 
+    useEffect(() => {
+        if (sendNote) {
+            sendNote(noteValue);
+        }
+    }, [noteValue]);
+
     const handleBlurLocal = (event) => {
-        let newValue = event.target.value;
-        let newState = Object.assign({},state);
-        setState({ ...newState, [newValue]: true, [value]: false });
-        setValue(newValue);
+        if (sendData) {
+            let newValue = event.target.value;
+            let newState = Object.assign({}, state);
+            setState({ ...newState, [newValue]: true, [value]: false });
+            setValue(newValue);
+        }
     };
 
+    const handleChange = (event) => {
+        if (sendNote) {
+            setNoteValue(event.target.value)
+        }
+    };
 
     return (
         <form className={classes.root} noValidate autoComplete='off'>
@@ -62,6 +76,7 @@ const MultilineTextField = (props) => {
                     multiline
                     rows={4}
                     onBlur={handleBlur ? handleBlur : handleBlurLocal}
+                    onChange={handleChange}
                     classes={{
                         input: classes.resize,
                     }}

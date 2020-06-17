@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SurveyCards from '../Components/SurveyCards';
 import DescriptionCard from '../Components/DescriptionCard';
 import Loading from '../Components/Loading';
-import { fetchSurvey, postAnswer } from '../redux/actions';
+import { fetchSurvey, postAnswer, postNote } from '../redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSurvey } from '../redux/selectors';
@@ -11,17 +11,18 @@ import { LIGHTGRAY, RED, WHITE } from '../utils/colours';
 import ProgressBar from '../Components/ProgressBar';
 import Button from '@material-ui/core/Button';
 import ThankYouCard from '../Components/ThankYouCard';
-import { ScrollTo, ScrollArea } from "react-scroll-to";
+import { ScrollTo } from 'react-scroll-to';
 
 const useStyles = makeStyles({
     root: {
-        minHeight: '100vh',
-        background: LIGHTGRAY
+        minHeight: '100%',
+        background: LIGHTGRAY,
+        paddingTop: 10,
     },
     button: {
         textAlign: 'right',
-        marginRight: '5vw',
-        marginBottom: '5vw',
+        paddingRight: '5vw',
+        paddingBottom: '5vw',
         '& > *': {
             borderRadius: 24,
             width: '40vw',
@@ -35,31 +36,43 @@ const useStyles = makeStyles({
 
 
 const SurveyPage = (props) => {
-    const { id, survey, fetchSurvey, postAnswer } = props;
+    const { id, survey, fetchSurvey, postAnswer, postNote } = props;
     const classes = useStyles();
-    const [currPage, setCurrPage] = React.useState(1);
     var currQuestions = [];
     const questionsPerPage = 3;
+    const [currPage, setCurrPage] = React.useState(1);
+    const [isNoteButtonDisabled, setIsNoteButtonDisabled] = React.useState(true);
     const [buttonText, setButtonText] = React.useState('');
     const [answData, setAnswData] = React.useState({
         survey_id: id,
         answers: {},
     });
+    const [noteData, setNoteData] = React.useState({
+        survey_id: id,
+        note: '',
+    });
 
     const getDataToPage = (value) => {
-        if (value[0]) {
+        if (value[0] && currPage <= pages) {
             setAnswData({ ...answData, answers: { ...answData.answers, [value[0].question_id]: value } })
+        }
+        else if (currPage > pages) {
+            setNoteData({ ...noteData, note: value });
         }
     };
 
     useEffect(() => {
-        console.log('som v Pagei', answData)
-    }, [answData]); //A ASI AJ TU... nevieme, zistis 
-
-
-    useEffect(() => {
         fetchSurvey(id);
     }, []);
+
+    useEffect(() => {
+        if (noteData.note !== '') {
+            setIsNoteButtonDisabled(false);
+        }
+        else {
+            setIsNoteButtonDisabled(true);
+        }
+    }, [noteData]);
 
     useEffect(() => {
         if (currPage === pages) {
@@ -81,88 +94,80 @@ const SurveyPage = (props) => {
 
     const onButtonClick = () => {
         setCurrPage(currPage + 1);
-        console.log(currPage)
-        if (currPage > pages) {
+    };
 
-        }
+    const onNoteButtonClick = () => {
+        postNote(noteData);
     };
 
     const renderCards = (currPage, pages) => {
         if (currPage === 1) {
             return (
                 <>
-                    {/* <ScrollTo>
-                        {({ scroll }) => (
-                            <ScrollArea> */}
-                            <DescriptionCard survey={survey} />
+                    <DescriptionCard survey={survey} />
+                    <ProgressBar currPage={currPage} numPages={pages} />
+                    <div className={classes.button}>
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            // disabled='0'
+                            onClick={(event) => onButtonClick()}
+                            style={{ color: WHITE, background: RED }}
+                        >
+                            {buttonText}
+                        </Button>
+                    </div>
+                </>
+            )
+        }
+        else if (currPage > pages) {
+            return (
+                <ThankYouCard isNoteButtonDisabled={isNoteButtonDisabled} sendDataToPage={(value) => { getDataToPage(value) }} onNoteButtonClick={() => { onNoteButtonClick() }} />
+            )
+        }
+        else {
+            return (
+                <ScrollTo>
+                    {({ scroll }) => (
+                        <>
+                            <SurveyCards sendDataToPage={(value) => { getDataToPage(value) }} id={id} questionsPerPage={questionsPerPage} questions={currQuestions} currPage={currPage} />
                             <ProgressBar currPage={currPage} numPages={pages} />
                             <div className={classes.button}>
                                 <Button
                                     variant='contained'
                                     color='primary'
                                     // disabled='0'
-                                    onClick={(event) => onButtonClick() /*, () => scroll({ y: 0, x: 0 })*/}
+                                    onClick={() => { onButtonClick(); scroll({ y: 0, x: 0 }) }}
                                     style={{ color: WHITE, background: RED }}
                                 >
                                     {buttonText}
                                 </Button>
                             </div>
-                       {/* </ScrollArea>
-                       )}
-                </ScrollTo> */}
-                </>
+                        </>
+                    )}
+                </ScrollTo>
             )
         }
-        else if (currPage > pages) {
-    return (
-        <ThankYouCard />
-    )
-}
-else {
-    return (
-        <>
-            {/* <ScrollTo>
-                {({ scroll }) => (
-                    <ScrollArea> */}
-                        <SurveyCards sendDataToPage={(value) => { getDataToPage(value) }} id={id} questionsPerPage={questionsPerPage} questions={currQuestions} currPage={currPage} />
-                        <ProgressBar currPage={currPage} numPages={pages} />
-                        <div className={classes.button}>
-                            <Button
-                                variant='contained'
-                                color='primary'
-                                // disabled='0'
-                                onClick={(event) => onButtonClick() /*, () => scroll({ y: 0, x: 0 })*/}
-                                style={{ color: WHITE, background: RED }}
-                            >
-                                {buttonText}
-                            </Button>
-                        </div>
-                    {/* </ScrollArea>
-                )}
-            </ScrollTo> */}
-        </>
-    )
-}
     };
 
 
-if (survey) {
-    var pages = Math.ceil((survey.questions.length / questionsPerPage)) + 1;
-    currQuestions = [];
-    for (var i = 0; i < questionsPerPage; i++) {
-        if (survey.questions.length > (currPage - 2) * questionsPerPage + i)
-            currQuestions.push(survey.questions[(currPage - 2) * questionsPerPage + i])
+    if (survey) {
+        var pages = Math.ceil((survey.questions.length / questionsPerPage)) + 1;
+        currQuestions = [];
+        for (var i = 0; i < questionsPerPage; i++) {
+            if (survey.questions.length > (currPage - 2) * questionsPerPage + i)
+                currQuestions.push(survey.questions[(currPage - 2) * questionsPerPage + i])
+        }
+        return (
+            <div className={classes.root}>
+                {
+                    renderCards(currPage, pages)
+                }
+            </div>
+        )
     }
-    return (
-        <div className={classes.root}>
-            {
-                renderCards(currPage, pages)
-            }
-        </div>
-    )
-}
-else
-    return <Loading />
+    else
+        return <Loading />
 };
 
 const mapStateToProps = (state) => {
@@ -173,6 +178,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     fetchSurvey: bindActionCreators(fetchSurvey, dispatch),
     postAnswer: bindActionCreators(postAnswer, dispatch),
+    postNote: bindActionCreators(postNote, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SurveyPage);

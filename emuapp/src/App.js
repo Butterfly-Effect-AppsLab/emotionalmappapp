@@ -23,7 +23,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   baseDiv: {
     height: '100vh',
-    overflow: 'hidden',
+    // overflow: 'hidden',
   },
 
 });

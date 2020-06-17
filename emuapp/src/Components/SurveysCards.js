@@ -132,9 +132,9 @@ const SurveysCards = (props) => {
     };
 
     return (
-        <div style={{marginTop: 10}}>
+        <>
             {surveys.map((survey, i) => renderCard(survey, i))}
-        </div>
+        </>
 
     );
 }

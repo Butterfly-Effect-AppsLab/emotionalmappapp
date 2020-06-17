@@ -4,13 +4,14 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { DARKGRAY, RED } from '../utils/colours';
+import { DARKGRAY, RED, WHITE } from '../utils/colours';
+import MultilineTextField from './MultilineTextField';
+import ButtonTemplate from './ButtonTemplate';
 
 
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-        marginBottom: 10,
     },
     label: {
         marginTop: 'auto',
@@ -43,11 +44,16 @@ const useStyles = makeStyles({
 
 });
 
-const ThankYouCard = () => {
+const ThankYouCard = (props) => {
+    const { sendDataToPage, onNoteButtonClick, isNoteButtonDisabled } = props;
     const classes = useStyles();
 
+    const getNote = (value) => {
+            sendDataToPage(value)
+    };
+
     return (
-        <div style={{ marginTop: 50 }}>
+        <>
             <Typography className={classes.title} variant="h5" component="h2">
                 Ďakujeme
             </Typography>
@@ -60,13 +66,13 @@ const ThankYouCard = () => {
                 classes={{ root: classes.card }}
             >
                 <CardContent>
-
-
+                    <MultilineTextField sendNote={(value) => { getNote(value) }}/>
+                    <ButtonTemplate variant="outlined" background={WHITE} textColor={RED} isDisabled={isNoteButtonDisabled} text={'Odoslať'} primary={true} onButtonClick={() => { onNoteButtonClick() }} />
                 </CardContent>
                 <CardActions className={classes.button}>
                 </CardActions>
             </Card>
-        </ div>
+        </>
 
     );
 }

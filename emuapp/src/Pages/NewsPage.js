@@ -1,8 +1,19 @@
 import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import NewsCards from '../Components/NewsCards';
 import Loading from '../Components/Loading';
+import { LIGHTGRAY } from '../utils/colours';
+
+const useStyles = makeStyles({
+    root: {
+        minHeight: '100%',
+        background: LIGHTGRAY,
+        paddingTop: 10,
+    },
+});
 
 const NewsPage = () => {
+    const classes = useStyles();
     const [news, setNews] = React.useState([]);
 
     useEffect(() => {
@@ -10,7 +21,7 @@ const NewsPage = () => {
             .then(res => res.json())
             .then(data => {
                 setNews(data.data);
-                
+
             }).catch(resp => {
                 console.error(resp);
             });
@@ -18,7 +29,7 @@ const NewsPage = () => {
 
     if (news) {
         return (
-            <div>
+            <div className={classes.root}>
                 <center><h1>Newsletter</h1></center>
                 <NewsCards news={news} />
             </div>

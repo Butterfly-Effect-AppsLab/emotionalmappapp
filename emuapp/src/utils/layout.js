@@ -7,16 +7,19 @@ import Box from '@material-ui/core/Box';
 const useStyles = makeStyles({
   root: {
     height: '100%',
-    overflow: 'auto',
+    // overflow: 'auto',
     display: 'flex',
     flexDirection: 'column',
   },
-  // childDiv: {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   // marginTop: 86,
-  //   // marginBottom: 56,
-  // }
+  childrenOverflow: {
+    minHeight: '200px',
+    overflow: 'auto',
+    flexGrow: 1,
+    
+  },
+  box: {
+    height: '100%',
+  }
 });
 
 const Layout = ({ children, history }) => {
@@ -35,15 +38,15 @@ const Layout = ({ children, history }) => {
       }
       else {
         switch (pathname) {
-          case "/onboarding":
+          case '/onboarding':
             setShowHeader(0);
             setShowFooter(0);
             break;
-          case "/test":
+          case '/test':
             setShowHeader(0);
             setShowFooter(0);
             break;
-          case "/login":
+          case '/login':
             setShowHeader(0);
             setShowFooter(0);
             break;
@@ -63,14 +66,14 @@ const Layout = ({ children, history }) => {
   }, [history]);
 
   return (
-    <div id='layout.js' className={classes.root}>
-      <Box display='flex' flexDirection='column'>
+    <div className={classes.root}>
+      <Box className={classes.box} display="flex" flexDirection="column">
         <Header history={history} showHeader={showHeader} />
-        {children}
+        <div className={classes.childrenOverflow}>{children}</div>
         <Footer history={history} showFooter={showFooter} />
       </Box>
     </div>
-  )
+  );
 };
 
 export default Layout;
