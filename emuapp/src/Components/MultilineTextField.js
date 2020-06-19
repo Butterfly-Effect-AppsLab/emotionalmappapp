@@ -36,13 +36,7 @@ const MultilineTextField = (props) => {
 
     useEffect(() => {
         if (sendData) {
-            let data = []
-            Object.keys(state).forEach((key) => {
-                if (state[key]) {
-                    data.push({ question_id: questionId, answer: key })
-                }
-            });
-            sendData(data);
+            sendData(state, questionId);
         }
     }, [state]);
 

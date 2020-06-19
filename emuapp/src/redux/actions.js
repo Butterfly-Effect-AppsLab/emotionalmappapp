@@ -10,7 +10,9 @@ import {
     POST_ANSWER_SUCCESS,
     POST_ANSWER_FAIL,
     POST_NOTE_SUCCESS,
-    POST_NOTE_FAIL
+    POST_NOTE_FAIL,
+    POST_INTERIMANSWER_SUCCESS,
+    POST_INTERIMANSWER_FAIL,
 } from './actionTypes';
 
 export const fetchRegInfo = () => async dispatch => {
@@ -68,6 +70,7 @@ export const fetchSurvey = (id) => async dispatch => {
 };
 
 export const postAnswer = (answData) => async dispatch => {
+    console.log('in action postAnswer', answData)
     try {
         const response = await fetch('/api/sendAnswer', {
             method: 'POST',
@@ -79,6 +82,17 @@ export const postAnswer = (answData) => async dispatch => {
     } catch (err) {
         console.log(err);
         dispatch(postAnswerFail());
+
+    }
+};
+
+export const postInterimAnswer = (interimData) => async dispatch => {
+    console.log('in action', interimData)
+    try {
+        dispatch(postInterimAnswerSuccess(interimData));
+    } catch (err) {
+        console.log(err);
+        dispatch(postInterimAnswerFail());
 
     }
 };
@@ -142,6 +156,15 @@ export const postAnswerSuccess = (json) => ({
 
 export const postAnswerFail = () => ({
     type: POST_ANSWER_FAIL,
+});
+
+export const postInterimAnswerSuccess = (json) => ({
+    type: POST_INTERIMANSWER_SUCCESS,
+    payload: json,
+});
+
+export const postInterimAnswerFail = () => ({
+    type: POST_INTERIMANSWER_FAIL,
 });
 
 export const postNoteSuccess = (json) => ({

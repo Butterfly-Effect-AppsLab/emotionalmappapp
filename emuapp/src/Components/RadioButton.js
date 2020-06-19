@@ -32,35 +32,35 @@ const useStyles = makeStyles({
 });
 
 const RadioButton = (props) => {
-    const { options, sendData, questionId } = props;
-    const [value, setValue] = React.useState();
+    const { options, sendData, questionId, retrievedAnswers } = props;
+    const [value, setValue] = React.useState('');
     const classes = useStyles();
     const [state, setState] = React.useState({});
 
     useEffect(() => {
-        options.forEach(option => { if (option.option !== 'other') { setState({ ...state, [option.option]: false }) } });
-    }, []);
+        if (retrievedAnswers) {
+            Object.keys(retrievedAnswers).forEach((key) => {
+                if (Number(key) === questionId) {
+                    let keyValue = Object.keys(retrievedAnswers[key])
+                    setValue(keyValue[0])
+                }
+            });
+        }
+    }, [retrievedAnswers]);
 
     useEffect(() => {
-        let data = []
-        Object.keys(state).forEach((key) => {
-            if (state[key]) {
-                data.push({ question_id: questionId, answer: key })
-            }
-        });
-        sendData(data);
+        sendData(state, questionId);
     }, [state]);
-
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        setState({[event.target.name]: true });
+        setState({ [event.target.name]: true });
     };
 
     const renderOptions = (option) => {
 
         return (
-                <FormControlLabel className={classes.box} value={option.option} name={option.option} control={< RedRadio />} label={option.option} />
+            <FormControlLabel className={classes.box} value={option.option} name={option.option} control={< RedRadio />} label={option.option} />
         )
 
     };
@@ -68,7 +68,7 @@ const RadioButton = (props) => {
     return (
         <FormControl className={classes.form} component="fieldset">
             {/* <FormLabel component="legend">Gender</FormLabel> */}
-            <RadioGroup  value={value} onChange={handleChange}>
+            <RadioGroup value={value} onChange={handleChange}>
                 {options.map((option) => renderOptions(option))}
             </RadioGroup>
         </FormControl>

@@ -26,4 +26,8 @@ export const getSurvey = (store) => {
     return isEmpty(store.survey.data) ? null : store.survey.data
 }
 
+export const getInterimAnswers = (store) => {
+    return isEmpty(store.interimAnswer.answers) ? null : store.interimAnswer.answers
+}
+
 

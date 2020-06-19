@@ -41,23 +41,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CheckBox = (props) => {
-    const { options, sendData, questionId } = props;
+    const { options, sendData, questionId, retrievedAnswers } = props;
     const classes = useStyles();
     const [state, setState] = React.useState({});
     const [value, setValue] = React.useState('');
 
-    useEffect(() => {
-        options.forEach(option => { if (option.option !== 'other') { setState({ ...state, [option.option]: false }) } });
-    }, []);
 
     useEffect(() => {
-        let data = []
-        Object.keys(state).forEach((key) => {
-            if (state[key]) {
-                data.push({ question_id: questionId, answer: key })
-            }
-        });
-        sendData(data);
+        if (retrievedAnswers) {
+            Object.keys(retrievedAnswers).forEach((key) => {
+                if (Number(key) === questionId) {
+                    // let keyValue = Object.keys(retrievedAnswers[key])
+                    // console.log(keyValue.length)
+                    // for (var i = 0; i < keyValue.length; i++) {
+                    //     setState({ ...state, [keyValue[i]]: true })
+                    // }
+                    setState(retrievedAnswers[key]) //////FUNGUJE, ale nezobrazuje sa checked ikona, treba doriesit
+                }
+            });
+        }
+    }, [retrievedAnswers]);
+
+    useEffect(() => {
+        console.log('toto je state v Check Boxe', state)
+        sendData(state, questionId);
     }, [state]);
 
     const handleChange = (event) => {
@@ -66,15 +73,16 @@ const CheckBox = (props) => {
 
     const handleBlur = (event) => {
         let newValue = event.target.value;
-        let newState = Object.assign({},state);
+        let newState = Object.assign({}, state);
         setState({ ...newState, [newValue]: true, [value]: false });
         setValue(newValue);
     };
 
     const renderOptions = (option) => {
+        console.log(state[option.option])
         if (option.option !== "other") {
             return (
-                    <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.id]} onChange={handleChange} name={option.option} />} label={option.option} />
+                <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.option]} onChange={handleChange} name={option.option} />} label={option.option} />
             )
         }
         else {

@@ -30,30 +30,27 @@ const useStyles = makeStyles({
     },
 });
 
-const SurveysCards = (props) => {
-    const { questions, currPage, questionsPerPage, sendDataToPage } = props
+const SurveyCards = (props) => {
+    const { questions, currPage, questionsPerPage, sendDataToPage, retrievedAnswers } = props
     const classes = useStyles();
 
-    const getData = (value) => {
-        if(value[0])
-        {
-            sendDataToPage(value)
-        }
+    const getData = (value, question_id) => {
+            sendDataToPage(value, question_id)
     };
 
     const renderForm = (type, options, questionId) => {
         switch (type) {
             case 'radiovertical':
                 return (
-                    <RadioButton sendData={(value) => { getData(value) }} options={options} questionId={questionId} />
+                    <RadioButton retrievedAnswers={retrievedAnswers} sendData={(value, question_id) => { getData(value, question_id) }} options={options} questionId={questionId} />
                 );
             case 'checkbox':
                 return (
-                    <CheckBox sendData={(value) => { getData(value) }} options={options} questionId={questionId}/>
+                    <CheckBox retrievedAnswers={retrievedAnswers} sendData={(value, question_id) => { getData(value, question_id) }} options={options} questionId={questionId}/>
                 );
             case 'text':
                 return (
-                    <MultilineTextField sendData={(value) => { getData(value) }} questionId={questionId}/>
+                    <MultilineTextField sendData={(value, question_id) => { getData(value, question_id) }} questionId={questionId}/>
                 );
             default:
                 break;
@@ -90,4 +87,4 @@ const SurveysCards = (props) => {
     );
 }
 
-export default SurveysCards;
+export default SurveyCards;
