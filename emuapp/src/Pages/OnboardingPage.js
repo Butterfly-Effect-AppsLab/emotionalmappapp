@@ -4,7 +4,7 @@ import 'swiper/css/swiper.css';
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { DARKGRAY, WHITE, RED } from '../utils/colours';
-import { ReactComponent as SmallLogo } from '../icons/logo_small.svg';
+import { ReactComponent as MiddleLogo } from '../icons/logo_red_middle.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import history from '../utils/history'
 
@@ -62,9 +62,9 @@ const OnboardingPage = () => {
         <div className={classes.root}>
             <Swiper {...params}>
                 <div className={classes.swipe}>
-                    <SmallLogo className={classes.logo} />
+                    <MiddleLogo className={classes.logo} />
                     <Typography variant='h5' className={classes.title}>
-                        Vitajte v aplikácii BratisLOVE!
+                        Vitajte v aplikácii zapoj.sa!
                     </Typography>
                     <Typography variant='subtitle1' className={classes.text}>
                         Pomôžte nám budovať lepšie mesto. Vyjadrite svoj názor v prieskumoch a sledujte dianie vo vašom meste.
@@ -74,7 +74,7 @@ const OnboardingPage = () => {
                     </div>
                 </div>
                 <div className={classes.swipe}>
-                    <SmallLogo className={classes.logo} />
+                    <MiddleLogo className={classes.logo} />
                     <Typography variant='h5' className={classes.title}>
                         Personalizované mestské správy
                     </Typography>
@@ -86,7 +86,7 @@ const OnboardingPage = () => {
                     </div>
                 </div>
                 <div className={classes.swipe}>
-                    <SmallLogo className={classes.logo} />
+                    <MiddleLogo className={classes.logo} />
                     <Typography variant='h5' className={classes.title}>
                         Prieskumy a ankety
                     </Typography>

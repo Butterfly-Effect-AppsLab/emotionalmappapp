@@ -4,12 +4,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import NewsMenu from './NewsMenu';
-import Box from '@material-ui/core/Box'
+import Box from '@material-ui/core/Box';
+import { WHITE, RED } from '../utils/colours';
+import { ReactComponent as SmallLogo } from '../icons/logo_red_small.svg';
+
 
 const useStyles = makeStyles(({
   appBar: {
-    minHeight: 56,
-    flexWrap: 'wrap',
+    color: RED,
   },
   toolBar: {
     minHeight: 56,
@@ -20,25 +22,20 @@ const useStyles = makeStyles(({
   },
   title: {
     flexGrow: 1,
-  },
-  tabs: {
-    paddingTop: 50,
-  },
-  tabsRoot: {
-    minHeight: 40,
-    height: 40,
-  },
-  tabRoot: {
-    minHeight: 40,
-    height: 40,
+    fontWeight: 'bold'
   },
   size: {
-    minHeight: 86,
-  }
+    // minHeight: 86, //TOTO MAS NA PRIDAVNY PANEL S MOZNOSTAMI
+    minHeight: 56,
+  },
+  logo: {
+    // marginBottom: "10vh"
+    marginRight: 20
+},
 }));
 
 const Header = (props) => {
-  const { showHeader } = props;
+  const { showHeader, headerText } = props;
   const classes = useStyles();
 
 
@@ -46,15 +43,16 @@ const Header = (props) => {
     return (
       <div id='HeaderMenu.js' >
         <Box display='flex' flexDirection='column' className={classes.size}>
-          <AppBar elevation={0} position='fixed'>
+          <AppBar className={classes.appBar} color={WHITE} elevation={0} position='fixed'>
             <Toolbar
               classes={{ regular: classes.toolBar }}
             >
-              <Typography variant='h6' className={classes.title}>
-                News
-                    </Typography>
+              <SmallLogo className={classes.logo} />
+              <Typography variant="h5" component="h2" className={classes.title}>
+                {headerText}
+              </Typography>
             </Toolbar>
-            <NewsMenu />
+            {/* <NewsMenu /> */}
           </AppBar>
         </Box>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { WHITE, BLACK, DARKBLUE, RED } from '../utils/colours';
-import { ReactComponent as LargeLogo } from '../icons/logo_large.svg';
+import { ReactComponent as LargeLogo } from '../icons/logo_red_large.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import history from '../utils/history'
 

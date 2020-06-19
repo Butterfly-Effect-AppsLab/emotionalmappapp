@@ -35,7 +35,7 @@ const SurveyCards = (props) => {
     const classes = useStyles();
 
     const getData = (value, question_id) => {
-            sendDataToPage(value, question_id)
+        sendDataToPage(value, question_id)
     };
 
     const renderForm = (type, options, questionId) => {
@@ -46,11 +46,11 @@ const SurveyCards = (props) => {
                 );
             case 'checkbox':
                 return (
-                    <CheckBox retrievedAnswers={retrievedAnswers} sendData={(value, question_id) => { getData(value, question_id) }} options={options} questionId={questionId}/>
+                    <CheckBox retrievedAnswers={retrievedAnswers} sendData={(value, question_id) => { getData(value, question_id) }} options={options} questionId={questionId} />
                 );
             case 'text':
                 return (
-                    <MultilineTextField sendData={(value, question_id) => { getData(value, question_id) }} questionId={questionId}/>
+                    <MultilineTextField retrievedAnswers={retrievedAnswers} sendData={(value, question_id) => { getData(value, question_id) }} questionId={questionId} />
                 );
             default:
                 break;

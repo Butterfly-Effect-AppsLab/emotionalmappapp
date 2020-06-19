@@ -74,12 +74,11 @@ const CheckBox = (props) => {
     const handleBlur = (event) => {
         let newValue = event.target.value;
         let newState = Object.assign({}, state);
-        setState({ ...newState, [newValue]: true, [value]: false });
+        setState({ ...newState, other: { [newValue]: true } });  ///Nemam sajnu preco to funguje 
         setValue(newValue);
     };
 
     const renderOptions = (option) => {
-        console.log(state[option.option])
         if (option.option !== "other") {
             return (
                 <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.option]} onChange={handleChange} name={option.option} />} label={option.option} />
@@ -91,7 +90,7 @@ const CheckBox = (props) => {
                     <Typography className={classes.text} variant="subtitle2" component="p">
                         Iné
                     </Typography>
-                    <MultilineTextField handleBlur={(value) => { handleBlur(value) }} />
+                    <MultilineTextField retrievedText={state ? state.other : null} handleBlur={(value) => { handleBlur(value) }} />
                 </div>
             )
         }

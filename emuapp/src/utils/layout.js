@@ -23,36 +23,33 @@ const useStyles = makeStyles({
 });
 
 const Layout = ({ children, history }) => {
-  const [showHeader, setShowHeader] = React.useState(1);
-  const [showFooter, setShowFooter] = React.useState(1);
+  const [showHeader, setShowHeader] = React.useState(0);
+  const [showFooter, setShowFooter] = React.useState(0);
+  const [headerText, setHeaderText] = React.useState('');
   const classes = useStyles();
 
   useEffect(() => {
     const processPathName = (pathname) => {
-      if (pathname.indexOf('/registration') !== -1) {
-        setShowHeader(0);
+      if (pathname.indexOf('/surveys/') !== -1) {
+        setShowHeader(1);
         setShowFooter(0);
-      }
-      else if (pathname.indexOf('/surveys/') !== -1) {
-        setShowFooter(0);
+        setHeaderText('Prieskumy');
       }
       else {
         switch (pathname) {
-          case '/onboarding':
-            setShowHeader(0);
-            setShowFooter(0);
-            break;
-          case '/test':
-            setShowHeader(0);
-            setShowFooter(0);
-            break;
-          case '/login':
-            setShowHeader(0);
-            setShowFooter(0);
-            break;
-          default:
+          case '/':
             setShowHeader(1);
             setShowFooter(1);
+            setHeaderText('Správy a novinky');
+            break;
+            case '/surveys':
+            setShowHeader(1);
+            setShowFooter(1);
+            setHeaderText('Prieskumy');
+            break;
+          default:
+            setShowHeader(0);
+            setShowFooter(0);
             break;
         }
       }
@@ -68,7 +65,7 @@ const Layout = ({ children, history }) => {
   return (
     <div className={classes.root}>
       <Box className={classes.box} display="flex" flexDirection="column">
-        <Header history={history} showHeader={showHeader} />
+        <Header history={history} showHeader={showHeader} headerText={headerText}/>
         <div className={classes.childrenOverflow}>{children}</div>
         <Footer history={history} showFooter={showFooter} />
       </Box>

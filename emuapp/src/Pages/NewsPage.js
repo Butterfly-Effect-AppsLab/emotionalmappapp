@@ -30,7 +30,6 @@ const NewsPage = () => {
     if (news) {
         return (
             <div className={classes.root}>
-                <center><h1>Newsletter</h1></center>
                 <NewsCards news={news} />
             </div>
         )

@@ -88,7 +88,7 @@ const ThankYouCard = (props) => {
     }, [isNoteButtonDisabled]);
 
     const onButtonClick = () => {
-        history.pushState('/surveys')
+        history.push('/surveys')
     };
 
     const renderNoteContent = () => {

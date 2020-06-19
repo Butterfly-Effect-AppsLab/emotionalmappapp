@@ -28,13 +28,63 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MultilineTextField = (props) => {
-    const { handleBlur, questionId, sendData, sendNote } = props;
+    const { handleBlur, questionId, sendData, sendNote, retrievedText, retrievedAnswers } = props;
     const classes = useStyles();
     const [state, setState] = React.useState({});
     const [value, setValue] = React.useState('');
     const [noteValue, setNoteValue] = React.useState('');
+    const [retrievedTextLocal, setRetrievedTextLocal] = React.useState({});
 
     useEffect(() => {
+        if (retrievedAnswers) {
+            Object.keys(retrievedAnswers).forEach((key) => {
+                if (Number(key) === questionId) {
+                    setState(retrievedAnswers[key]);
+                    if (retrievedAnswers[key].other) {
+                        setRetrievedTextLocal(retrievedAnswers[key].other)
+                    }
+                }
+            });
+        }
+    }, [retrievedAnswers]);
+
+    useEffect(() => {
+        if (retrievedText) {
+            let keyValues = Object.keys(retrievedText)
+            for (var i = 0; i < keyValues.length; i++) {
+                let key = keyValues[i];
+                if (key) {
+                    console.log('retrievedText[key]', retrievedText[key])
+                    if (retrievedText[key] === true) {
+                        console.log('KEYKEYKEY', key)
+                        setValue(key);
+                    }
+
+                }
+            }
+        }
+        else if (retrievedTextLocal) {
+            let keyValues = Object.keys(retrievedTextLocal)
+            for (var i = 0; i < keyValues.length; i++) {
+                let key = keyValues[i];
+                if (key) {
+                    console.log('retrievedText[key]', retrievedTextLocal[key])
+                    if (retrievedTextLocal[key] === true) {
+                        console.log('KEYKEYKEY', key)
+                        setValue(key);
+                    }
+
+                }
+            }
+        }
+    }, [retrievedText, retrievedTextLocal]);
+
+    useEffect(() => {
+        console.log('retrievedTextLocal', retrievedTextLocal);
+    }, [retrievedTextLocal]);
+
+    useEffect(() => {
+        console.log('STATESTATE', state)
         if (sendData) {
             sendData(state, questionId);
         }
@@ -50,7 +100,7 @@ const MultilineTextField = (props) => {
         if (sendData) {
             let newValue = event.target.value;
             let newState = Object.assign({}, state);
-            setState({ ...newState, [newValue]: true, [value]: false });
+            setState({ ...newState, other: { [newValue]: true } }); ///Nemam sajnu preco to funguje 
             setValue(newValue);
         }
     };
@@ -59,6 +109,7 @@ const MultilineTextField = (props) => {
         if (sendNote) {
             setNoteValue(event.target.value)
         }
+        setValue(event.target.value);
     };
 
     return (
@@ -70,6 +121,7 @@ const MultilineTextField = (props) => {
                     multiline
                     rows={4}
                     onBlur={handleBlur ? handleBlur : handleBlurLocal}
+                    value={value}
                     onChange={handleChange}
                     classes={{
                         input: classes.resize,

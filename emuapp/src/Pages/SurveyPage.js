@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         '& > *': {
             borderRadius: 24,
             width: '40vw',
-            maxWidth: 100,
+            maxWidth: 120,
             minHeight: 50,
             fontSize: '2vh',
             marginTop: '2vh',
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
         '& > *': {
             borderRadius: 24,
             width: '40vw',
-            maxWidth: 100,
+            maxWidth: 120,
             minHeight: 50,
             fontSize: '2vh',
             marginTop: '2vh',
@@ -62,7 +62,7 @@ const SurveyPage = (props) => {
     const [currPage, setCurrPage] = React.useState(1);
     const [isNoteButtonDisabled, setIsNoteButtonDisabled] = React.useState(true);
     const [isNoteSent, setIsNoteSent] = React.useState(false);
-    const [buttonText, setButtonText] = React.useState('');
+    const [buttonText, setButtonText] = React.useState('Ďalej');
     const [answData, setAnswData] = React.useState({
         survey_id: id,
         answers: {},
@@ -76,24 +76,30 @@ const SurveyPage = (props) => {
     });
 
     const getDataToPage = (value, questionId) => {
-        let data = []
-        Object.keys(value).forEach((key) => {
-            if (value[key]) {
-                data.push({ question_id: questionId, answer: key })
+        if (currPage <= pages) {
+            let data = []
+            Object.keys(value).forEach((key) => {
+                if (value[key]) {
+                    if (typeof value[key] === 'object' && value[key] !== null) {
+                        Object.keys(value[key]).forEach((otherKey) => {
+                            data.push({ question_id: questionId, answer: otherKey })
+                        })
+                    }
+                    else {
+                        data.push({ question_id: questionId, answer: key })
+                    }
+                }
+            });
+            if (data[0]) {
+                setAnswData({ ...answData, answers: { ...answData.answers, [data[0].question_id]: data } })
             }
-        });
-        setInterimData({...interimData, answers: { ...interimData.answers, [questionId]: value }})
-        if (data[0] && currPage <= pages) {
-            setAnswData({ ...answData, answers: { ...answData.answers, [data[0].question_id]: data }})
         }
-        
-        else if (currPage > pages) {
+        setInterimData({ ...interimData, answers: { ...interimData.answers, [questionId]: value } })
+
+        if (currPage > pages) {
             setNoteData({ ...noteData, note: value });
         }
     };
-
-    useEffect(() => {
-    }, [interimData]);
 
     useEffect(() => {
         fetchSurvey(id);
@@ -111,7 +117,7 @@ const SurveyPage = (props) => {
     useEffect(() => {
         if (currPage === pages) {
             if (interimData.answers) {
-            postInterimAnswer(interimData);
+                postInterimAnswer(interimData);
             }
             setButtonText('Dokončiť')
         }
@@ -148,13 +154,13 @@ const SurveyPage = (props) => {
                 <>
                     <DescriptionCard survey={survey} />
                     <ProgressBar currPage={currPage} numPages={pages} />
-                    <div className={classes.buttonNext} style={{width: '100vw'}}>
+                    <div className={classes.buttonNext} style={{ width: '100vw' }}>
                         <Button
                             variant='contained'
                             color='primary'
                             // disabled='0'
                             onClick={(event) => onNextButtonClick()}
-                            style={{ color: WHITE, background: RED }}
+                            disableElevation
                         >
                             {buttonText}
                         </Button>
@@ -172,15 +178,15 @@ const SurveyPage = (props) => {
                 <ScrollTo>
                     {({ scroll }) => (
                         <>
-                            <SurveyCards retrievedAnswers={retrievedAnswers} id={id} questionsPerPage={questionsPerPage} sendDataToPage={(value, questionId) => { getDataToPage(value, questionId) }}  questions={currQuestions} currPage={currPage} />
+                            <SurveyCards retrievedAnswers={retrievedAnswers} id={id} questionsPerPage={questionsPerPage} sendDataToPage={(value, questionId) => { getDataToPage(value, questionId) }} questions={currQuestions} currPage={currPage} />
                             <ProgressBar currPage={currPage} numPages={pages} />
                             <div className={classes.buttonParent}>
                                 <div className={classes.buttonPrevious}>
                                     <Button
-                                        variant='contained'
+                                        variant='outlined'
                                         color='primary'
                                         onClick={() => { onPreviousButtonClick(); scroll({ y: 0, x: 0 }) }}
-                                        style={{ color: RED, background: WHITE }}
+                                        disableElevation
                                     >
                                         Späť
                                   </Button>
@@ -191,7 +197,7 @@ const SurveyPage = (props) => {
                                         color='primary'
                                         // disabled='0'
                                         onClick={() => { onNextButtonClick(); scroll({ y: 0, x: 0 }) }}
-                                        style={{ color: WHITE, background: RED }}
+                                        disableElevation
                                     >
                                         {buttonText}
                                     </Button>
