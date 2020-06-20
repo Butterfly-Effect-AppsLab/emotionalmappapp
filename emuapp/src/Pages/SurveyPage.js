@@ -58,11 +58,13 @@ const SurveyPage = (props) => {
     const { id, survey, fetchSurvey, postAnswer, postNote, postInterimAnswer, retrievedAnswers } = props;
     const classes = useStyles();
     var currQuestions = [];
+    var currQuestionsKeys = [];
     const questionsPerPage = 3;
     const [currPage, setCurrPage] = React.useState(1);
     const [isNoteButtonDisabled, setIsNoteButtonDisabled] = React.useState(true);
     const [isNoteSent, setIsNoteSent] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('Ďalej');
+    const [isNextButtonDisabled, setIsNextButtonDisabled] = React.useState(true);
     const [answData, setAnswData] = React.useState({
         survey_id: id,
         answers: {},
@@ -92,6 +94,7 @@ const SurveyPage = (props) => {
             });
             if (data[0]) {
                 setAnswData({ ...answData, answers: { ...answData.answers, [data[0].question_id]: data } })
+                // console.log('ANSWDATAANSWDATA', Object.keys(answData.answers))
             }
         }
         setInterimData({ ...interimData, answers: { ...interimData.answers, [questionId]: value } })
@@ -116,13 +119,17 @@ const SurveyPage = (props) => {
 
     useEffect(() => {
         if (currPage === pages) {
-            if (interimData.answers) {
-                postInterimAnswer(interimData);
+            if (interimData) {
+                    // setIsNextButtonDisabled(false);
+                    console.log('PRESIEL SOM PODMIENKOU')
+                    postInterimAnswer(interimData);
             }
             setButtonText('Dokončiť')
         }
         else if (currPage < pages && currPage !== 2) {
-            postInterimAnswer(interimData);
+                // setIsNextButtonDisabled(false);
+                console.log('PRESIEL SOM PODMIENKOU')
+                postInterimAnswer(interimData);
         }
         else if (currPage > pages) {
             let answers = []
@@ -134,6 +141,10 @@ const SurveyPage = (props) => {
             setButtonText('Ďalej')
         }
     }, [currPage]);
+
+    useEffect(() => {
+        console.log('currQuestionsKeys', currQuestionsKeys)
+    }, [currQuestionsKeys]);
 
     const onNextButtonClick = () => {
         setCurrPage(currPage + 1);
@@ -211,13 +222,17 @@ const SurveyPage = (props) => {
         }
     };
 
-
     if (survey) {
         var pages = Math.ceil((survey.questions.length / questionsPerPage)) + 1;
         currQuestions = [];
+        // currQuestionsKeys = [];
         for (var i = 0; i < questionsPerPage; i++) {
-            if (survey.questions.length > (currPage - 2) * questionsPerPage + i)
-                currQuestions.push(survey.questions[(currPage - 2) * questionsPerPage + i])
+            if (survey.questions.length > (currPage - 2) * questionsPerPage + i) {
+                currQuestions.push(survey.questions[(currPage - 2) * questionsPerPage + i]);
+                if (currQuestions[i]) {
+                    currQuestionsKeys.push(currQuestions[i].id);
+                }
+            }
         }
         return (
             <div className={classes.root}>
