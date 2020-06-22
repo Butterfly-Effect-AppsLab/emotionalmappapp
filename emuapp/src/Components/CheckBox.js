@@ -10,6 +10,7 @@ import { PINK, RED } from '../utils/colours';
 import MultilineTextField from './MultilineTextField';
 import { Typography } from '@material-ui/core';
 
+
 const RedCheckbox = withStyles({
     root: {
         color: RED,
@@ -78,10 +79,11 @@ const CheckBox = (props) => {
         setValue(newValue);
     };
 
-    const renderOptions = (option) => {
+    const renderOptions = (option, index) => {
         if (option.option !== "other") {
+            console.log('state v checkboxe', state[option.option], index)
             return (
-                <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.option]} onChange={handleChange} name={option.option} />} label={option.option} />
+                    <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.option] ? true : false} onChange={(event) => { handleChange(event) }} name={option.option} />} label={option.option} />
             )
         }
         else {
@@ -100,7 +102,7 @@ const CheckBox = (props) => {
         <div className={classes.root}>
             <FormControl component="fieldset">
                 {/* <FormLabel component="legend">Assign responsibility</FormLabel> */}
-                {options.map((option) => renderOptions(option))}
+                {options.map((option, index) => <div key={index}>{renderOptions(option, index)}</div>)}
             </FormControl>
         </div>
     );
