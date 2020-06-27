@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, Response, render_template, send_from_directory, url_for
+from flask import Flask, redirect, request, Response, render_template, send_from_directory, url_for, make_response
 from flask_login import (
     LoginManager,
     current_user,
@@ -6,11 +6,12 @@ from flask_login import (
     login_user,
     logout_user,
 )
+from flask_jwt_extended import (JWTManager, jwt_required)
 from flask_cors import CORS
 import requests
 from oauthlib.oauth2 import WebApplicationClient
 from emuapp import models as m
-from emuapp import schemas
+from emuapp import schemas, jwthandler
 from emuapp import decorators as dec
 from random import randint
 from datetime import datetime
@@ -29,14 +30,38 @@ app = Flask("__main__")
 app.debug = True
 app.root_path = os.path.dirname(os.path.abspath(__file__))
 app.config['JSON_AS_ASCII'] = False
+app.config['JWT_SECRET_KEY'] = os.environ.get("JWT_SECRET")
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = True
+app.config['JWT_CSRF_CHECK_FORM'] = True
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+jwt = JWTManager(app)
 CORS(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+@jwt.unauthorized_loader
+def unauthorized_callback(callback):
+    # No auth header
+    return redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/login', 302)
+
+@jwt.invalid_token_loader
+def invalid_token_callback(callback):
+    # Invalid Fresh/Non-Fresh Access token in auth header
+    resp = make_response(redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/login'))
+    jwthandler.unset_jwt_cookies(resp)
+    return resp, 302
+
+@jwt.expired_token_loader
+def expired_token_callback(callback):
+    # Expired auth header
+    resp = make_response(redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/token/refresh'))
+    jwthandler.unset_access_cookies(resp)
+    return resp, 302
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -101,17 +126,18 @@ def create_or_update_user():
             ses.commit()
             ses.refresh(new_user)
             ses.close()
-            return redirect('/registration/' + new_user.id)
+            return jwthandler.assign_access_refresh_tokens(new_user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/registration/' + new_user.id)
         elif not user.sex:
-            return redirect('/registration/' + user.id)
+            return jwthandler.assign_access_refresh_tokens(user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/registration/' + user.id)
         else:
-            return redirect("/")
+           return jwthandler.assign_access_refresh_tokens(user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/')
     except Exception as e:
         return str(e) #TODO doplnit error handling
 
 @app.route('/logout')
+@jwt_required
 def get_logout():
-    return render_template("index.html")
+    return jwthandler.unset_jwt(), 302
 
 @app.route('/api/news')
 def get_news():
@@ -124,7 +150,7 @@ def get_news():
                 filter_interests.append(n)
     except:
         pass
-    news = ses.query(m.News).order_by(m.News.pub_date).limit(25)
+    news = ses.query(m.News).order_by(m.News.pub_date.desc()).limit(25)
     filtered_news = []
     if len(filter_interests) != 0:
         for n in news:
@@ -152,6 +178,7 @@ def get_users():
     return {'data': result}
 
 @app.route('/api/surveys')
+@jwt_required
 def get_surveys():
     ses = m.Session()
     surveys = ses.query(m.Survey)

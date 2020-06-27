@@ -9,7 +9,7 @@ def parse_rss(rss_address, rss_feed_id):
     news_schema = schemas.NewsScheme()
     result = []
     for n in news['entries']:
-        print(n)
+        #print(n)
         day =  n.published_parsed[2] if len(str(n.published_parsed[2])) > 1 else f"0{n.published_parsed[2]}"
         month = n.published_parsed[1] if len(str(n.published_parsed[1])) > 1 else f"0{n.published_parsed[1]}"
         published_date = f"{n.published_parsed[0]}-{month}-{day} {n.published_parsed[3]}:{n.published_parsed[4]}"
@@ -37,7 +37,7 @@ def seed_rss():
                 try:
                     ses.add(n)
                     ses.commit()
-                    print("new")
+                    #print("new")
                 except:
                     print("already in db")
                     ses.rollback()

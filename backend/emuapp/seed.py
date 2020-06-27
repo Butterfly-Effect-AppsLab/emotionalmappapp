@@ -6,6 +6,7 @@ from emuapp import decorators as dec
 from random import randint
 from emuapp import models as m
 from emuapp import schemas
+from emuapp import rssparser
 
 cur_path = os.path.dirname(__file__)
 
@@ -101,6 +102,6 @@ def seed_feeds(ses):
 if __name__ == '__main__':
     seed_interests()
     seed_streets()
-    seed_news()
-    seed_surveys()
     seed_feeds()
+    rssparser.seed_rss()
+    seed_surveys()

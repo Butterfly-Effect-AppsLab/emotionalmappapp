@@ -80,7 +80,7 @@
             },
             {
                 "question": "Ako sa mate znovu?",
-                "type": "radiohorizontal",
+                "type": "radiovertical",
                 "options": [
                     {
                         "option": "test 1"
