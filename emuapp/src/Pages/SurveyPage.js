@@ -117,7 +117,8 @@ const SurveyPage = (props) => {
         if(currQuestions.length > 0){
             let buttonDisabled = false
             currQuestions.forEach((question) => {
-                if(question && question.required  ){
+                console.log('QUESTIONQUESTION', question)
+                if(question && question.required){
                     //console.log('answdata kokot otazka', question)
                     //console.log('answdata kokotak',answData.answers)
                     //console.log('answdata uplny kokotak',answData.answers[question.id.toString()] )

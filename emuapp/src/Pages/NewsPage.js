@@ -27,14 +27,14 @@ const NewsPage = () => {
             });
     }, [])
 
-    // if (news) {
-    //     return (
-    //         <div className={classes.root}>
-    //             <NewsCards news={news} />
-    //         </div>
-    //     )
-    // }
-    // else
+    if (news) {
+        return (
+            <div className={classes.root}>
+                <NewsCards news={news} />
+            </div>
+        )
+    }
+    else
         return <Loading />
 };
 
