@@ -104,7 +104,8 @@ class SurveyRecord(Base):
 class Question(Base):
     __tablename__ = 'questions'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key = True)
+    required = Column(Boolean, default = True)
     survey_id = Column(Integer, ForeignKey('surveys.id'))
     surveys = relationship('Survey', back_populates='questions')
     question = Column(String)

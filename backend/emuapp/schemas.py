@@ -83,6 +83,7 @@ class QuestionSchema(Schema):
     id = fields.Integer(dump_only=True)
     question = fields.String(required=True)
     type = fields.String(required=True)
+    required = fields.Boolean()
     options = fields.Nested(QuestionOptionSchema, many=True, dump_only=True)
 
     class Meta:
