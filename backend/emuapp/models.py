@@ -76,6 +76,7 @@ class News(Base):
     title = Column(String)
     description = Column(String)
     link = Column(String, unique=True)
+    image = Column(String)
     pub_date = Column(DateTime)
     rss_feed = relationship('RssFeed')
     rss_feed_id = Column(Integer, ForeignKey('rss_feeds.id'))

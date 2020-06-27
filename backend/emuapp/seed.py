@@ -67,6 +67,7 @@ def seed_streets(ses):
     ses.add_all(streets)
     ses.commit()
 
+
 @dec.init_db
 def seed_surveys(ses):
     try:
@@ -86,10 +87,20 @@ def seed_feeds(ses):
         ses.commit()
     except:
         ses.rollback()
-    print('test')
+    with open('/opt/app/backend/importdata/rssFeeds.jsonc') as json_file:
+        data = json.load(json_file)
+        for feed in data['data']:
+            new_feed = m.RssFeed(name = feed['name'], image = feed['image'])
+            ses.add(new_feed)
+            ses.commit()
+            for address in feed['address']:
+                feed_address = m.RssAddress(address = address['address'], rss_feed_id = new_feed.id)
+                ses.add(feed_address)
+                ses.commit()
 
 if __name__ == '__main__':
     seed_interests()
     seed_streets()
     seed_news()
     seed_surveys()
+    seed_feeds()

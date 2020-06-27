@@ -28,6 +28,7 @@ class NewsScheme(Schema):
     description = fields.Str()
     pub_date = fields.DateTime()
     link = fields.String()
+    image = fields.String()
     rss_feed_id = fields.Integer(load_only=True)
     rss_feed = fields.Nested('RssFeedSchema',dump_only=True)
     #author = Author(attribute="author",allow_none = True)
@@ -141,11 +142,24 @@ class SurveyRecordSchema(Schema):
     def make_survey_record(self, data, **kwargs):
         return m.SurveyRecord(**data)
 
+class RssAddressSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    rss_feed_id = fields.Integer()
+    address = fields.String()
+
+    class Meta:
+        model = m.RssAddress
+        unknown = EXCLUDE
+
+    @post_load
+    def make_survey_record(self, data, **kwargs):
+        return m.RssAddress(**data)
+
 class RssFeedSchema(Schema):
     id = fields.Integer(dump_only=True)
-    name = fields.Integer()
-    address = fields.Integer()
-    image = fields.Integer()
+    name = fields.String()
+    rss_address = fields.Nested(RssAddressSchema, many=True)
+    image = fields.String()
 
     class Meta:
         model = m.RssFeed
@@ -154,7 +168,6 @@ class RssFeedSchema(Schema):
     @post_load
     def make_survey_record(self, data, **kwargs):
         return m.RssFeed(**data)
-
 
 class SurveyNoteSchema(Schema):
     user_id = fields.Integer()

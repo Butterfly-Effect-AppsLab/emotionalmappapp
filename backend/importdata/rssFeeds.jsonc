@@ -1,35 +1,73 @@
-[
-    {
-        "name": "Bratislava",
-        "address": ["https://bratislava.sk/rss?projection=528",
-                    "https://bratislava.sk/rss?projection=15553",
-                    "https://bratislava.sk/rss?projection=15554"],
-        "image": ""
-    },
-    {
-        "name": "Petržálka",
-        "address": ["https://www.petrzalka.sk/rss-newsletter",
-                    "https://www.petrzalka.sk/rss-zivot-v-samosprave",
-                    "https://www.petrzalka.sk/rss-uradna-tabula"],
-        "image": ""
-    },
-    {
-        "name": "Vrakuňa",
-        "address": ["https://www.vrakuna.sk/?feed=full"],
-        "image": ""
-    },
-    {
-        "name": "Ružinov",
-        "address": ["https://www.ruzinov.sk/sk/aktuality/rss",
-                    "https://www.ruzinov.sk/sk/podujatia/rss",
-                    "https://www.ruzinov.sk/sk/uradna-tabula/rss"],
-        "image": ""
-    },
-    {
-        "name": "Ružinov",
-        "address": ["https://www.ruzinov.sk/sk/aktuality/rss",
-                    "https://www.ruzinov.sk/sk/podujatia/rss",
-                    "https://www.ruzinov.sk/sk/uradna-tabula/rss"],
-        "image": ""
-    },
-]
+{
+    "data": [{
+            "name": "Bratislava",
+            "address": [{
+                    "address": "https://bratislava.sk/rss?projection=528"
+                },
+                {
+                    "address": "https://bratislava.sk/rss?projection=15553"
+                },
+                {
+                    "address": "https://bratislava.sk/rss?projection=15554"
+                }
+            ],
+            "image": ""
+        },
+        {
+            "name": "Petržálka",
+            "address": [{
+                    "address": "https://www.petrzalka.sk/rss-newsletter"
+                },
+                {
+                    "address": "https://www.petrzalka.sk/rss-zivot-v-samosprave"
+                },
+                {
+                    "address": "https://www.petrzalka.sk/rss-uradna-tabula"
+                }
+            ],
+            "image": ""
+        },
+        {
+            "name": "Vrakuňa",
+            "address": [{
+                "address": "https://www.vrakuna.sk/?feed=full"
+            }],
+            "image": ""
+        },
+        {
+            "name": "Ružinov",
+            "address": [{
+                    "address": "https://www.ruzinov.sk/sk/aktuality/rss"
+                },
+                {
+                    "address": "https://www.ruzinov.sk/sk/podujatia/rss"
+                },
+                {
+                    "address": "https://www.ruzinov.sk/sk/uradna-tabula/rss"
+                }
+            ],
+            "image": ""
+        },
+        {
+            "name": "Podunajské Biskupice",
+            "address": [{
+                "address": "https://www.biskupice.sk/?rss=200"
+            }],
+            "image": ""
+        },
+        {
+            "name": "Nove Mesto",
+            "address": [{
+                    "address": "https://www.banm.sk/rss/"
+                },
+                {
+                    "address": "https://www.banm.sk/rss-uradna-tabula/"
+                },
+                {
+                    "address": "https://www.ruzinov.sk/sk/uradna-tabula/rss"
+                }
+            ],
+            "image": ""
+        }
+    ]
+}

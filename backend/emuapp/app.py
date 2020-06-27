@@ -124,7 +124,7 @@ def get_news():
                 filter_interests.append(n)
     except:
         pass
-    news = ses.query(m.News)
+    news = ses.query(m.News).order_by(m.News.pub_date).limit(25)
     filtered_news = []
     if len(filter_interests) != 0:
         for n in news:
