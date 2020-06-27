@@ -54,9 +54,9 @@ const MultilineTextField = (props) => {
             for (var i = 0; i < keyValues.length; i++) {
                 let key = keyValues[i];
                 if (key) {
-                    console.log('retrievedText[key]', retrievedText[key])
+                    // console.log('retrievedText[key]', retrievedText[key])
                     if (retrievedText[key] === true) {
-                        console.log('KEYKEYKEY', key)
+                        // console.log('KEYKEYKEY', key)
                         setValue(key);
                     }
 
@@ -68,9 +68,9 @@ const MultilineTextField = (props) => {
             for (var i = 0; i < keyValues.length; i++) {
                 let key = keyValues[i];
                 if (key) {
-                    console.log('retrievedText[key]', retrievedTextLocal[key])
+                    // console.log('retrievedText[key]', retrievedTextLocal[key])
                     if (retrievedTextLocal[key] === true) {
-                        console.log('KEYKEYKEY', key)
+                        // console.log('KEYKEYKEY', key)
                         setValue(key);
                     }
 
@@ -80,11 +80,11 @@ const MultilineTextField = (props) => {
     }, [retrievedText, retrievedTextLocal]);
 
     useEffect(() => {
-        console.log('retrievedTextLocal', retrievedTextLocal);
+        // console.log('retrievedTextLocal', retrievedTextLocal);
     }, [retrievedTextLocal]);
 
     useEffect(() => {
-        console.log('STATESTATE', state)
+        // console.log('STATESTATE', state)
         if (sendData) {
             sendData(state, questionId);
         }
