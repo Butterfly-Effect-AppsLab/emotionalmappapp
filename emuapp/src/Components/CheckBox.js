@@ -64,7 +64,6 @@ const CheckBox = (props) => {
     }, [retrievedAnswers]);
 
     useEffect(() => {
-        console.log('toto je state v Check Boxe', state)
         sendData(state, questionId);
     }, [state]);
 
@@ -81,7 +80,6 @@ const CheckBox = (props) => {
 
     const renderOptions = (option, index) => {
         if (option.option !== "other") {
-            console.log('state v checkboxe', state[option.option], index)
             return (
                     <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.option] ? true : false} onChange={(event) => { handleChange(event) }} name={option.option} />} label={option.option} />
             )

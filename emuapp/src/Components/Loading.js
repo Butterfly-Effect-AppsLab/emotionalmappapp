@@ -16,6 +16,7 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: 0,
         zIndex: 1100,
+        display: 'block',
     },
     text: {
         fontSize: '2.2vh',
@@ -28,31 +29,43 @@ const useStyles = makeStyles({
         // textAlign: 'center',
     },
     logo: {
-        position: 'absolute',
-        top: '35%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        // position: 'absolute',
+        // top: '25%',
+        // left: '50%',
+        // transform: 'translate(-50%, -50%)',
+        justifySelf: 'center',
+        marginTop: '20vh',
+        marginBottom: '5vh',
+        width: 162,
+        height: 170,
     },
     name: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        // position: 'absolute',
+        // top: '50%',
+        // left: '50%',
+        // transform: 'translate(-50%, -50%)',
+        justifySelf: 'center',
+        // marginTop: '60vh',
+        // marginBottom: '5vh',
     }
 });
 
 const Loading = () => {
     const classes = useStyles();
 
-        return (
-            <div className={classes.root}>
+    return (
+        <div className={classes.root}>
+            <div>
                 <LargeWhiteLogo className={classes.logo} />
-                <WhiteName className={classes.name}/>
-                <Typography className={classes.text}>
-                    Budujeme lepšie mesto
-                </Typography>
             </div>
-        )
+            <div>
+                <WhiteName className={classes.name} />
+            </div>
+            <Typography className={classes.text}>
+                Budujeme lepšie mesto
+                </Typography>
+        </div>
+    )
 }
 
 export default Loading;

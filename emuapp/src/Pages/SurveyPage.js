@@ -78,21 +78,30 @@ const SurveyPage = (props) => {
     });
 
     const getDataToPage = (value, questionId) => {
+        console.log('uplne jebnuty system sme spraivili', value)
         if (currPage <= pages) {
             let data = []
+            let allValuesFalse = true
             Object.keys(value).forEach((key) => {
                 if (value[key]) {
                     if (typeof value[key] === 'object' && value[key] !== null) {
                         Object.keys(value[key]).forEach((otherKey) => {
-                            data.push({ question_id: questionId, answer: otherKey })
+                            if(otherKey !== ""){
+                                data.push({ question_id: questionId, answer: otherKey })
+                                allValuesFalse = false
+                            }
                         })
                     }
                     else {
                         data.push({ question_id: questionId, answer: key })
+                        allValuesFalse = false
                     }
                 }
             });
-            if (data[0]) {
+            if (allValuesFalse) {
+                setAnswData({ ...answData, answers: { ...answData.answers, [questionId]: [] } })
+            }
+            else if (data[0]) {
                 setAnswData({ ...answData, answers: { ...answData.answers, [data[0].question_id]: data } })
                 // console.log('ANSWDATAANSWDATA', Object.keys(answData.answers))
             }
@@ -105,8 +114,30 @@ const SurveyPage = (props) => {
     };
 
     useEffect(() => {
+        if(currQuestions.length > 0){
+            let buttonDisabled = false
+            currQuestions.forEach((question) => {
+                if(question && question.required  ){
+                    //console.log('answdata kokot otazka', question)
+                    //console.log('answdata kokotak',answData.answers)
+                    //console.log('answdata uplny kokotak',answData.answers[question.id.toString()] )
+                    if(!answData.answers[question.id.toString()] || answData.answers[question.id.toString()].length == 0){
+                        //console.log('im in')
+                        buttonDisabled = true
+                    }
+                }
+            })
+            setIsNextButtonDisabled(buttonDisabled)
+        }
+    }, [answData])
+
+    useEffect(() => {
         fetchSurvey(id);
     }, []);
+
+    useEffect(() => {
+        console.log('picasak', isNextButtonDisabled)
+    }, [isNextButtonDisabled]);
 
     useEffect(() => {
         if (noteData.note !== '') {
@@ -121,14 +152,14 @@ const SurveyPage = (props) => {
         if (currPage === pages) {
             if (interimData) {
                     // setIsNextButtonDisabled(false);
-                    console.log('PRESIEL SOM PODMIENKOU')
+                    // console.log('PRESIEL SOM PODMIENKOU')
                     postInterimAnswer(interimData);
             }
             setButtonText('Dokončiť')
         }
         else if (currPage < pages && currPage !== 2) {
                 // setIsNextButtonDisabled(false);
-                console.log('PRESIEL SOM PODMIENKOU')
+                // console.log('PRESIEL SOM PODMIENKOU')
                 postInterimAnswer(interimData);
         }
         else if (currPage > pages) {
@@ -142,9 +173,9 @@ const SurveyPage = (props) => {
         }
     }, [currPage]);
 
-    useEffect(() => {
-        console.log('currQuestionsKeys', currQuestionsKeys)
-    }, [currQuestionsKeys]);
+    // useEffect(() => {
+    //     console.log('currQuestionsKeys', currQuestionsKeys)
+    // }, [currQuestionsKeys]);
 
     const onNextButtonClick = () => {
         setCurrPage(currPage + 1);
@@ -206,7 +237,7 @@ const SurveyPage = (props) => {
                                     <Button
                                         variant='contained'
                                         color='primary'
-                                        // disabled='0'
+                                        disabled={isNextButtonDisabled}
                                         onClick={() => { onNextButtonClick(); scroll({ y: 0, x: 0 }) }}
                                         disableElevation
                                     >
