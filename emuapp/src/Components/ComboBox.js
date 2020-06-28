@@ -36,12 +36,10 @@ const ComboBox = (props) => {
     const classes = useStyles();
     const [inputText, setInputText] = React.useState('');
     const [inputOption, setInputOption] = React.useState(null
-        // id: null,
-        // street: '',
-        // sub_part: '',
     );
 
     useEffect(() => {
+        console.log('INPUTOPTIUON', inputOption)
         if(inputOption){
            sendData(inputOption, idComponent)
         }
@@ -50,14 +48,17 @@ const ComboBox = (props) => {
 
     const handleInputChange = (value) => {
         setInputText(value);
-        if (value == '') {
-            setInputOption({...value, id: value, street: value, sub_part: value});
+        if (value === '') {
+            setInputOption(null);
         }
     };
 
     const handleChange = (value) => {
-        if (value) {
+        if (value.id) {
         setInputOption({...value, id: value.id, street: value.street, sub_part: value.sub_part});
+        }
+        else if (!value.id){
+            setInputOption({...value, id: 0, street: value, sub_part: value});
         }
     }
 
