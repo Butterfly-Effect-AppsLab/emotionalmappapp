@@ -14,6 +14,7 @@ import {
     POST_INTERIMANSWER_SUCCESS,
     POST_INTERIMANSWER_FAIL,
 } from './actionTypes';
+import history from '../utils/history';
 
 export const fetchRegInfo = () => async dispatch => {
     try {
@@ -46,12 +47,21 @@ export const postRegInfo = (regData, id) => async dispatch => {
 };
 
 export const fetchSurveysList = () => async dispatch => {
+    const helpResponse = await fetch('/api/surveys');
+    console.log(helpResponse)
     try {
         const response = await fetch('/api/surveys');
         const json = await response.json();
         dispatch(fetchSurveysListSuccess(json));
+        console.log('co mi vracia backend pri surveyoch registrovany', response);
     } catch (err) {
         console.log(err);
+        if (helpResponse.url.indexOf('/login') !== -1){
+            // const helpLength = helpResponse.url.lengthOf();
+            // const helpUrlLocation = helpResponse.url.indexOf('/login')
+            history.push('/login')
+        }
+        console.log('co mi vracia backend pri surveyoch neregistrovany', await fetch('/api/surveys'));
         dispatch(fetchSurveysListFail());
 
     }

@@ -45,7 +45,7 @@ const Footer = (props) => {
         case "/":
           setValue(0);
           break;
-        case "/Onboarding":
+        case "/surveys":
           setValue(1);
           break;
         default:

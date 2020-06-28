@@ -4,7 +4,7 @@ import 'swiper/css/swiper.css';
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { DARKGRAY, WHITE, RED } from '../utils/colours';
-import { ReactComponent as MiddleLogo } from '../icons/logo_red_middle.svg';
+import { ReactComponent as Logo } from '../icons/logo_red_large.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';
 import history from '../utils/history'
 
@@ -18,22 +18,24 @@ const useStyles = makeStyles({
         height: '100vh',
         paddingLeft: '10vw',
         paddingRight: '10vw',
-        paddingTop: '10vh',
+        paddingTop: '20vh',
     },
     logo: {
-        marginBottom: "10vh"
+        marginBottom: '3vh',
+        width: 77,
+        height: 81,
     },
     title: {
         fontSize: 28,
-        marginBottom: "5vh",
+        marginBottom: '5vh',
         fontWeight: 500,
     },
     text: {
         fontSize: 12,
-        marginBottom: "40vh"
+        marginBottom: '40vh'
     },
     button: {
-        position: "absolute",
+        position: 'absolute',
         bottom: '10vh',
         left: '10vw',
         right: '10vw',
@@ -62,7 +64,7 @@ const OnboardingPage = () => {
         <div className={classes.root}>
             <Swiper {...params}>
                 <div className={classes.swipe}>
-                    <MiddleLogo className={classes.logo} />
+                    <Logo className={classes.logo} />
                     <Typography variant='h5' className={classes.title}>
                         Vitajte v aplikácii zapoj.sa!
                     </Typography>
@@ -74,7 +76,7 @@ const OnboardingPage = () => {
                     </div>
                 </div>
                 <div className={classes.swipe}>
-                    <MiddleLogo className={classes.logo} />
+                    <Logo className={classes.logo} />
                     <Typography variant='h5' className={classes.title}>
                         Personalizované mestské správy
                     </Typography>
@@ -86,7 +88,7 @@ const OnboardingPage = () => {
                     </div>
                 </div>
                 <div className={classes.swipe}>
-                    <MiddleLogo className={classes.logo} />
+                    <Logo className={classes.logo} />
                     <Typography variant='h5' className={classes.title}>
                         Prieskumy a ankety
                     </Typography>

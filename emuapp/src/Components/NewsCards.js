@@ -9,7 +9,7 @@ import { ReactComponent as SourceIcon } from '../icons/source.svg';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { LIGHTGRAY, DARKGRAY } from '../utils/colours';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import history from '../utils/history'
 
 const useStyles = makeStyles({
@@ -59,9 +59,9 @@ const NewsCards = (props) => {
                             {moment(news.pub_date).format('DD.MM.YYYY')}
                         </Typography>
                         <Typography className={classes.title} style={{ fontWeight: 'bold' }} variant="h5" component="h2">
-                            {/* <Link to={news.link}> nefunguje to nemam sajnu preco ani s hrefom */}
+                            <Link href={news.link} color='inherit'>
                                 {news.title}
-                            {/* </Link> */}
+                            </Link>
                         </Typography>
                         <div className={classes.row}>
                             <div className={classes.iconDiv}>

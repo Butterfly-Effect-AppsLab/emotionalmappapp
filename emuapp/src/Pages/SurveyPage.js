@@ -12,6 +12,9 @@ import ProgressBar from '../Components/ProgressBar';
 import Button from '@material-ui/core/Button';
 import ThankYouCard from '../Components/ThankYouCard';
 import { ScrollTo } from 'react-scroll-to';
+import Link from '@material-ui/core/Link';
+import history from '../utils/history';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
@@ -51,6 +54,13 @@ const useStyles = makeStyles({
             marginTop: '2vh',
         },
     },
+    closeButton: {
+        position: 'absolute',
+        top: 25,
+        right: '5vw',
+        zIndex: 1100,
+        color: RED,
+    }
 });
 
 
@@ -86,7 +96,7 @@ const SurveyPage = (props) => {
                 if (value[key]) {
                     if (typeof value[key] === 'object' && value[key] !== null) {
                         Object.keys(value[key]).forEach((otherKey) => {
-                            if(otherKey !== ""){
+                            if (otherKey !== "") {
                                 data.push({ question_id: questionId, answer: otherKey })
                                 allValuesFalse = false
                             }
@@ -114,15 +124,15 @@ const SurveyPage = (props) => {
     };
 
     useEffect(() => {
-        if(currQuestions.length > 0){
+        if (currQuestions.length > 0) {
             let buttonDisabled = false
             currQuestions.forEach((question) => {
                 console.log('QUESTIONQUESTION', question)
-                if(question && question.required){
+                if (question && question.required) {
                     //console.log('answdata kokot otazka', question)
                     //console.log('answdata kokotak',answData.answers)
                     //console.log('answdata uplny kokotak',answData.answers[question.id.toString()] )
-                    if(!answData.answers[question.id.toString()] || answData.answers[question.id.toString()].length == 0){
+                    if (!answData.answers[question.id.toString()] || answData.answers[question.id.toString()].length == 0) {
                         //console.log('im in')
                         buttonDisabled = true
                     }
@@ -151,17 +161,11 @@ const SurveyPage = (props) => {
 
     useEffect(() => {
         if (currPage === pages) {
-            if (interimData) {
-                    // setIsNextButtonDisabled(false);
-                    // console.log('PRESIEL SOM PODMIENKOU')
-                    postInterimAnswer(interimData);
-            }
+            postInterimAnswer(interimData);
             setButtonText('Dokončiť')
         }
         else if (currPage < pages && currPage !== 2) {
-                // setIsNextButtonDisabled(false);
-                // console.log('PRESIEL SOM PODMIENKOU')
-                postInterimAnswer(interimData);
+            postInterimAnswer(interimData);
         }
         else if (currPage > pages) {
             let answers = []
@@ -254,6 +258,26 @@ const SurveyPage = (props) => {
         }
     };
 
+    const handleClose = () => {
+        console.log('INTERIMINTERIM', interimData)
+        if (interimData) {
+            postInterimAnswer(interimData)
+        }
+        history.push('/surveys');
+    };
+
+    const renderCloseButton = () => {
+        if (currPage <= pages) {
+            return (
+                <Typography className={classes.closeButton} variant="body2" component="p">
+                    <Link onClick={() => { handleClose() }}>
+                        Zatvoriť
+                    </Link>
+                </Typography>
+            )
+        }
+    };
+
     if (survey) {
         var pages = Math.ceil((survey.questions.length / questionsPerPage)) + 1;
         currQuestions = [];
@@ -268,9 +292,8 @@ const SurveyPage = (props) => {
         }
         return (
             <div className={classes.root}>
-                {
-                    renderCards(currPage, pages)
-                }
+                {renderCloseButton()}
+                {renderCards(currPage, pages)}
             </div>
         )
     }
@@ -281,6 +304,7 @@ const SurveyPage = (props) => {
 const mapStateToProps = (state) => {
     const survey = getSurvey(state);
     const retrievedAnswers = getInterimAnswers(state)
+    console.log('RETRIEVEDRETRIEVED',retrievedAnswers)
     return { survey, retrievedAnswers };
 };
 
