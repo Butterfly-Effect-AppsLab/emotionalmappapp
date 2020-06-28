@@ -103,5 +103,5 @@ if __name__ == '__main__':
     seed_interests()
     seed_streets()
     seed_feeds()
-    rssparser.seed_rss()
     seed_surveys()
+    rssparser.seed_rss()

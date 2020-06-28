@@ -6,7 +6,7 @@ from flask_login import (
     login_user,
     logout_user,
 )
-from flask_jwt_extended import (JWTManager, jwt_required, get_jwt_identity, create_access_token, jwt_refresh_token_required, set_access_cookies)
+from flask_jwt_extended import (JWTManager, jwt_required, jwt_optional, get_jwt_identity, create_access_token, jwt_refresh_token_required, set_access_cookies)
 from flask_cors import CORS
 import requests
 from oauthlib.oauth2 import WebApplicationClient
@@ -188,12 +188,17 @@ def get_users():
     return {'data': result}
 
 @app.route('/api/surveys')
+@jwt_optional
 def get_surveys():
+    user_id = get_jwt_identity()
     ses = m.Session()
     surveys = ses.query(m.Survey)
     survey_schema = schemas.SurveySchema(exclude=('questions', 'interests', 'residence_regions', 'work_regions'))
 
     result = survey_schema.dump(surveys, many=True)
+    for r in result:
+        #return {'err': ses.query(m.SurveyRecord).filter(m.SurveyRecord.survey_id == r['id']).filter(m.SurveyRecord.user_id == user_id).first()}
+        r.update({'filled': True if ses.query(m.SurveyRecord).filter(m.SurveyRecord.survey_id == r['id']).filter(m.SurveyRecord.user_id == user_id).first() else False})
     ses.close()
     return {'data': result}
 
@@ -278,7 +283,6 @@ def post_user():
     return {"data": user_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/registerUser/<id>', methods=['POST'])
-@jwt_required
 def update_user(id):
     ses = m.Session()
     try:
@@ -296,6 +300,7 @@ def update_user(id):
 @app.route('/api/sendAnswer', methods=['POST'])
 @jwt_required
 def post_answer():
+    user_id = get_jwt_identity()
     ses = m.Session()
     try:
         answer_json = request.json
@@ -303,6 +308,7 @@ def post_answer():
         answer_schema = schemas.AnswerSchema()
 
         new_survey_record = survey_record_schema.load(answer_json)
+        new_survey_record.update({'user_id': user_id})
         ses.add(new_survey_record)
         if 'answers' in answer_json:
                 new_survey_record.answers.extend(answer_schema.load(answer_json['answers'], many=True))
@@ -330,7 +336,6 @@ def post_note():
     return {"data": note_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/createSurvey', methods=['POST'])
-@jwt_required
 def post_survey():
     ses = m.Session()
     try:
