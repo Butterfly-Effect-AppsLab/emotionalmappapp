@@ -6,7 +6,7 @@ from flask_login import (
     login_user,
     logout_user,
 )
-from flask_jwt_extended import (JWTManager, jwt_required)
+from flask_jwt_extended import (JWTManager, jwt_required, get_jwt_identity, create_access_token, jwt_refresh_token_required, set_access_cookies)
 from flask_cors import CORS
 import requests
 from oauthlib.oauth2 import WebApplicationClient
@@ -62,6 +62,16 @@ def expired_token_callback(callback):
     resp = make_response(redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/token/refresh'))
     jwthandler.unset_access_cookies(resp)
     return resp, 302
+
+@app.route('/token/refresh', methods=['GET'])
+@jwt_refresh_token_required
+def refresh():
+    # Refreshing expired Access token
+    user_id = get_jwt_identity()
+    access_token = create_access_token(identity=str(user_id))
+    resp = make_response(redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/', 302))
+    set_access_cookies(resp, access_token)
+    return resp
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -178,7 +188,6 @@ def get_users():
     return {'data': result}
 
 @app.route('/api/surveys')
-@jwt_required
 def get_surveys():
     ses = m.Session()
     surveys = ses.query(m.Survey)
@@ -189,6 +198,7 @@ def get_surveys():
     return {'data': result}
 
 @app.route('/api/surveys/<id>')
+@jwt_required
 def get_surveys_by_id(id):
     ses = m.Session()
     surveys = ses.query(m.Survey).get(id)
@@ -227,6 +237,7 @@ def get_cityparts():
     return {'data': result}
 
 @app.route('/api/answers')
+@jwt_required
 def get_answers():
     ses = m.Session()
     survey_records = ses.query(m.SurveyRecord)
@@ -267,6 +278,7 @@ def post_user():
     return {"data": user_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/registerUser/<id>', methods=['POST'])
+@jwt_required
 def update_user(id):
     ses = m.Session()
     try:
@@ -282,6 +294,7 @@ def update_user(id):
     return {"data": user_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/sendAnswer', methods=['POST'])
+@jwt_required
 def post_answer():
     ses = m.Session()
     try:
@@ -301,6 +314,7 @@ def post_answer():
     return {"data": answer_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/sendNote', methods=['POST'])
+@jwt_required
 def post_note():
     ses = m.Session()
     try:
@@ -316,6 +330,7 @@ def post_note():
     return {"data": note_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/createSurvey', methods=['POST'])
+@jwt_required
 def post_survey():
     ses = m.Session()
     try:
