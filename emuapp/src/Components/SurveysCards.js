@@ -109,7 +109,7 @@ const SurveysCards = (props) => {
     }, [activeCounter]);
 
     const renderActiveCard = (survey, i) => {
-        if (!moment(Date()).isAfter(survey.active_to)) {
+        if (!moment().isAfter(survey.active_to)) {
             activeCounter = activeCounter + 1;
             return (
                 <div>
@@ -173,7 +173,7 @@ const SurveysCards = (props) => {
     };
 
     const renderClosedCard = (survey, i) => {
-        if (moment(Date()).isAfter(survey.active_to)) {
+        if (moment().isAfter(survey.active_to)) {
             closedCounter = closedCounter + 1;
             return (
                 <div>

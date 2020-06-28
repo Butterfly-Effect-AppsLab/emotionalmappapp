@@ -259,10 +259,6 @@ const SurveyPage = (props) => {
     };
 
     const handleClose = () => {
-        console.log('INTERIMINTERIM', interimData)
-        if (interimData) {
-            postInterimAnswer(interimData)
-        }
         history.push('/surveys');
     };
 
