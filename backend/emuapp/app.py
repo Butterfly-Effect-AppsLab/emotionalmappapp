@@ -332,11 +332,12 @@ def post_answer():
 @app.route('/api/sendNote', methods=['POST'])
 @jwt_required
 def post_note():
+    user_id = get_jwt_identity()
     ses = m.Session()
     try:
         note_json = request.json
         survey_note_schema = schemas.SurveyNoteSchema()
-
+        note_json.update({'user_id': user_id})
         new_survey_note = survey_note_schema.load(note_json)
         ses.add(new_survey_note)
         ses.commit()
