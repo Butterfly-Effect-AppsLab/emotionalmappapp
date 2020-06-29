@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate'
-import { RED, WHITE, DARKGRAY } from '../utils/colours';
+import { RED, WHITE, DARKGRAY, DARKERGRAY } from '../utils/colours';
 import history from '../utils/history';
 import { ReactComponent as SurveyIcon } from '../icons/survey_icon.svg';
 import { ReactComponent as SurveyIconClosed } from '../icons/survey_icon_closed.svg';
@@ -17,7 +17,7 @@ import moment from 'moment';
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-        marginBottom: 10,
+        paddingBottom: 66,
     },
     title: {
         marginTop: 'auto',
@@ -52,6 +52,7 @@ const useStyles = makeStyles({
         marginBottom: 'auto',
     },
     iconDiv: {
+        maxWidth: 45,
         width: '10vw',
         textAlign: 'center',
         justifyContent: 'center',
@@ -86,10 +87,11 @@ const useStyles = makeStyles({
         textAlign: 'center',
     },
     line: {
+        backgroundColor: DARKERGRAY,
         borderRadius: 20,
         width: '80vw',
         marginTop: 30,
-        height: 0,
+        border: '0.1px solid' + DARKERGRAY,
     },
 });
 

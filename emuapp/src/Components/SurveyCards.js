@@ -75,7 +75,7 @@ const SurveyCards = (props) => {
                             <br/>
                         </Typography>
                         {
-                            question.required ? 
+                            !question.required ? 
                             <Typography className={classes.label} color="textSecondary" gutterBottom>
                                 Nepovinná otázka
                             </Typography>

@@ -32,7 +32,7 @@ const useStyles = makeStyles({
         marginBottom: 'auto',
     },
     iconDiv: {
-        width: '10vw',
+        width: 30,
         textAlign: 'center',
         justifyContent: 'center',
         marginBottom: '1vw'

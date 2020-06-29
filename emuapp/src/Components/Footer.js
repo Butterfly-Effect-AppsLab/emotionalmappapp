@@ -21,6 +21,7 @@ const useStyles = makeStyles({
   },
   footerDiv: {
     height: 56,
+    minHeight: 56,
   },
   root: {
     backgroundColor: RED,

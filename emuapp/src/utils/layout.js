@@ -63,7 +63,7 @@ const Layout = ({ children, history }) => {
   }, [history]);
 
   return (
-    <div className={classes.root}>
+    <div id='layout.js' className={classes.root}>
       <Box className={classes.box} display="flex" flexDirection="column">
         <Header history={history} showHeader={showHeader} headerText={headerText}/>
         <div className={classes.childrenOverflow}>{children}</div>
