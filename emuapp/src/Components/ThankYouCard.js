@@ -15,7 +15,6 @@ const useStyles = makeStyles({
     },
     rootCard: {
         minWidth: 275,
-        // minHeight: '37vh',
     },
     label: {
         marginTop: 'auto',

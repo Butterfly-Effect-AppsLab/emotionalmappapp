@@ -25,14 +25,8 @@ const useStyles = makeStyles({
         bottom: '5%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        // justifyContent: 'center',
-        // textAlign: 'center',
     },
     logo: {
-        // position: 'absolute',
-        // top: '25%',
-        // left: '50%',
-        // transform: 'translate(-50%, -50%)',
         justifySelf: 'center',
         marginTop: '20vh',
         marginBottom: '5vh',
@@ -40,13 +34,7 @@ const useStyles = makeStyles({
         height: 170,
     },
     name: {
-        // position: 'absolute',
-        // top: '50%',
-        // left: '50%',
-        // transform: 'translate(-50%, -50%)',
         justifySelf: 'center',
-        // marginTop: '60vh',
-        // marginBottom: '5vh',
     }
 });
 

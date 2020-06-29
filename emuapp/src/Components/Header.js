@@ -7,7 +7,6 @@ import NewsMenu from './NewsMenu';
 import Box from '@material-ui/core/Box';
 import { WHITE, RED } from '../utils/colours';
 import { ReactComponent as Logo } from '../icons/logo_red_large.svg';
-import Link from '@material-ui/core/Link';
 import history from '../utils/history'
 
 const useStyles = makeStyles(({
@@ -30,16 +29,10 @@ const useStyles = makeStyles(({
     minHeight: 56,
   },
   logo: {
-    // marginBottom: "10vh"
     marginRight: 20,
     width: 29,
     height: 30
   },
-  closeButton: {
-    // position: 'absolute',
-    // top: 50,
-    // right: '5vw',
-  }
 }));
 
 const Header = (props) => {
@@ -62,7 +55,6 @@ const Header = (props) => {
               <Typography variant="h5" component="h2" className={classes.title}>
                 {headerText}
               </Typography>
-              {/* <Link className={classes.closeButton} onClick={handleClose()}>Zatvoriť</Link> */}
             </Toolbar>
             {/* <NewsMenu /> */}
           </AppBar>

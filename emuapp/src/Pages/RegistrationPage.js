@@ -70,7 +70,6 @@ const RegistrationPage = (props) => {
         work_location: null,
     });
     const [regData, setRegData] = React.useState({
-        // id: ,
         sex: '',
         // interests: [],
         residence_location_id: null,

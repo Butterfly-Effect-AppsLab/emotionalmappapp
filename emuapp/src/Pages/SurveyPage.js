@@ -7,7 +7,7 @@ import { fetchSurvey, postAnswer, postNote, postInterimAnswer } from '../redux/a
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSurvey, getInterimAnswers } from '../redux/selectors';
-import { LIGHTGRAY, RED, WHITE } from '../utils/colours';
+import { LIGHTGRAY, RED } from '../utils/colours';
 import ProgressBar from '../Components/ProgressBar';
 import Button from '@material-ui/core/Button';
 import ThankYouCard from '../Components/ThankYouCard';

@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box';
 const useStyles = makeStyles({
   root: {
     height: '100%',
-    // overflow: 'auto',
     display: 'flex',
     flexDirection: 'column',
   },

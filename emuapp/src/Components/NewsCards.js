@@ -1,13 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { ReactComponent as SourceIcon } from '../icons/source.svg';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import { LIGHTGRAY, DARKGRAY } from '../utils/colours';
+import PlaceholderImage from '../icons/news_placeholder_image.png';
+import { DARKGRAY } from '../utils/colours';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -44,7 +42,13 @@ const useStyles = makeStyles({
     },
     media: {
         marginTop: 10,
-        textAlign: 'center'
+        justifyContent: 'center',
+        textAlign: 'center',
+    },
+    image: {
+        maxHeight: '30vh',
+        maxWidth: '90vw',
+        borderRadius: 10,
     }
 });
 
@@ -58,7 +62,6 @@ const NewsCards = (props) => {
         return (
             <div key={i}>
                 <Card className={classes.root} variant="outlined">
-                    {/* <ButtonBase> */}
                     <CardContent>
                         <Typography className={classes.date} variant="body2" component="p">
                             {moment(news.pub_date).format('DD.MM.YYYY')}
@@ -78,16 +81,17 @@ const NewsCards = (props) => {
                                 </Typography>
                             </div>
                         </div>
-                        {news.image !== '' ?
+                        
                             <CardMedia className={classes.media}>
                                 <Link href={news.link} color='inherit'>
-                                    <img src={news.image} />
+                                {news.image !== '' ?
+                                    <img src={news.image} className={classes.image}/>
+                                    :
+                                    <img src={PlaceholderImage} className={classes.image}/>
+                                }
                                 </Link>
                             </CardMedia>
-                            : null
-                        }
                     </CardContent>
-                    {/* </ButtonBase> */}
                 </Card>
             </div >
         );

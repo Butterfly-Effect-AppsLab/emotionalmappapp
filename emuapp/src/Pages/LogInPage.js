@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { WHITE, BLACK, DARKBLUE, RED } from '../utils/colours';
+import { WHITE, BLACK, RED } from '../utils/colours';
 import { ReactComponent as Logo } from '../icons/logo_red_large.svg';
 import { ReactComponent as RedName } from '../icons/name_red.svg';
 import ButtonTemplate from '../Components/ButtonTemplate';

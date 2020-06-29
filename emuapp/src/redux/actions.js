@@ -29,7 +29,6 @@ export const fetchRegInfo = () => async dispatch => {
 };
 
 export const postRegInfo = (regData) => async dispatch => {
-    console.log('register user', regData);
     try {
         const response = await fetch('/api/registerUser', {
             method: 'POST',

@@ -4,12 +4,12 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { ReactComponent as Home } from '../icons/home.svg';
 import { ReactComponent as Surveys } from '../icons/surveys.svg';
-import { ReactComponent as Notifications } from '../icons/notifications.svg';
-import { ReactComponent as Profile } from '../icons/profile.svg';
+// import { ReactComponent as Notifications } from '../icons/notifications.svg';
+// import { ReactComponent as Profile } from '../icons/profile.svg';
 import { ReactComponent as HomeSelected } from '../icons/home_selected.svg';
 import { ReactComponent as SurveysSelected } from '../icons/surveys_selected.svg';
-import { ReactComponent as NotificationsSelected } from '../icons/notifications_selected.svg';
-import { ReactComponent as ProfileSelected } from '../icons/profile_selected.svg';
+// import { ReactComponent as NotificationsSelected } from '../icons/notifications_selected.svg';
+// import { ReactComponent as ProfileSelected } from '../icons/profile_selected.svg';
 import { RED, WHITE, TRANSWHITE } from '../utils/colours';
 import history from '../utils/history';
 
