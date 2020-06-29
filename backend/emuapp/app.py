@@ -32,12 +32,11 @@ app.root_path = os.path.dirname(os.path.abspath(__file__))
 app.config['JSON_AS_ASCII'] = False
 app.config['JWT_SECRET_KEY'] = os.environ.get("JWT_SECRET")
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
-app.config['JWT_COOKIE_CSRF_PROTECT'] = True
-app.config['JWT_CSRF_CHECK_FORM'] = True
+#app.config['JWT_CSRF_CHECK_FORM'] = True
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 jwt = JWTManager(app)
-CORS(app)
+jwt._set_error_handler_callbacks(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -202,6 +201,11 @@ def get_surveys():
     ses.close()
     return {'data': result}
 
+@app.route('/api/test')
+@jwt_required
+def get_test():
+    return {'user': get_jwt_identity()}
+
 @app.route('/api/surveys/<id>')
 @jwt_required
 def get_surveys_by_id(id):
@@ -298,7 +302,7 @@ def update_user(id):
     return {"data": user_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/sendAnswer', methods=['POST'])
-@jwt_required
+@jwt_optional
 def post_answer():
     user_id = get_jwt_identity()
     ses = m.Session()

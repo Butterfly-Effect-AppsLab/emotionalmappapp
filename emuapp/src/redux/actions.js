@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import {
     FETCH_REGINFO_SUCCESS,
     FETCH_REGINFO_FAIL,
@@ -32,7 +33,7 @@ export const postRegInfo = (regData, id) => async dispatch => {
     try {
         const response = await fetch('/api/registerUser/' + id, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': Cookies.get('csrf_access_token')},
             body: JSON.stringify(regData)
         });
         // console.log(response.content)
@@ -70,8 +71,8 @@ export const fetchSurvey = (id) => async dispatch => {
             dispatch(fetchSurveySuccess(json));
         }
         else {
+            alert("Hello! I am an alert box!!");
             history.push('/login')
-            alert('Pre pokračovanie sa musíte prihlásiť');
         }
     } catch (err) {
         console.log(err);
@@ -84,6 +85,7 @@ export const postAnswer = (answData) => async dispatch => {
     console.log('in action postAnswer', answData)
     try {
         const response = await fetch('/api/sendAnswer', {
+            credentials: 'same-origin',
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(answData)
