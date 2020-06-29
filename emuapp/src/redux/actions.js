@@ -66,7 +66,7 @@ export const fetchSurvey = (id) => async dispatch => {
             dispatch(fetchSurveySuccess(json));
         }
         else {
-            alert("Hello! I am an alert box!!");
+            alert('Pre pokračovanie sa musíte prihlásiť');
             history.push('/login')
         }
     } catch (err) {
