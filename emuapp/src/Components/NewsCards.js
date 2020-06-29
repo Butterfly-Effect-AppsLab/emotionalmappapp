@@ -60,7 +60,7 @@ const NewsCards = (props) => {
                         </Typography>
                         <Typography className={classes.title} style={{ fontWeight: 'bold' }} variant="h5" component="h2">
                             <Link href={news.link} color='inherit'>
-                                {news.title}
+                                { news.title.split(/\s+/).length < 15 ? news.title : news.title.split(/\s+/).slice(0,10).join(" ") + "..."}
                             </Link>
                         </Typography>
                         <div className={classes.row}>

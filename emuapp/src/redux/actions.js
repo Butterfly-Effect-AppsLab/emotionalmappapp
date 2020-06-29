@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import {
     FETCH_REGINFO_SUCCESS,
     FETCH_REGINFO_FAIL,
@@ -34,7 +33,7 @@ export const postRegInfo = (regData) => async dispatch => {
     try {
         const response = await fetch('/api/registerUser', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': Cookies.get('csrf_access_token')},
+            headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(regData)
         });
         const json = await response.json();
