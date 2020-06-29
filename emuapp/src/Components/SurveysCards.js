@@ -17,7 +17,7 @@ import moment from 'moment';
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-        paddingBottom: 66,
+        marginBottom: 10,
     },
     title: {
         marginTop: 'auto',
