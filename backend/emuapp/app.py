@@ -177,6 +177,7 @@ def get_news():
     ses.close()
     return {'data': result}
 
+"""
 @app.route('/api/users')
 def get_users():
     ses = m.Session()
@@ -186,6 +187,7 @@ def get_users():
     result = user_schema.dump(users, many=True)
     ses.close()
     return {'data': result}
+"""
 
 @app.route('/api/surveys')
 @jwt_optional
