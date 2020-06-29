@@ -86,11 +86,19 @@ def get_google_provider_cfg():
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
+@jwt_optional
 def get_index(path):
+    if(not get_jwt_identity() and not request.cookies.get('seenOnboarding') and path == ''):
+        resp = make_response(redirect('/onboarding'))
+        resp.set_cookie('seenOnboarding', 'true')
+        return resp
     return  render_template("index.html", token=path)
 
 @app.route('/glogin')
+@jwt_optional
 def get_login():
+    if(get_jwt_identity()):
+        return redirect(os.environ.get("GOOGLE_REDIRECT_URI", None))
     google_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 
@@ -270,7 +278,7 @@ def get_regInfo():
     year = datetime.today().year
     r = range(year-150,year)
     years = list(reversed([*r]))
-    data = {'data': {"streets": streets_result, "years": years, "sexes": ["Female", "Male"]}}
+    data = {'data': {"streets": streets_result, "years": years, "sexes": ["Žena", "Muž"]}}
     ses.close()
     return data
 
@@ -299,7 +307,10 @@ def update_user():
     try:
         user_json = request.json
         user_schema = schemas.UserSchema()
-
+        if(user_json['residence_location_id'] == 0):
+            user_json.update({'residence_location_id': None})
+        if(user_json['work_location_id'] == 0):
+            user_json.update({'work_location_id': None})
         user = ses.query(m.User).filter(m.User.id == user_id)
         user.update(user_json)
         ses.commit()
