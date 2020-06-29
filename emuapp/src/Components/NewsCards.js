@@ -10,7 +10,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import { LIGHTGRAY, DARKGRAY } from '../utils/colours';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
-import history from '../utils/history'
+import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles({
     root: {
@@ -41,6 +41,10 @@ const useStyles = makeStyles({
         color: DARKGRAY,
         textAlign: 'left',
         marginBottom: 10,
+    },
+    media: {
+        marginTop: 10,
+        textAlign: 'center'
     }
 });
 
@@ -50,6 +54,7 @@ const NewsCards = (props) => {
 
 
     const renderCard = (news, i) => {
+        console.log(news.image)
         return (
             <div key={i}>
                 <Card className={classes.root} variant="outlined">
@@ -60,7 +65,7 @@ const NewsCards = (props) => {
                         </Typography>
                         <Typography className={classes.title} style={{ fontWeight: 'bold' }} variant="h5" component="h2">
                             <Link href={news.link} color='inherit'>
-                                { news.title.split(/\s+/).length < 15 ? news.title : news.title.split(/\s+/).slice(0,10).join(" ") + "..."}
+                                {news.title.split(/\s+/).length < 15 ? news.title : news.title.split(/\s+/).slice(0, 10).join(" ") + "..."}
                             </Link>
                         </Typography>
                         <div className={classes.row}>
@@ -73,6 +78,14 @@ const NewsCards = (props) => {
                                 </Typography>
                             </div>
                         </div>
+                        {news.image !== '' ?
+                            <CardMedia className={classes.media}>
+                                <Link href={news.link} color='inherit'>
+                                    <img src={news.image} />
+                                </Link>
+                            </CardMedia>
+                            : null
+                        }
                     </CardContent>
                     {/* </ButtonBase> */}
                 </Card>
