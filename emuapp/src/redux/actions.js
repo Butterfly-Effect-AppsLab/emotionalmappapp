@@ -30,15 +30,14 @@ export const fetchRegInfo = () => async dispatch => {
 };
 
 export const postRegInfo = (regData, id) => async dispatch => {
+    console.log('register user', regData);
     try {
         const response = await fetch('/api/registerUser/' + id, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': Cookies.get('csrf_access_token')},
             body: JSON.stringify(regData)
         });
-        // console.log(response.content)
         const json = await response.json();
-        // console.log(json);
         dispatch(postRegInfoSuccess(json));
     } catch (err) {
         console.log(err);
@@ -48,13 +47,10 @@ export const postRegInfo = (regData, id) => async dispatch => {
 };
 
 export const fetchSurveysList = () => async dispatch => {
-    // const helpResponse = await fetch('/api/surveys');
-    // console.log(helpResponse)
     try {
         const response = await fetch('/api/surveys');
         const json = await response.json();
         dispatch(fetchSurveysListSuccess(json));
-        // console.log('co mi vracia backend pri surveyoch registrovany', response);
     } catch (err) {
         console.log(err);
         dispatch(fetchSurveysListFail());
@@ -82,7 +78,6 @@ export const fetchSurvey = (id) => async dispatch => {
 };
 
 export const postAnswer = (answData) => async dispatch => {
-    console.log('in action postAnswer', answData)
     try {
         const response = await fetch('/api/sendAnswer', {
             credentials: 'same-origin',
@@ -100,7 +95,6 @@ export const postAnswer = (answData) => async dispatch => {
 };
 
 export const postInterimAnswer = (interimData) => async dispatch => {
-    console.log('in action', interimData)
     try {
         dispatch(postInterimAnswerSuccess(interimData));
     } catch (err) {

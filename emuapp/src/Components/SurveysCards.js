@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import ButtonTemplate from '../Components/ButtonTemplate'
 import { RED, WHITE, DARKGRAY } from '../utils/colours';
 import history from '../utils/history';
-import { ReactComponent as SurveyIcon } from '../icons/prieskum_icon.svg';
-import { ReactComponent as PollIcon } from '../icons/anketa_icon.svg';
+import { ReactComponent as SurveyIcon } from '../icons/survey_icon.svg';
+import { ReactComponent as SurveyIconClosed } from '../icons/survey_icon_closed.svg';
 import { ReactComponent as TimeIcon } from '../icons/time.svg';
 import { ReactComponent as FilledCountIcon } from '../icons/filled_count.svg';
 import moment from 'moment';
@@ -105,7 +105,6 @@ const SurveysCards = (props) => {
     }
 
     useEffect(() => {
-        console.log('activeCounter', activeCounter)
     }, [activeCounter]);
 
     const renderActiveCard = (survey, i) => {
@@ -184,7 +183,7 @@ const SurveysCards = (props) => {
                         <CardContent className={classes.content}>
                             <div className={classes.row}>
                                 <div className={classes.iconDiv}>
-                                    <SurveyIcon />
+                                    <SurveyIconClosed />
                                 </div>
                                 <div className={classes.column}>
                                     <Typography className={classes.label} variant="body2" component="p">

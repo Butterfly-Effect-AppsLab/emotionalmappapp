@@ -9,7 +9,7 @@
         "active_to": "2020-07-12 16:00:00",
         "questions": [
             {
-                "question": "Ako sa mate?",
+                "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
                 "type": "text"
             },
             {
@@ -72,7 +72,7 @@
         "age_group_bottom": 500,
         "age_group_top": 1000,
         "survey_type": "Anketu",
-        "active_to": "2020-07-10 20:00:00",
+        "active_to": "2020-06-10 20:00:00",
         "questions": [
             {
                 "question": "Ako sa mate znovu?",
