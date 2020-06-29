@@ -9,6 +9,7 @@ const useStyles = makeStyles({
         minHeight: '100%',
         background: LIGHTGRAY,
         paddingTop: 10,
+        paddingBottom: 5,
     },
 });
 

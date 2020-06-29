@@ -92,7 +92,6 @@ const ThankYouCard = (props) => {
     };
 
     const renderNoteContent = () => {
-        console.log('v renderi', isNoteSent)
         if (isNoteSent === false) {
             return (
                 <>
