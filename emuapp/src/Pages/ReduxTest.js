@@ -13,7 +13,6 @@ function ReduxTest(props) {
       <TestApp />
       <button
                 onClick={() => {
-                    console.log('load from BE');
                     props.fetchRegInfo();
                 }}
             >

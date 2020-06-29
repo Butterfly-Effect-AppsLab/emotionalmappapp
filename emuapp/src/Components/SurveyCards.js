@@ -16,18 +16,22 @@ const useStyles = makeStyles({
         marginBottom: 10,
     },
     label: {
-        marginTop: 'auto',
-        marginBottom: 'auto',
+        fontSize: 12,
         color: DARKGRAY,
     },
     text: {
         marginTop: 'auto',
         marginBottom: 'auto',
         fontWeight: 'bold',
+        display: 'flex',
     },
     card: {
         borderRadius: 20,
     },
+    index: {
+        display: 'flex',
+        marginBottom: 0,
+    }
 });
 
 const SurveyCards = (props) => {
@@ -68,7 +72,15 @@ const SurveyCards = (props) => {
                     <CardContent>
                         <Typography className={classes.text} variant="subtitle2" component="p">
                             {i}. {question.question}
+                            <br/>
                         </Typography>
+                        {
+                            question.required ? 
+                            <Typography className={classes.label} color="textSecondary" gutterBottom>
+                                Nepovinná otázka
+                            </Typography>
+                            : null
+                        }
                         {renderForm(question.type, question.options, question.id)}
                     </CardContent>
                     <CardActions className={classes.button}>

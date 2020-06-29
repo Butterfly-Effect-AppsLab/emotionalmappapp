@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 'auto',
         fontWeight: 'bold',
     },
+    label: {
+        fontSize: 14,
+    }
 }));
 
 const CheckBox = (props) => {
@@ -52,12 +55,7 @@ const CheckBox = (props) => {
         if (retrievedAnswers) {
             Object.keys(retrievedAnswers).forEach((key) => {
                 if (Number(key) === questionId) {
-                    // let keyValue = Object.keys(retrievedAnswers[key])
-                    // console.log(keyValue.length)
-                    // for (var i = 0; i < keyValue.length; i++) {
-                    //     setState({ ...state, [keyValue[i]]: true })
-                    // }
-                    setState(retrievedAnswers[key]) //////FUNGUJE, ale nezobrazuje sa checked ikona, treba doriesit
+                    setState(retrievedAnswers[key])
                 }
             });
         }
@@ -81,7 +79,7 @@ const CheckBox = (props) => {
     const renderOptions = (option, index) => {
         if (option.option !== "other") {
             return (
-                    <FormControlLabel className={classes.box} control={<RedCheckbox checked={state[option.option] ? true : false} onChange={(event) => { handleChange(event) }} name={option.option} />} label={option.option} />
+                    <FormControlLabel classes={{ label: classes.label }} className={classes.box} control={<RedCheckbox checked={state[option.option] ? true : false} onChange={(event) => { handleChange(event) }} name={option.option} />} label={option.option} />
             )
         }
         else {

@@ -88,7 +88,6 @@ const SurveyPage = (props) => {
     });
 
     const getDataToPage = (value, questionId) => {
-        console.log('uplne jebnuty system sme spraivili', value)
         if (currPage <= pages) {
             let data = []
             let allValuesFalse = true
@@ -113,7 +112,6 @@ const SurveyPage = (props) => {
             }
             else if (data[0]) {
                 setAnswData({ ...answData, answers: { ...answData.answers, [data[0].question_id]: data } })
-                // console.log('ANSWDATAANSWDATA', Object.keys(answData.answers))
             }
         }
         setInterimData({ ...interimData, answers: { ...interimData.answers, [questionId]: value } })
@@ -127,13 +125,8 @@ const SurveyPage = (props) => {
         if (currQuestions.length > 0) {
             let buttonDisabled = false
             currQuestions.forEach((question) => {
-                console.log('QUESTIONQUESTION', question)
                 if (question && question.required) {
-                    //console.log('answdata kokot otazka', question)
-                    //console.log('answdata kokotak',answData.answers)
-                    //console.log('answdata uplny kokotak',answData.answers[question.id.toString()] )
                     if (!answData.answers[question.id.toString()] || answData.answers[question.id.toString()].length == 0) {
-                        //console.log('im in')
                         buttonDisabled = true
                     }
                 }
@@ -145,10 +138,6 @@ const SurveyPage = (props) => {
     useEffect(() => {
         fetchSurvey(id);
     }, []);
-
-    useEffect(() => {
-        console.log('picasak', isNextButtonDisabled)
-    }, [isNextButtonDisabled]);
 
     useEffect(() => {
         if (noteData.note !== '') {
@@ -177,10 +166,6 @@ const SurveyPage = (props) => {
             setButtonText('Ďalej')
         }
     }, [currPage]);
-
-    // useEffect(() => {
-    //     console.log('currQuestionsKeys', currQuestionsKeys)
-    // }, [currQuestionsKeys]);
 
     const onNextButtonClick = () => {
         setCurrPage(currPage + 1);
@@ -300,7 +285,6 @@ const SurveyPage = (props) => {
 const mapStateToProps = (state) => {
     const survey = getSurvey(state);
     const retrievedAnswers = getInterimAnswers(state)
-    console.log('RETRIEVEDRETRIEVED',retrievedAnswers)
     return { survey, retrievedAnswers };
 };
 

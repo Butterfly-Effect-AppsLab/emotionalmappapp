@@ -105,7 +105,6 @@ const SurveysCards = (props) => {
     }
 
     useEffect(() => {
-        console.log('activeCounter', activeCounter)
     }, [activeCounter]);
 
     const renderActiveCard = (survey, i) => {

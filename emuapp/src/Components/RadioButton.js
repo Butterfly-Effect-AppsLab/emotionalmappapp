@@ -28,6 +28,9 @@ const useStyles = makeStyles({
     },
     form: {
         marginTop: 10,
+    },
+    label: {
+        fontSize: 14,
     }
 });
 
@@ -60,7 +63,7 @@ const RadioButton = (props) => {
     const renderOptions = (option) => {
 
         return (
-            <FormControlLabel className={classes.box} value={option.option} name={option.option} control={< RedRadio />} label={option.option} />
+            <FormControlLabel classes={{ label: classes.label }} className={classes.box} value={option.option} name={option.option} control={< RedRadio />} label={option.option} />
         )
 
     };

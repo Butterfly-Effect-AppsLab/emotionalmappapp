@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     resize: {
-        fontSize: 12
+        fontSize: 14
     },
     textField: {
         [`& fieldset`]: {
@@ -54,9 +54,7 @@ const MultilineTextField = (props) => {
             for (var i = 0; i < keyValues.length; i++) {
                 let key = keyValues[i];
                 if (key) {
-                    // console.log('retrievedText[key]', retrievedText[key])
                     if (retrievedText[key] === true) {
-                        // console.log('KEYKEYKEY', key)
                         setValue(key);
                     }
 
@@ -68,9 +66,7 @@ const MultilineTextField = (props) => {
             for (var i = 0; i < keyValues.length; i++) {
                 let key = keyValues[i];
                 if (key) {
-                    // console.log('retrievedText[key]', retrievedTextLocal[key])
                     if (retrievedTextLocal[key] === true) {
-                        // console.log('KEYKEYKEY', key)
                         setValue(key);
                     }
 
@@ -80,11 +76,9 @@ const MultilineTextField = (props) => {
     }, [retrievedText, retrievedTextLocal]);
 
     useEffect(() => {
-        // console.log('retrievedTextLocal', retrievedTextLocal);
     }, [retrievedTextLocal]);
 
     useEffect(() => {
-        // console.log('STATESTATE', state)
         if (sendData) {
             sendData(state, questionId);
         }
@@ -123,13 +117,20 @@ const MultilineTextField = (props) => {
                     onBlur={handleBlur ? handleBlur : handleBlurLocal}
                     value={value}
                     onChange={handleChange}
-                    classes={{
-                        input: classes.resize,
-                    }}
+                    // classes={{
+                    //     input: classes.resize,
+                    // }}
                     className={classes.textField}
                     InputProps={{
                         classes: {
-                            notchedOutline: classes.notchedOutline
+                            notchedOutline: classes.notchedOutline,
+                            input: classes.resize,
+
+                        }
+                    }}
+                    InputLabelProps={{
+                        classes: {
+                            root: classes.resize,
                         }
                     }}
                 />
