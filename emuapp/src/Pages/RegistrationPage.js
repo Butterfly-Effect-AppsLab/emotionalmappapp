@@ -119,7 +119,7 @@ const RegistrationPage = (props) => {
     };
 
     const onButtonClick = () => {
-        postRegInfo(regData, id);
+        postRegInfo(regData);
         history.push('/')
     };
 

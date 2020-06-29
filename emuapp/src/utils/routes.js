@@ -22,7 +22,7 @@ const Routes = () => (
   <>
     <Route exact path={'/'} component={NewsPage} />
     <Route exact path={'/onboarding'} component={OnboardingPage} />
-    <Route exact path={'/registration/:id'} render={routerProps => renderRegistration(routerProps.match.params.id)} />
+    <Route exact path={'/registration'} component={RegistrationPage} />
     <Route exact path={'/login'} component={LogInPage} />
     <Route exact path={'/surveys'} component={SurveysPage} />
     <Route path ={'/surveys/:id'} render={routerProps => renderSurvey(routerProps.match.params.id)} />
@@ -30,7 +30,7 @@ const Routes = () => (
 
 
     <Route exact path={'/test'} component={Loading} />
-    
+
   </>
 );
 export default withRouter(Routes);

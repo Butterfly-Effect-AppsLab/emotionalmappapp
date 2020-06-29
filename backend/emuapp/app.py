@@ -32,6 +32,7 @@ app.root_path = os.path.dirname(os.path.abspath(__file__))
 app.config['JSON_AS_ASCII'] = False
 app.config['JWT_SECRET_KEY'] = os.environ.get("JWT_SECRET")
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 #app.config['JWT_CSRF_CHECK_FORM'] = True
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -135,9 +136,9 @@ def create_or_update_user():
             ses.commit()
             ses.refresh(new_user)
             ses.close()
-            return jwthandler.assign_access_refresh_tokens(new_user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/registration/' + new_user.id)
+            return jwthandler.assign_access_refresh_tokens(new_user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/registration')
         elif not user.sex:
-            return jwthandler.assign_access_refresh_tokens(user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/registration/' + user.id)
+            return jwthandler.assign_access_refresh_tokens(user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/registration')
         else:
            return jwthandler.assign_access_refresh_tokens(user.id , os.environ.get("GOOGLE_REDIRECT_URI", None) + '/')
     except Exception as e:
@@ -271,6 +272,7 @@ def get_regInfo():
     ses.close()
     return data
 
+"""
 @app.route('/api/registerUserOld', methods=['POST'])
 def post_user():
     ses = m.Session()
@@ -285,15 +287,18 @@ def post_user():
     except Exception as e:
         return {'error': str(e)}, 400, {'ContentType':'application/json'}
     return {"data": user_json}, 201, {'ContentType':'application/json'}
+"""
 
-@app.route('/api/registerUser/<id>', methods=['POST'])
-def update_user(id):
+@app.route('/api/registerUser', methods=['POST'])
+@jwt_required
+def update_user():
+    user_id = get_jwt_identity()
     ses = m.Session()
     try:
         user_json = request.json
         user_schema = schemas.UserSchema()
 
-        user = ses.query(m.User).filter(m.User.id == id)
+        user = ses.query(m.User).filter(m.User.id == user_id)
         user.update(user_json)
         ses.commit()
         ses.close()
@@ -302,7 +307,7 @@ def update_user(id):
     return {"data": user_json}, 201, {'ContentType':'application/json'}
 
 @app.route('/api/sendAnswer', methods=['POST'])
-@jwt_optional
+@jwt_required
 def post_answer():
     user_id = get_jwt_identity()
     ses = m.Session()
@@ -310,9 +315,8 @@ def post_answer():
         answer_json = request.json
         survey_record_schema = schemas.SurveyRecordSchema()
         answer_schema = schemas.AnswerSchema()
-
+        answer_json.update({'user_id': user_id})
         new_survey_record = survey_record_schema.load(answer_json)
-        new_survey_record.update({'user_id': user_id})
         ses.add(new_survey_record)
         if 'answers' in answer_json:
                 new_survey_record.answers.extend(answer_schema.load(answer_json['answers'], many=True))

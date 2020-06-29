@@ -131,7 +131,7 @@ class AnswerSchema(Schema):
         return m.Answer(**data)
 
 class SurveyRecordSchema(Schema):
-    user_id = fields.Integer(load_only=True)
+    user_id = fields.String(load_only=True)
     survey_id = fields.Integer()
     answers = fields.Nested(AnswerSchema, many=True)
 

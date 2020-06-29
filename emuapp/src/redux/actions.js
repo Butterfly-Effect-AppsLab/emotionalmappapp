@@ -29,10 +29,10 @@ export const fetchRegInfo = () => async dispatch => {
     }
 };
 
-export const postRegInfo = (regData, id) => async dispatch => {
+export const postRegInfo = (regData) => async dispatch => {
     console.log('register user', regData);
     try {
-        const response = await fetch('/api/registerUser/' + id, {
+        const response = await fetch('/api/registerUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': Cookies.get('csrf_access_token')},
             body: JSON.stringify(regData)
