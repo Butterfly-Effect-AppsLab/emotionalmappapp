@@ -27,14 +27,18 @@ const useStyles = makeStyles({
         transform: 'translate(-50%, -50%)',
     },
     logo: {
-        justifySelf: 'center',
-        marginTop: '20vh',
-        marginBottom: '5vh',
-        width: 162,
-        height: 170,
+        position: 'absolute',
+        top: '30%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        maxWidth: 162,
+        maxHeight: 170,
     },
     name: {
-        justifySelf: 'center',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
     }
 });
 

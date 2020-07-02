@@ -202,7 +202,13 @@ const SurveyPage = (props) => {
         }
         else if (currPage > pages) {
             return (
-                <ThankYouCard isNoteSent={isNoteSent} isNoteButtonDisabled={isNoteButtonDisabled} sendDataToPage={(value) => { getDataToPage(value, 0) }} onNoteButtonClick={() => { onNoteButtonClick() }} />
+                <ScrollTo>
+                    {({ scroll }) => (
+                        <>
+                            <ThankYouCard isNoteSent={isNoteSent} isNoteButtonDisabled={isNoteButtonDisabled} sendDataToPage={(value) => { getDataToPage(value, 0) }} onNoteButtonClick={() => { onNoteButtonClick() }} />
+                        </>
+                    )}
+                </ScrollTo>
             )
         }
         else {
