@@ -14,7 +14,7 @@ def assign_access_refresh_tokens(user_id, url):
     refresh_token = create_refresh_token(identity=str(user_id))
     resp = make_response(redirect(url, 302))
     set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
+    set_refresh_cookies(resp, refresh_token, max_age=60*60*24*10)
     return resp
 
 def unset_jwt():

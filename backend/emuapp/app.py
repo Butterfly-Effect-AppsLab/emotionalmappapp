@@ -14,7 +14,7 @@ from emuapp import models as m
 from emuapp import schemas, jwthandler
 from emuapp import decorators as dec
 from random import randint
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import json
 
@@ -47,7 +47,10 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 @jwt.unauthorized_loader
 def unauthorized_callback(callback):
     # No auth header
-    return redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/login', 302)
+    if request.cookies.get('refresh_token_cookie'):
+        return redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/token/refresh', 302)
+    else:
+        return redirect(os.environ.get("GOOGLE_REDIRECT_URI", None) + '/login', 302)
 
 @jwt.invalid_token_loader
 def invalid_token_callback(callback):
@@ -90,7 +93,7 @@ def get_google_provider_cfg():
 def get_index(path):
     if(not get_jwt_identity() and not request.cookies.get('seenOnboarding') and path == ''):
         resp = make_response(redirect('/onboarding'))
-        resp.set_cookie('seenOnboarding', 'true')
+        resp.set_cookie('seenOnboarding', 'true', expires=datetime.now() + timedelta(days=365))
         return resp
     return  render_template("index.html", token=path)
 
