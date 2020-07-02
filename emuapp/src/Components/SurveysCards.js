@@ -110,7 +110,7 @@ const SurveysCards = (props) => {
     }, [activeCounter]);
 
     const renderActiveCard = (survey, i) => {
-        if (!moment().isAfter(survey.active_to)) { //docasne riesenie nezobrazenia vyplnenych surveyov
+        if (!moment().isAfter(survey.active_to) && !survey.filled) { //docasne riesenie nezobrazenia vyplnenych surveyov
             activeCounter = activeCounter + 1;
             return (
                 <div>
