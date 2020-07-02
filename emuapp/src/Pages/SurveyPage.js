@@ -205,6 +205,7 @@ const SurveyPage = (props) => {
                 <ScrollTo>
                     {({ scroll }) => (
                         <>
+                            {scroll({ y: 0, x: 0 })}
                             <ThankYouCard isNoteSent={isNoteSent} isNoteButtonDisabled={isNoteButtonDisabled} sendDataToPage={(value) => { getDataToPage(value, 0) }} onNoteButtonClick={() => { onNoteButtonClick() }} />
                         </>
                     )}
